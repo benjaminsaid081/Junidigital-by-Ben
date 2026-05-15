@@ -69,6 +69,7 @@ body{font-family:'Outfit',sans-serif;background:#0364DB;min-height:100vh;overflo
 .bp{width:100%;padding:13px;border:none;border-radius:11px;background:var(--blue);color:white;font-family:'Outfit',sans-serif;font-weight:900;font-size:15px;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:8px;margin-top:5px}
 .bp:hover{background:#0255c0;transform:translateY(-1px);box-shadow:0 8px 20px rgba(3,100,219,.28)}
 .arr{transition:transform .2s}.bp:hover .arr{transform:translateX(4px)}
+/* Apple-style green login button */ .bp-login{background:linear-gradient(180deg,#34C759 0%,#28A745 100%);border-radius:14px;padding:15px 20px;font-weight:600;font-size:16px;letter-spacing:-0.01em;box-shadow:inset 0 1px 0 rgba(255,255,255,.25),0 1px 2px rgba(0,0,0,.08),0 4px 14px rgba(40,167,69,.28);transition:transform .12s cubic-bezier(.2,.8,.2,1),box-shadow .2s ease,background .2s ease;-webkit-tap-highlight-color:transparent} .bp-login:hover{background:linear-gradient(180deg,#3CD063 0%,#2EB854 100%);transform:none;box-shadow:inset 0 1px 0 rgba(255,255,255,.3),0 1px 2px rgba(0,0,0,.08),0 6px 18px rgba(40,167,69,.38)} .bp-login:active{transform:scale(.97);transition-duration:.06s;box-shadow:inset 0 1px 2px rgba(0,0,0,.15),0 1px 2px rgba(0,0,0,.08)} .bp-login:focus-visible{outline:none;box-shadow:inset 0 1px 0 rgba(255,255,255,.25),0 0 0 4px rgba(52,199,89,.35),0 4px 14px rgba(40,167,69,.28)} .bp-login .arr{transition:transform .25s cubic-bezier(.2,.8,.2,1)} .bp-login:hover .arr{transform:translateX(3px)}
 .bk{background:none;border:none;color:var(--blue);font-weight:700;font-size:13px;cursor:pointer;font-family:'Outfit',sans-serif;margin-top:11px;display:block;text-align:center}
 .terms{text-align:center;font-size:11px;color:#94a3b8;font-family:'Quicksand',sans-serif;margin-top:11px;line-height:1.6}
 .terms a{color:var(--blue);text-decoration:none;font-weight:600}
@@ -288,7 +289,7 @@ body{font-family:'Outfit',sans-serif;background:#0364DB;min-height:100vh;overflo
           <button class="eye" onclick="togP('lp',this)" type="button">👁</button></div>
         <div class="em" id="lErr">Email ou palavra-passe incorretos</div></div>
       <div style="text-align:right;margin-bottom:13px"><a href="#" style="font-size:12px;color:var(--blue);font-weight:600;text-decoration:none">Esqueci a palavra-passe</a></div>
-      <button class="bp" onclick="doL()">Entrar <span class="arr">→</span></button>
+      <button class="bp bp-login" onclick="doL()">Entrar <span class="arr">→</span></button>
       <div style="margin-top:14px;text-align:center;font-size:12px;color:#94a3b8;font-family:'Quicksand',sans-serif">
         Testa: <strong>crianca@test.pt</strong> · <strong>prof@test.pt</strong> · <strong>pai@test.pt</strong><br>password: qualquer coisa
       </div>
