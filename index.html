@@ -293,7 +293,7 @@ body.dark .ltop .logo{color:#e9eef5}
 .lform{flex:1 1 48%;display:flex;flex-direction:column;justify-content:center;padding:24px clamp(22px,5vw,70px)}
 .lform-inner{width:100%;max-width:432px;margin:0 auto}
 .lart{flex:1 1 52%;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;background:white}
-body.dark .lart{background:#f0f6ff}
+body.dark .lart{background:white}
 .lart svg{width:92%;max-width:560px;height:auto}
 .lart-img{width:72%;max-width:420px;height:auto;display:block;animation:robotFloat 3.8s ease-in-out infinite,robotEntry .7s cubic-bezier(.2,.8,.2,1) both;filter:drop-shadow(0 24px 40px rgba(3,100,219,.18))}
 @keyframes robotFloat{0%,100%{transform:translateY(0) rotate(0deg)}45%{transform:translateY(-18px) rotate(-1.5deg)}55%{transform:translateY(-16px) rotate(1.5deg)}}
@@ -528,6 +528,175 @@ body.dark .sbot{border-color:rgba(255,255,255,.08)}
   .notif-dd{left:58px}
   .notif-badge{top:-3px;right:-3px}
 }
+
+/* ═══════════════════════════════════════════
+   LOGIN PAGE — estilo junicoders.com
+═══════════════════════════════════════════ */
+
+/* Background escuro com estrelas */
+#SA{background:var(--bd)!important;min-height:100vh;position:relative;overflow-x:hidden}
+body.dark #SA{background:#060f1f!important}
+
+/* Blobs decorativos */
+.sa-blob{position:absolute;border-radius:50%;filter:blur(100px);pointer-events:none;z-index:0;animation:bf ease-in-out infinite alternate}
+#sa-stars-wrap{position:absolute;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.sa-star{position:absolute;border-radius:50%;background:white;animation:sasTwinkle ease-in-out infinite}
+@keyframes sasTwinkle{0%,100%{opacity:.15;transform:scale(1)}50%{opacity:.85;transform:scale(1.4)}}
+
+/* ── Navbar estilo junicoders.com ── */
+.ltop{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  height:68px;padding:0 44px;
+  display:flex;align-items:center;gap:0;
+  background:rgba(1,28,60,.82);
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
+  border-bottom:1px solid rgba(255,255,255,.09);
+}
+.ltop .logo{color:white;font-size:21px;font-weight:900;letter-spacing:-.02em;gap:10px}
+.ltop .logo .li{width:34px;height:34px;border-radius:9px;border:1.5px solid rgba(255,255,255,.22)}
+.ltop .logo span{color:var(--mint)}
+.ltag{display:none}
+
+/* Nav links centro */
+.ltop-nav{display:flex;align-items:center;gap:2px;margin-left:36px;flex:1}
+.ltop-navlink{
+  color:rgba(255,255,255,.68);font-weight:700;font-size:14px;
+  text-decoration:none;padding:8px 15px;border-radius:8px;
+  transition:all .18s;cursor:pointer;white-space:nowrap;
+  font-family:'Outfit',sans-serif;border:none;background:none;
+}
+.ltop-navlink:hover{color:white;background:rgba(255,255,255,.09)}
+
+/* Botões direita */
+.ltop-right{display:flex;align-items:center;gap:10px;margin-left:auto;flex-shrink:0}
+.ltop-btn-outline{
+  padding:9px 20px;border-radius:40px;
+  border:1.5px solid rgba(255,255,255,.28);
+  background:transparent;color:rgba(255,255,255,.8);
+  font-family:'Outfit',sans-serif;font-weight:700;font-size:14px;
+  cursor:pointer;transition:all .18s;
+}
+.ltop-btn-outline:hover{border-color:white;color:white;background:rgba(255,255,255,.07)}
+.ltop-btn-pill{
+  padding:10px 22px;border-radius:40px;
+  background:white;color:var(--bd);border:none;
+  font-family:'Outfit',sans-serif;font-weight:800;font-size:14px;
+  cursor:pointer;transition:all .18s;
+}
+.ltop-btn-pill:hover{background:var(--mint);transform:translateY(-1px);box-shadow:0 6px 20px rgba(113,200,192,.4)}
+
+/* ── Page layout ── */
+.lpage{margin-top:68px;min-height:calc(100vh - 68px);position:relative;z-index:10}
+.lform{background:transparent;position:relative;z-index:10}
+.lart{background:transparent;position:relative;z-index:10}
+body.dark .lart{background:transparent}
+
+/* Form inner — glass card */
+.lform-inner{
+  background:rgba(255,255,255,.07);
+  border:1px solid rgba(255,255,255,.14);
+  border-radius:26px;
+  padding:36px;
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
+  box-shadow:0 24px 64px rgba(0,0,0,.25);
+  max-width:440px;
+}
+
+/* Logo mark */
+.lmark{background:var(--blue);border-radius:16px;box-shadow:0 6px 24px rgba(3,100,219,.4)}
+
+/* Heading */
+.lh1{color:white!important;font-size:clamp(24px,3.5vw,30px)}
+body.dark .lh1{color:white!important}
+
+/* Inputs */
+.lform-inner .inp{
+  background:rgba(255,255,255,.09);
+  border-color:rgba(255,255,255,.18);
+  color:white;
+}
+.lform-inner .inp:focus{border-color:var(--blue);background:rgba(255,255,255,.13)}
+.lform-inner .inp::placeholder{color:rgba(255,255,255,.35)}
+.lform-inner .inp.er{border-color:var(--red)}
+.lform-inner .f label{color:rgba(255,255,255,.65)}
+
+/* Login tabs */
+.lform-inner .lt{background:rgba(255,255,255,.09)}
+.lform-inner .lt button{color:rgba(255,255,255,.5)}
+.lform-inner .lt button.on{background:rgba(255,255,255,.95);color:var(--bd)}
+.lform-inner .lt button:hover{color:rgba(255,255,255,.85)}
+
+/* Role cards */
+.lform-inner .rc{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.14)}
+.lform-inner .rc:hover{border-color:var(--blue);background:rgba(3,100,219,.15)}
+.lform-inner .rc.on{border-color:var(--blue);background:rgba(3,100,219,.2)}
+.lform-inner .rc h3{color:white}
+.lform-inner .rc p{color:rgba(255,255,255,.5)}
+
+/* Social buttons */
+.lform-inner .sb{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.16);color:white}
+.lform-inner .sb:hover{border-color:var(--blue);background:rgba(255,255,255,.12)}
+
+/* Divider */
+.lform-inner .dv::before,.lform-inner .dv::after{background:rgba(255,255,255,.18)}
+.lform-inner .dv span{color:rgba(255,255,255,.45);background:transparent}
+
+/* Links e textos secundários */
+.lform-inner .sl{color:rgba(255,255,255,.45)}
+.lform-inner .sl a{color:var(--mint)}
+.lform-inner .terms{color:rgba(255,255,255,.35)}
+.lform-inner .terms a{color:var(--mint)}
+.lform-inner .bk{color:var(--mint)}
+.lform-inner a[href="#"]{color:var(--mint)!important}
+
+/* Password bars */
+.lform-inner .pb{background:rgba(255,255,255,.12)}
+.lform-inner .pl{color:rgba(255,255,255,.4)}
+
+/* Steps bar */
+.lform-inner .sd{background:rgba(255,255,255,.15)}
+
+/* Login hint demo */
+#loginHint{color:rgba(255,255,255,.38)!important}
+#loginHint strong{color:rgba(255,255,255,.7)}
+
+/* Secondary button "Criar conta" */
+.lbtn2{
+  background:rgba(255,255,255,.09)!important;
+  border-color:rgba(255,255,255,.2)!important;
+  color:white!important;
+  border-radius:13px;
+}
+.lbtn2:hover{background:rgba(255,255,255,.15)!important;border-color:rgba(255,255,255,.35)!important}
+
+/* Robot illustration */
+.lart-img{filter:drop-shadow(0 32px 56px rgba(3,100,219,.35))}
+
+/* Success screen on dark */
+.lform-inner .sw h2{color:white}
+.lform-inner .sw p{color:rgba(255,255,255,.55)}
+.lform-inner .rcc{background:rgba(255,255,255,.09)}
+.lform-inner .rcl{color:rgba(255,255,255,.5)}
+
+/* Eye button */
+.lform-inner .eye{color:rgba(255,255,255,.4)}
+.lform-inner .eye:hover{color:rgba(255,255,255,.8)}
+
+/* Forgot password */
+#forgotWrap a{color:var(--mint)!important}
+
+/* Steps bar active/done */
+.lform-inner .sd.a{background:var(--blue)}
+.lform-inner .sd.d{background:var(--mint)}
+
+@media(max-width:900px){
+  .ltop{padding:0 18px}
+  .ltop-nav{display:none}
+  .ltop-btn-outline{display:none}
+  .lform-inner{padding:24px 20px;border-radius:20px}
+}
 </style>
 </head>
 <body>
@@ -536,13 +705,33 @@ body.dark .sbot{border-color:rgba(255,255,255,.08)}
 <div id="SA">
 <div id="FI" style="display:none"></div>
 
+<!-- Stars background -->
+<div id="sa-stars-wrap"></div>
+<!-- Blobs -->
+<div class="sa-blob" style="width:650px;height:650px;background:#0364DB;top:-250px;left:-200px;opacity:.18;animation-duration:10s"></div>
+<div class="sa-blob" style="width:500px;height:500px;background:#71C8C0;bottom:-150px;right:-100px;opacity:.15;animation-duration:13s;animation-delay:-5s"></div>
+<div class="sa-blob" style="width:280px;height:280px;background:#FBC92A;top:35%;left:50%;opacity:.1;animation-duration:16s;animation-delay:-8s"></div>
+
+<!-- Navbar -->
 <header class="ltop">
-  <a href="#" class="logo"><div class="li"><svg viewBox="0 0 32 24" width="20" height="15" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="28" height="20" rx="6"/><path d="M9 14.5l3-3 3 3"/><path d="M17 14.5l3-3 3 3"/></svg></div>juni<span>[^^]</span>coders</a>
-  <span class="ltag">Robótica &amp; Programação</span>
-  <button class="themeBtn" type="button" onclick="toggleTheme()" aria-label="Mudar tema claro/escuro" title="Tema claro / escuro" style="margin-left:auto">
-    <svg class="ic-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-    <svg class="ic-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
-  </button>
+  <a href="https://www.junicoders.pt" target="_blank" aria-label="Junicoders"
+     style="display:flex;align-items:center;gap:0;text-decoration:none;font-family:'Outfit',sans-serif;font-weight:900;font-size:22px;color:white;letter-spacing:-.025em;line-height:1">
+    juni<svg viewBox="0 0 54 46" width="36" height="31" style="display:block;margin:0 1px 0 2px;flex-shrink:0" aria-hidden="true">
+      <rect x="2" y="2" width="50" height="42" rx="10" fill="none" stroke="white" stroke-width="4.5"/>
+      <polyline points="8,31 19,16 30,31"  fill="none" stroke="white" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <polyline points="26,31 37,16 48,31" fill="none" stroke="white" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>coders
+  </a>
+
+  <!-- Right actions -->
+  <div class="ltop-right">
+    <button class="themeBtn" type="button" onclick="toggleTheme()" aria-label="Mudar tema" title="Tema claro / escuro" style="border-color:rgba(255,255,255,.22);background:rgba(255,255,255,.1);color:#fff">
+      <svg class="ic-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      <svg class="ic-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+    </button>
+    <button class="ltop-btn-outline" onclick="showRegister()">Criar conta</button>
+    <button class="ltop-btn-pill" onclick="(function(){showLogin();var el=document.getElementById('le');if(el){el.scrollIntoView({behavior:'smooth',block:'center'});setTimeout(function(){el.focus()},350);}})()">Iniciar Sessão</button>
+  </div>
 </header>
 
 <div class="lpage">
@@ -727,7 +916,7 @@ body.dark .sbot{border-color:rgba(255,255,255,.08)}
 <div id="PA">
 <div class="ps">
   <aside class="side">
-    <div class="sl2"><div class="si2"><svg viewBox="0 0 32 24" width="20" height="15" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="28" height="20" rx="6"/><path d="M9 14.5l3-3 3 3"/><path d="M17 14.5l3-3 3 3"/></svg></div><div class="slo">juni<span>[^^]</span>coders</div><button class="themeBtn" type="button" onclick="toggleTheme()" aria-label="Mudar tema claro/escuro" title="Tema claro / escuro" style="margin-left:auto;width:30px;height:30px">
+    <div class="sl2"><a href="#" style="display:flex;align-items:center;gap:0;text-decoration:none;font-family:'Outfit',sans-serif;font-weight:900;font-size:15px;color:white;letter-spacing:-.02em;line-height:1">juni<svg viewBox="0 0 54 46" width="22" height="19" style="display:block;margin:0 1px;flex-shrink:0" aria-hidden="true"><rect x="2" y="2" width="50" height="42" rx="10" fill="none" stroke="white" stroke-width="5"/><polyline points="8,31 19,16 30,31" fill="none" stroke="white" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><polyline points="26,31 37,16 48,31" fill="none" stroke="white" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg>coders</a><button class="themeBtn" type="button" onclick="toggleTheme()" aria-label="Mudar tema claro/escuro" title="Tema claro / escuro" style="margin-left:auto;width:30px;height:30px">
       <svg class="ic-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
       <svg class="ic-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
     </button></div>
@@ -2939,6 +3128,21 @@ function completarDesafio() {
   }
 }
 
+</script>
+
+<script>
+/* ── Starfield para a página de login ── */
+(function(){
+  var wrap = document.getElementById('sa-stars-wrap');
+  if(!wrap) return;
+  for(var i = 0; i < 130; i++){
+    var s = document.createElement('div');
+    s.className = 'sa-star';
+    var size = Math.random() * 2.2 + 0.6;
+    s.style.cssText = 'width:'+size+'px;height:'+size+'px;top:'+Math.random()*100+'%;left:'+Math.random()*100+'%;animation-duration:'+(2.5+Math.random()*4.5)+'s;animation-delay:'+Math.random()*6+'s;';
+    wrap.appendChild(s);
+  }
+})();
 </script>
 </body>
 </html>
