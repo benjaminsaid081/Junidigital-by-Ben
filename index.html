@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Junicoders · Plataforma</title>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/blockly@11/blockly.min.js"></script>
+<!-- Scratch embedded via TurboWarp iframe (Blockly removed) -->
 <style>
 /* Paleta oficial Junicoders — Manual de Normas Gráficas */
 :root{
@@ -1522,54 +1522,31 @@ body.dark .lh1{color:white!important}
         </div>
         <!-- challenge body -->
         <div style="display:flex;flex:1;overflow:hidden">
-          <!-- left: instruction + Blockly editor -->
-          <div style="width:55%;padding:16px;border-right:1px solid #1e3a5f;display:flex;flex-direction:column;gap:12px;overflow:hidden">
+          <!-- left: instruction panel -->
+          <div style="width:36%;min-width:260px;padding:16px;border-right:1px solid #1e3a5f;display:flex;flex-direction:column;gap:12px;overflow-y:auto">
             <div style="background:#1e3a5f;border-radius:14px;padding:15px;border-left:4px solid #71C8C0;flex-shrink:0">
               <div id="desEmoji" style="font-size:23px;margin-bottom:4px"></div>
               <h3 id="desH3" style="font-size:16px;font-weight:800;color:white;margin-bottom:5px"></h3>
               <p id="desP" style="font-size:12.5px;color:#7dd3fc;font-family:'Quicksand',sans-serif;line-height:1.5"></p>
             </div>
-            <!-- BLOCKLY EDITOR (estilo Scratch) -->
-            <div style="flex:1;background:#1e1e2e;border-radius:12px;overflow:hidden;border:1px solid #2a3a5f;display:flex;flex-direction:column;min-height:0">
-              <div style="background:#12122a;padding:9px 14px;display:flex;align-items:center;gap:8px;border-bottom:1px solid #2a3a5f;flex-shrink:0">
-                <div style="width:10px;height:10px;border-radius:50%;background:#ef4444"></div>
-                <div style="width:10px;height:10px;border-radius:50%;background:#fbbf24"></div>
-                <div style="width:10px;height:10px;border-radius:50%;background:#34d399"></div>
-                <span style="color:#4C97FF;font-size:12px;font-weight:700;margin-left:6px">Scratch · Blocos</span>
-                <span style="margin-left:auto;color:#64748b;font-size:10px;font-family:'Quicksand',sans-serif">arrasta os blocos da paleta</span>
-              </div>
-              <div id="blocklyDiv" style="flex:1;min-height:0;width:100%"></div>
+            <div style="background:#0f2a47;border-radius:12px;padding:14px;border:1px solid #1e3a5f;flex:1">
+              <div style="font-size:11px;font-weight:700;color:#71C8C0;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">🧩 Como fazer</div>
+              <div id="desInst" style="font-size:12px;color:#94a3b8;font-family:'Quicksand',sans-serif;line-height:1.7"></div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:8px;flex-shrink:0">
+              <button onclick="showHint()" style="background:transparent;border:2px solid #FBC92A;color:#FBC92A;padding:11px;border-radius:10px;font-weight:700;font-size:13px;cursor:pointer;font-family:'Outfit',sans-serif">💡 Pedir dica</button>
+              <button onclick="completarDesafio()" style="background:#71C8C0;color:#012C56;border:none;padding:13px;border-radius:10px;font-weight:900;font-size:14px;cursor:pointer;font-family:'Outfit',sans-serif">✅ Marcar como concluído →</button>
             </div>
           </div>
-          <!-- right: output + robot -->
-          <div style="width:45%;padding:22px;display:flex;flex-direction:column;gap:14px">
-            <div id="desOutput" style="background:#020f1f;border-radius:14px;padding:20px;border:1px solid #1e3a5f;flex:1;display:flex;align-items:center;justify-content:center;min-height:180px">
-              <div style="text-align:center">
-                <svg width="90" height="110" viewBox="0 0 90 110" style="margin-bottom:10px">
-                  <rect x="20" y="30" width="50" height="45" rx="10" fill="#0364DB"/>
-                  <rect x="25" y="35" width="40" height="30" rx="6" fill="#012C56"/>
-                  <circle cx="33" cy="45" r="7" fill="#92D6FF"/>
-                  <circle cx="57" cy="45" r="7" fill="#92D6FF"/>
-                  <circle cx="35" cy="47" r="4" fill="#012C56"/>
-                  <circle cx="59" cy="47" r="4" fill="#012C56"/>
-                  <path d="M33,60 Q45,68 57,60" fill="none" stroke="#71C8C0" stroke-width="2.5" stroke-linecap="round"/>
-                  <line x1="45" y1="30" x2="45" y2="18" stroke="#0364DB" stroke-width="3" stroke-linecap="round"/>
-                  <circle cx="45" cy="15" r="5" fill="#FBC92A"/>
-                  <rect x="28" y="75" width="34" height="22" rx="5" fill="#0469BC"/>
-                  <rect x="5" y="35" width="12" height="28" rx="5" fill="#0469BC"/>
-                  <rect x="73" y="35" width="12" height="28" rx="5" fill="#0469BC"/>
-                  <rect x="28" y="97" width="13" height="12" rx="4" fill="#012C56"/>
-                  <rect x="49" y="97" width="13" height="12" rx="4" fill="#012C56"/>
-                  <rect x="30" y="38" width="30" height="18" rx="3" fill="#0ea5e9" opacity="0.3"/>
-                  <text id="robotTxt" x="45" y="50" text-anchor="middle" font-size="8" fill="#7DDEF4" font-family="monospace">pronto!</text>
-                </svg>
-                <p style="color:#71C8C0;font-size:12px;font-family:'Quicksand',sans-serif">Juni:bit pronto — carrega em ▶</p>
-              </div>
+          <!-- right: Scratch editor (embedded) -->
+          <div style="flex:1;display:flex;flex-direction:column;overflow:hidden;background:#0f172a">
+            <!-- top bar -->
+            <div style="background:#12122a;padding:8px 14px;display:flex;align-items:center;gap:8px;border-bottom:1px solid #2a3a5f;flex-shrink:0">
+              <svg width="18" height="18" viewBox="0 0 56 56" style="flex-shrink:0"><circle cx="28" cy="28" r="28" fill="#4C97FF"/><path d="M22 18c0-3.3 2.7-6 6-6s6 2.7 6 6v4h4a4 4 0 0 1 4 4v12a4 4 0 0 1-4 4H18a4 4 0 0 1-4-4V26a4 4 0 0 1 4-4h4v-4z" fill="white" opacity=".9"/><circle cx="23" cy="30" r="3" fill="#4C97FF"/><circle cx="33" cy="30" r="3" fill="#4C97FF"/></svg>
+              <span style="color:#4C97FF;font-size:12px;font-weight:700">Editor Scratch</span>
             </div>
-            <div style="display:flex;gap:10px">
-              <button onclick="runCode(this)" style="flex:1;background:#71C8C0;color:#012C56;border:none;padding:13px;border-radius:10px;font-weight:900;font-size:15px;cursor:pointer;font-family:'Outfit',sans-serif;transition:all .2s" onmouseover="this.style.background='#5fb8b0'" onmouseout="this.style.background='#71C8C0'">▶ Correr</button>
-              <button onclick="showHint()" style="background:transparent;border:2px solid #FBC92A;color:#FBC92A;padding:13px 16px;border-radius:10px;font-weight:700;font-size:14px;cursor:pointer;font-family:'Outfit',sans-serif">💡 Dica</button>
-            </div>
+            <!-- Scratch iframe -->
+            <iframe src="./scratch/index.html" style="flex:1;border:none;width:100%;display:block" allow="microphone" title="Editor Scratch"></iframe>
           </div>
         </div>
       </div>
@@ -2834,211 +2811,9 @@ function voltarIlha() {
   else goMap();
 }
 
-// ── SCRATCH-STYLE BLOCK EDITOR (Blockly + renderer Zelos) ────────────────────
-let blocklyWS = null;
+// ── EDITOR SCRATCH (TurboWarp iframe) ────────────────────────────────────────
 
-const JUNI_BLOCKS = [
-  // ── EVENTOS ──
-  {type:"juni_start", message0:"▶ quando começar", nextStatement:null, colour:"#FFBF00", tooltip:"Onde o programa começa"},
-  {type:"juni_key", message0:"⌨ quando tecla %1 premida",
-    args0:[{type:"field_dropdown",name:"KEY",options:[["espaço","space"],["seta ↑","up"],["seta ↓","down"],["seta ←","left"],["seta →","right"],["A","a"],["B","b"]]}],
-    nextStatement:null, colour:"#FFBF00", tooltip:"Começa quando uma tecla é premida"},
-  // ── CONTROLO ──
-  {type:"juni_wait", message0:"⏱ esperar %1 segundos",
-    args0:[{type:"field_number",name:"T",value:1,min:0.1,max:60,precision:0.1}],
-    previousStatement:null, nextStatement:null, colour:"#FFAB19", tooltip:"Faz uma pausa"},
-  {type:"juni_wait_until", message0:"⏳ esperar até %1",
-    args0:[{type:"input_value",name:"COND",check:"Boolean"}],
-    previousStatement:null, nextStatement:null, colour:"#FFAB19", tooltip:"Espera até a condição ser verdadeira"},
-  {type:"juni_repeat", message0:"🔁 repetir %1 vezes %2 %3",
-    args0:[{type:"field_number",name:"N",value:10,min:1,max:100,precision:1},
-           {type:"input_dummy"},{type:"input_statement",name:"DO"}],
-    previousStatement:null, nextStatement:null, colour:"#FFAB19", tooltip:"Repete um número de vezes"},
-  {type:"juni_forever", message0:"♾ para sempre %1 %2",
-    args0:[{type:"input_dummy"},{type:"input_statement",name:"DO"}],
-    previousStatement:null, colour:"#FFAB19", tooltip:"Repete sem parar"},
-  {type:"juni_repeat_until", message0:"🔁 repetir até %1 %2 %3",
-    args0:[{type:"input_value",name:"COND",check:"Boolean"},
-           {type:"input_dummy"},{type:"input_statement",name:"DO"}],
-    previousStatement:null, nextStatement:null, colour:"#FFAB19", tooltip:"Repete até a condição ser verdadeira"},
-  {type:"juni_if", message0:"🔀 se %1 então %2 %3",
-    args0:[{type:"input_value",name:"COND",check:"Boolean"},
-           {type:"input_dummy"},{type:"input_statement",name:"DO"}],
-    previousStatement:null, nextStatement:null, colour:"#FFAB19", tooltip:"Corre os blocos se a condição for verdadeira"},
-  {type:"juni_if_else", message0:"🔀 se %1 então %2 %3 senão %4",
-    args0:[{type:"input_value",name:"COND",check:"Boolean"},
-           {type:"input_dummy"},{type:"input_statement",name:"DO"},
-           {type:"input_statement",name:"ELSE"}],
-    previousStatement:null, nextStatement:null, colour:"#FFAB19", tooltip:"Escolhe entre dois caminhos"},
-  {type:"juni_stop", message0:"⏹ parar tudo", previousStatement:null, colour:"#FFAB19", tooltip:"Para o programa"},
-  // ── ROBÔ (movimento) ──
-  {type:"juni_move", message0:"🤖 andar %1 %2 passos",
-    args0:[{type:"field_dropdown",name:"DIR",options:[["em frente","fwd"],["para trás","back"]]},
-           {type:"field_number",name:"N",value:10,min:1,max:100}],
-    previousStatement:null, nextStatement:null, colour:"#4C97FF", tooltip:"Move o robô"},
-  {type:"juni_turn", message0:"🤖 virar à %1 %2 graus",
-    args0:[{type:"field_dropdown",name:"DIR",options:[["direita ↻","right"],["esquerda ↺","left"]]},
-           {type:"field_number",name:"DEG",value:90,min:1,max:360}],
-    previousStatement:null, nextStatement:null, colour:"#4C97FF", tooltip:"Roda o robô"},
-  // ── JUNI:BIT (hardware) ──
-  {type:"juni_led", message0:"🔌 LED %1 %2",
-    args0:[{type:"field_dropdown",name:"COLOR",options:[["vermelho","red"],["amarelo","yellow"],["verde","green"],["alerta","alert"]]},
-           {type:"field_dropdown",name:"STATE",options:[["ligar","on"],["desligar","off"]]}],
-    previousStatement:null, nextStatement:null, colour:"#5CB1D6", tooltip:"Liga ou desliga um LED"},
-  {type:"juni_led_all_off", message0:"🔌 desligar todos os LEDs",
-    previousStatement:null, nextStatement:null, colour:"#5CB1D6", tooltip:"Apaga todos os LEDs"},
-  {type:"juni_show_temp", message0:"🌡️ mostrar temperatura no ecrã",
-    previousStatement:null, nextStatement:null, colour:"#5CB1D6", tooltip:"Lê e mostra a temperatura"},
-  // ── SOM ──
-  {type:"juni_buzzer", message0:"🔊 buzzer tocar bip",
-    previousStatement:null, nextStatement:null, colour:"#CF63CF", tooltip:"Toca um bip"},
-  {type:"juni_buzzer_n", message0:"🔊 tocar %1 bips",
-    args0:[{type:"field_number",name:"N",value:3,min:1,max:20}],
-    previousStatement:null, nextStatement:null, colour:"#CF63CF", tooltip:"Toca vários bips"},
-  {type:"juni_note", message0:"🎵 tocar nota %1 por %2 s",
-    args0:[{type:"field_dropdown",name:"NOTE",options:[["Dó","do"],["Ré","re"],["Mi","mi"],["Fá","fa"],["Sol","sol"],["Lá","la"],["Si","si"]]},
-           {type:"field_number",name:"D",value:0.4,min:0.1,max:4,precision:0.1}],
-    previousStatement:null, nextStatement:null, colour:"#CF63CF", tooltip:"Toca uma nota musical"},
-  // ── APARÊNCIA ──
-  {type:"juni_say", message0:"💬 dizer %1",
-    args0:[{type:"field_input",name:"TEXT",text:"Olá!"}],
-    previousStatement:null, nextStatement:null, colour:"#9966FF", tooltip:"Mostra uma mensagem"},
-  {type:"juni_say_secs", message0:"💬 dizer %1 por %2 s",
-    args0:[{type:"field_input",name:"TEXT",text:"Olá!"},
-           {type:"field_number",name:"D",value:2,min:0.5,max:10,precision:0.5}],
-    previousStatement:null, nextStatement:null, colour:"#9966FF", tooltip:"Mostra uma mensagem durante uns segundos"},
-  {type:"juni_think", message0:"💭 pensar %1",
-    args0:[{type:"field_input",name:"TEXT",text:"Hmm..."}],
-    previousStatement:null, nextStatement:null, colour:"#9966FF", tooltip:"Mostra um balão de pensamento"},
-  // ── SENSORES (blocos de valor) ──
-  {type:"juni_movement", message0:"há movimento?", output:"Boolean", colour:"#4CBFE6", tooltip:"Verdadeiro se o sensor PIR detetar movimento"},
-  {type:"juni_button", message0:"botão %1 premido?",
-    args0:[{type:"field_dropdown",name:"BTN",options:[["A","a"],["B","b"]]}],
-    output:"Boolean", colour:"#4CBFE6", tooltip:"Verdadeiro se o botão estiver premido"},
-  {type:"juni_temp", message0:"temperatura (°C)", output:"Number", colour:"#4CBFE6", tooltip:"Valor do sensor de temperatura"},
-  {type:"juni_light", message0:"luminosidade", output:"Number", colour:"#4CBFE6", tooltip:"Valor do sensor de luz"},
-  // ── OPERADORES ──
-  {type:"juni_math", message0:"%1 %2 %3",
-    args0:[{type:"input_value",name:"A",check:"Number"},
-           {type:"field_dropdown",name:"OP",options:[["+","add"],["−","sub"],["×","mul"],["÷","div"]]},
-           {type:"input_value",name:"B",check:"Number"}],
-    inputsInline:true, output:"Number", colour:"#59C059", tooltip:"Operação matemática"},
-  {type:"juni_compare", message0:"%1 %2 %3",
-    args0:[{type:"input_value",name:"A"},
-           {type:"field_dropdown",name:"OP",options:[["<","lt"],["=","eq"],[">","gt"]]},
-           {type:"input_value",name:"B"}],
-    inputsInline:true, output:"Boolean", colour:"#59C059", tooltip:"Compara dois valores"},
-  {type:"juni_logic", message0:"%1 %2 %3",
-    args0:[{type:"input_value",name:"A",check:"Boolean"},
-           {type:"field_dropdown",name:"OP",options:[["e","and"],["ou","or"]]},
-           {type:"input_value",name:"B",check:"Boolean"}],
-    inputsInline:true, output:"Boolean", colour:"#59C059", tooltip:"Combina duas condições"},
-  {type:"juni_not", message0:"não %1",
-    args0:[{type:"input_value",name:"A",check:"Boolean"}],
-    inputsInline:true, output:"Boolean", colour:"#59C059", tooltip:"Inverte uma condição"},
-  {type:"juni_random", message0:"nº aleatório de %1 a %2",
-    args0:[{type:"input_value",name:"A",check:"Number"},
-           {type:"input_value",name:"B",check:"Number"}],
-    inputsInline:true, output:"Number", colour:"#59C059", tooltip:"Um número à sorte"},
-];
 
-const numSh = n => ({ shadow:{ type:"math_number", fields:{ NUM:n } } });
-const JUNI_TOOLBOX = {
-  kind:"categoryToolbox",
-  contents:[
-    {kind:"category", name:"Eventos", colour:"#FFBF00", contents:[
-      {kind:"block",type:"juni_start"},
-      {kind:"block",type:"juni_key"},
-    ]},
-    {kind:"category", name:"Controlo", colour:"#FFAB19", contents:[
-      {kind:"block",type:"juni_wait"},
-      {kind:"block",type:"juni_wait_until"},
-      {kind:"block",type:"juni_repeat"},
-      {kind:"block",type:"juni_forever"},
-      {kind:"block",type:"juni_repeat_until"},
-      {kind:"block",type:"juni_if"},
-      {kind:"block",type:"juni_if_else"},
-      {kind:"block",type:"juni_stop"},
-    ]},
-    {kind:"category", name:"Robô", colour:"#4C97FF", contents:[
-      {kind:"block",type:"juni_move"},
-      {kind:"block",type:"juni_turn"},
-    ]},
-    {kind:"category", name:"Juni:bit", colour:"#5CB1D6", contents:[
-      {kind:"block",type:"juni_led"},
-      {kind:"block",type:"juni_led_all_off"},
-      {kind:"block",type:"juni_show_temp"},
-    ]},
-    {kind:"category", name:"Som", colour:"#CF63CF", contents:[
-      {kind:"block",type:"juni_buzzer"},
-      {kind:"block",type:"juni_buzzer_n"},
-      {kind:"block",type:"juni_note"},
-    ]},
-    {kind:"category", name:"Aparência", colour:"#9966FF", contents:[
-      {kind:"block",type:"juni_say"},
-      {kind:"block",type:"juni_say_secs"},
-      {kind:"block",type:"juni_think"},
-    ]},
-    {kind:"category", name:"Sensores", colour:"#4CBFE6", contents:[
-      {kind:"block",type:"juni_movement"},
-      {kind:"block",type:"juni_button"},
-      {kind:"block",type:"juni_temp"},
-      {kind:"block",type:"juni_light"},
-    ]},
-    {kind:"category", name:"Operadores", colour:"#59C059", contents:[
-      {kind:"block",type:"juni_math", inputs:{A:numSh(1),B:numSh(1)}},
-      {kind:"block",type:"juni_compare", inputs:{A:numSh(1),B:numSh(1)}},
-      {kind:"block",type:"juni_logic"},
-      {kind:"block",type:"juni_not"},
-      {kind:"block",type:"juni_random", inputs:{A:numSh(1),B:numSh(10)}},
-    ]},
-    {kind:"category", name:"Variáveis", colour:"#FF8C1A", custom:"VARIABLE"},
-  ]
-};
-
-function initBlockly(){
-  if(blocklyWS || typeof Blockly === 'undefined') return;
-  try {
-    Blockly.defineBlocksWithJsonArray(JUNI_BLOCKS);
-    const juniTheme = Blockly.Theme.defineTheme('juni', {
-      base: Blockly.Themes.Classic,
-      componentStyles: {
-        workspaceBackgroundColour: '#1e1e2e',
-        toolboxBackgroundColour: '#12122a',
-        toolboxForegroundColour: '#e2e8f0',
-        flyoutBackgroundColour: '#181826',
-        flyoutForegroundColour: '#cbd5e1',
-        flyoutOpacity: 1,
-        scrollbarColour: '#3a3a55',
-        scrollbarOpacity: 0.6,
-        insertionMarkerColour: '#71C8C0',
-        insertionMarkerOpacity: 0.5,
-        cursorColour: '#71C8C0',
-      }
-    });
-    blocklyWS = Blockly.inject('blocklyDiv', {
-      toolbox: JUNI_TOOLBOX,
-      renderer: 'zelos',
-      theme: juniTheme,
-      scrollbars: true,
-      trashcan: true,
-      sounds: false,
-      grid: { spacing:30, length:2, colour:'#2a3a5f', snap:true },
-      zoom: { controls:true, wheel:false, startScale:0.85, maxScale:1.5, minScale:0.5 },
-      move: { scrollbars:true, drag:true, wheel:true },
-    });
-  } catch(e){ console.warn('Blockly init falhou:', e); }
-}
-
-function seedStartBlock(){
-  if(!blocklyWS) return;
-  try {
-    Blockly.serialization.workspaces.load(
-      { blocks: { blocks: [ { type:'juni_start', x:50, y:40 } ] } },
-      blocklyWS
-    );
-  } catch(e){ try{ blocklyWS.clear(); }catch(e2){} }
-}
 
 function abrirDesafio(ilhaId, stepN) {
   const ilha = ilhasData[ilhaId];
@@ -3059,60 +2834,17 @@ function abrirDesafio(ilhaId, stepN) {
   // instruction
   document.getElementById('desEmoji').textContent = step.emo;
   document.getElementById('desH3').textContent = step.titulo + '!';
-  document.getElementById('desP').textContent = step.inst;
-
-  // robot txt
-  document.getElementById('robotTxt').textContent = 'pronto!';
-
-  // output message
-  document.getElementById('desOutput').querySelector('p').textContent = step.output || 'Clica ▶ para executar';
+  document.getElementById('desP').textContent = step.desc || '';
+  document.getElementById('desInst').textContent = step.inst || '';
 
   shV('v-desafio');
-
-  // Editor de blocos Scratch — injeta (1ª vez) e prepara um bloco de início
-  requestAnimationFrame(() => {
-    initBlockly();
-    seedStartBlock();
-    if(blocklyWS){
-      Blockly.svgResize(blocklyWS);
-      setTimeout(() => { if(blocklyWS) Blockly.svgResize(blocklyWS); }, 120);
-    }
-  });
-}
-
-function runCode(btn) {
-  if (!stepAtual) return;
-  btn = btn || document.querySelector('#v-desafio button[onclick*="runCode"]');
-  if(!btn) return;
-  // É preciso ter montado algum bloco para além do "quando começar"
-  if(blocklyWS && blocklyWS.getAllBlocks(false).length < 2){
-    document.getElementById('desOutput').innerHTML = `
-      <div style="text-align:center;width:100%">
-        <div style="font-size:42px;margin-bottom:8px">🧩</div>
-        <div style="font-size:15px;font-weight:900;color:#FBC92A;margin-bottom:5px">Monta o teu programa!</div>
-        <div style="font-size:12px;color:#7dd3fc;font-family:'Quicksand',sans-serif;line-height:1.5">Arrasta blocos da paleta e encaixa-os por baixo de "quando começar".</div>
-      </div>`;
-    return;
-  }
-  btn.textContent = '⟳ A correr...';
-  btn.style.background = '#5fb8b0';
-  setTimeout(() => {
-    btn.textContent = '▶ Correr';
-    btn.style.background = '#71C8C0';
-    if (stepAtual.robotTxt) document.getElementById('robotTxt').textContent = stepAtual.robotTxt;
-    // show success
-    document.getElementById('desOutput').innerHTML = `
-      <div style="text-align:center;width:100%">
-        <div style="font-size:52px;margin-bottom:10px;animation:pop .4s ease">🎉</div>
-        <div style="font-size:16px;font-weight:900;color:#71C8C0;margin-bottom:6px">Funcionou!</div>
-        <div style="font-size:13px;color:#7dd3fc;font-family:'Quicksand',sans-serif;margin-bottom:16px">${stepAtual.titulo} concluído com sucesso!</div>
-        <button onclick="completarDesafio()" style="background:#FBC92A;color:#012C56;border:none;padding:11px 22px;border-radius:10px;font-family:'Outfit',sans-serif;font-weight:900;font-size:14px;cursor:pointer">Próximo desafio →</button>
-      </div>`;
-  }, 1500);
 }
 
 function showHint() {
-  alert('💡 Dica: Verifica se a placa Juni:bit está ligada ao computador e se o sensor está no pin correto!');
+  const hint = stepAtual && stepAtual.inst
+    ? '💡 Dica: ' + stepAtual.inst
+    : '💡 Dica: Usa os blocos do Scratch para programar o Juni:bit! Carrega no ▶ verde do Scratch para correr o projeto.';
+  alert(hint);
 }
 
 function completarDesafio() {
