@@ -1,0 +1,28 @@
+<svg viewBox="0 0 540 300" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@900&amp;display=swap');
+      .ltr { font-family: 'Outfit', 'Arial Rounded MT Bold', Arial, sans-serif; font-weight: 900; fill: currentColor; }
+    </style>
+  </defs>
+
+  <!-- "juni" -->
+  <text class="ltr" x="0" y="148" font-size="155" letter-spacing="-4">juni</text>
+
+  <!-- Monitor icon (rounded rectangle border) -->
+  <rect x="330" y="4" width="206" height="168" rx="32" ry="32"
+        fill="none" stroke="currentColor" stroke-width="20"/>
+
+  <!-- Left chevron ^ -->
+  <polyline points="363,112 396,72 429,112"
+            fill="none" stroke="currentColor" stroke-width="20"
+            stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Right chevron ^ -->
+  <polyline points="417,112 450,72 483,112"
+            fill="none" stroke="currentColor" stroke-width="20"
+            stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- "coders" -->
+  <text class="ltr" x="0" y="290" font-size="155" letter-spacing="-4">coders</text>
+</svg>

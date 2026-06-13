@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Junidigital · Menu</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --blue: #0364DB;
+  --bd:   #012C56;
+  --mint: #71C8C0;
+  --ml:   #7DDEF4;
+  --yel:  #FBC92A;
+  --org:  #EC6C3B;
+  --bei:  #F8F3E0;
+  --sky:  #92D6FF;
+  --mut:  #5b6b82;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Outfit', sans-serif;
+  background: var(--bd);
+  min-height: 100vh;
+  overflow-x: hidden;
+  color: white;
+}
+
+/* ── Stars background ── */
+.stars-wrap {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+.star {
+  position: absolute;
+  border-radius: 50%;
+  background: white;
+  animation: twinkle ease-in-out infinite;
+}
+@keyframes twinkle {
+  0%, 100% { opacity: 0.2; transform: scale(1); }
+  50%       { opacity: 0.9; transform: scale(1.3); }
+}
+
+/* ── Blobs ── */
+.blob {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.18;
+  pointer-events: none;
+  z-index: 0;
+  animation: blobFloat ease-in-out infinite alternate;
+}
+@keyframes blobFloat {
+  from { transform: translateY(0) scale(1); }
+  to   { transform: translateY(-30px) scale(1.05); }
+}
+
+/* ── Navbar ── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 0 40px;
+  height: 68px;
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  background: rgba(1, 28, 60, 0.72);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(255,255,255,0.09);
+}
+
+.nav-logo {
+  font-size: 22px;
+  font-weight: 900;
+  color: white;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  letter-spacing: -0.02em;
+  flex-shrink: 0;
+}
+.nav-logo-icon {
+  width: 36px; height: 36px;
+  background: var(--blue);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  border: 1.5px solid rgba(255,255,255,0.2);
+}
+.nav-logo span { color: var(--mint); }
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex: 1;
+}
+.nav-link {
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.65);
+  text-decoration: none;
+  transition: all 0.18s;
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-family: 'Outfit', sans-serif;
+}
+.nav-link:hover { color: white; background: rgba(255,255,255,0.08); }
+.nav-link.active { color: white; background: rgba(3,100,219,0.35); }
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.nav-user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 14px 6px 6px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.14);
+  border-radius: 40px;
+  cursor: pointer;
+  transition: all 0.18s;
+}
+.nav-user:hover { background: rgba(255,255,255,0.14); }
+.nav-avatar {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: var(--yel);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px;
+}
+.nav-user-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: white;
+}
+
+.btn-pill {
+  padding: 9px 22px;
+  background: white;
+  color: var(--bd);
+  border: none;
+  border-radius: 40px;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 800;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.18s;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+.btn-pill:hover { background: var(--mint); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(113,200,192,0.4); }
+
+/* ── Page wrapper ── */
+.page {
+  position: relative;
+  z-index: 10;
+  padding: 100px 40px 60px;
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+/* ── Hero section ── */
+.hero {
+  margin-bottom: 56px;
+}
+.hero-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(113,200,192,0.15);
+  border: 1px solid rgba(113,200,192,0.3);
+  border-radius: 40px;
+  padding: 6px 16px;
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--mint);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+.hero-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--mint); animation: pulse 1.8s ease-in-out infinite; }
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(.8)} }
+
+.hero h1 {
+  font-size: clamp(32px, 5vw, 54px);
+  font-weight: 900;
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  margin-bottom: 16px;
+}
+.hero h1 em { color: var(--mint); font-style: normal; }
+
+.hero-sub {
+  font-size: 16px;
+  color: rgba(255,255,255,0.6);
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 600;
+  max-width: 520px;
+  line-height: 1.65;
+  margin-bottom: 32px;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.btn-primary {
+  padding: 14px 28px;
+  background: linear-gradient(135deg, var(--mint), var(--blue));
+  color: white;
+  border: none;
+  border-radius: 14px;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 900;
+  font-size: 15px;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  box-shadow: 0 8px 28px rgba(3,100,219,0.35);
+}
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 14px 36px rgba(3,100,219,0.48); }
+
+.btn-secondary {
+  padding: 14px 28px;
+  background: rgba(255,255,255,0.1);
+  color: white;
+  border: 1.5px solid rgba(255,255,255,0.2);
+  border-radius: 14px;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+}
+.btn-secondary:hover { background: rgba(255,255,255,0.17); border-color: rgba(255,255,255,0.35); }
+
+/* ── Stats strip ── */
+.stats {
+  display: flex;
+  gap: 0;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 18px;
+  margin-bottom: 56px;
+  overflow: hidden;
+}
+.stat-item {
+  flex: 1;
+  padding: 22px 28px;
+  border-right: 1px solid rgba(255,255,255,0.08);
+  transition: background 0.2s;
+}
+.stat-item:last-child { border-right: none; }
+.stat-item:hover { background: rgba(255,255,255,0.05); }
+.stat-val {
+  font-size: 30px;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  margin-bottom: 5px;
+}
+.stat-val .accent { color: var(--mint); }
+.stat-lbl {
+  font-size: 12px;
+  color: rgba(255,255,255,0.5);
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 600;
+}
+
+/* ── Section title ── */
+.section-title {
+  font-size: 13px;
+  font-weight: 800;
+  color: rgba(255,255,255,0.4);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.section-title::before {
+  content: '';
+  width: 20px; height: 2px;
+  background: var(--mint);
+  border-radius: 1px;
+  flex-shrink: 0;
+}
+
+/* ── Feature cards grid ── */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  margin-bottom: 48px;
+}
+@media(max-width: 900px) { .cards-grid { grid-template-columns: 1fr 1fr; } }
+@media(max-width: 560px) { .cards-grid { grid-template-columns: 1fr; } }
+
+.card {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 22px;
+  padding: 28px 26px;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(.2,.8,.2,1);
+  position: relative;
+  overflow: hidden;
+}
+.card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 22px;
+  opacity: 0;
+  transition: opacity 0.25s;
+}
+.card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(255,255,255,0.22);
+  box-shadow: 0 24px 56px rgba(0,0,0,0.3);
+}
+.card:hover::before { opacity: 1; }
+
+/* Card color accents */
+.card-blue::before { background: radial-gradient(ellipse at 0% 0%, rgba(3,100,219,0.18) 0%, transparent 60%); }
+.card-mint::before { background: radial-gradient(ellipse at 0% 0%, rgba(113,200,192,0.18) 0%, transparent 60%); }
+.card-yellow::before { background: radial-gradient(ellipse at 0% 0%, rgba(251,201,42,0.18) 0%, transparent 60%); }
+.card-orange::before { background: radial-gradient(ellipse at 0% 0%, rgba(236,108,59,0.18) 0%, transparent 60%); }
+.card-sky::before { background: radial-gradient(ellipse at 0% 0%, rgba(146,214,255,0.18) 0%, transparent 60%); }
+.card-purple::before { background: radial-gradient(ellipse at 0% 0%, rgba(168,85,247,0.18) 0%, transparent 60%); }
+
+.card-icon {
+  width: 54px; height: 54px;
+  border-radius: 16px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 26px;
+  margin-bottom: 20px;
+  position: relative;
+  z-index: 1;
+}
+.icon-blue   { background: rgba(3,100,219,0.25); border: 1px solid rgba(3,100,219,0.4); }
+.icon-mint   { background: rgba(113,200,192,0.25); border: 1px solid rgba(113,200,192,0.4); }
+.icon-yellow { background: rgba(251,201,42,0.25); border: 1px solid rgba(251,201,42,0.4); }
+.icon-orange { background: rgba(236,108,59,0.25); border: 1px solid rgba(236,108,59,0.4); }
+.icon-sky    { background: rgba(146,214,255,0.25); border: 1px solid rgba(146,214,255,0.4); }
+.icon-purple { background: rgba(168,85,247,0.25); border: 1px solid rgba(168,85,247,0.4); }
+
+.card h3 {
+  font-size: 17px;
+  font-weight: 800;
+  color: white;
+  margin-bottom: 8px;
+  position: relative;
+  z-index: 1;
+}
+.card p {
+  font-size: 13px;
+  color: rgba(255,255,255,0.55);
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 600;
+  line-height: 1.6;
+  position: relative;
+  z-index: 1;
+  margin-bottom: 20px;
+}
+.card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  z-index: 1;
+}
+.card-badge {
+  padding: 4px 11px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 800;
+  font-family: 'Outfit', sans-serif;
+}
+.badge-blue   { background: rgba(3,100,219,0.3);    color: #7DDEF4; }
+.badge-mint   { background: rgba(113,200,192,0.3);  color: var(--mint); }
+.badge-yellow { background: rgba(251,201,42,0.3);   color: #FBC92A; }
+.badge-orange { background: rgba(236,108,59,0.3);   color: #EC6C3B; }
+.badge-sky    { background: rgba(146,214,255,0.3);  color: #92D6FF; }
+.badge-purple { background: rgba(168,85,247,0.3);   color: #d8b4fe; }
+
+.card-arrow {
+  width: 32px; height: 32px;
+  border-radius: 9px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.12);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px;
+  transition: all 0.2s;
+  color: rgba(255,255,255,0.6);
+}
+.card:hover .card-arrow {
+  background: rgba(255,255,255,0.16);
+  color: white;
+  transform: translate(2px, -2px);
+}
+
+/* ── Progress bar inside card (featured) ── */
+.prog-bar {
+  height: 5px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 7px;
+  position: relative;
+  z-index: 1;
+}
+.prog-fill {
+  height: 100%;
+  border-radius: 3px;
+  background: linear-gradient(90deg, var(--mint), var(--sky));
+}
+.prog-txt {
+  font-size: 11px;
+  color: rgba(255,255,255,0.4);
+  font-family: 'Quicksand', sans-serif;
+  position: relative;
+  z-index: 1;
+  margin-bottom: 16px;
+}
+
+/* ── Featured big card ── */
+.cards-grid-2 {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 18px;
+  margin-bottom: 48px;
+}
+@media(max-width: 700px) { .cards-grid-2 { grid-template-columns: 1fr; } }
+
+.card-big {
+  background: linear-gradient(135deg, rgba(3,100,219,0.22), rgba(1,28,60,0.6));
+  border: 1px solid rgba(3,100,219,0.35);
+  border-radius: 22px;
+  padding: 32px;
+  cursor: pointer;
+  transition: all 0.25s;
+  position: relative;
+  overflow: hidden;
+}
+.card-big:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 24px 56px rgba(3,100,219,0.25);
+  border-color: rgba(3,100,219,0.55);
+}
+.card-big-deco {
+  position: absolute;
+  right: -20px; top: -20px;
+  width: 160px; height: 160px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(3,100,219,0.25), transparent 70%);
+  pointer-events: none;
+}
+.card-big h3 {
+  font-size: 22px;
+  font-weight: 900;
+  margin-bottom: 10px;
+  line-height: 1.2;
+}
+.card-big p {
+  font-size: 14px;
+  color: rgba(255,255,255,0.6);
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 600;
+  line-height: 1.65;
+  margin-bottom: 24px;
+}
+
+/* ── Activity feed ── */
+.activity-list { display: flex; flex-direction: column; gap: 10px; }
+.activity-item {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 13px 16px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 13px;
+  transition: all 0.18s;
+  cursor: default;
+}
+.activity-item:hover { background: rgba(255,255,255,0.08); transform: translateX(3px); }
+.act-ico { font-size: 22px; flex-shrink: 0; }
+.act-info { flex: 1; min-width: 0; }
+.act-title { font-size: 13px; font-weight: 700; color: white; margin-bottom: 2px; }
+.act-time { font-size: 11px; color: rgba(255,255,255,0.4); font-family: 'Quicksand', sans-serif; font-weight: 600; }
+.act-xp { font-size: 13px; font-weight: 800; color: var(--mint); flex-shrink: 0; }
+
+/* ── Footer ── */
+footer {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  padding: 32px 40px;
+  border-top: 1px solid rgba(255,255,255,0.07);
+  font-size: 13px;
+  color: rgba(255,255,255,0.3);
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 600;
+}
+footer a { color: var(--mint); text-decoration: none; font-weight: 700; }
+footer a:hover { color: white; }
+
+/* ── Mobile nav ── */
+@media(max-width: 768px) {
+  nav { padding: 0 18px; gap: 16px; }
+  .nav-links { display: none; }
+  .page { padding: 90px 18px 40px; }
+  .stats { flex-direction: column; border-radius: 16px; }
+  .stat-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.08); }
+  .stat-item:last-child { border-bottom: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- Stars -->
+<div class="stars-wrap" id="starsWrap"></div>
+
+<!-- Blobs -->
+<div class="blob" style="width:600px;height:600px;background:#0364DB;top:-200px;left:-150px;animation-duration:9s;"></div>
+<div class="blob" style="width:500px;height:500px;background:#71C8C0;bottom:-100px;right:-100px;animation-duration:12s;animation-delay:-4s;"></div>
+<div class="blob" style="width:300px;height:300px;background:#FBC92A;top:40%;left:55%;animation-duration:15s;animation-delay:-7s;"></div>
+
+<!-- Navbar -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <div class="nav-logo-icon">
+      <svg viewBox="0 0 32 24" width="20" height="15" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2" y="2" width="28" height="20" rx="6"/>
+        <path d="M9 14.5l3-3 3 3"/>
+        <path d="M17 14.5l3-3 3 3"/>
+      </svg>
+    </div>
+    juni<span>[^^]</span>digital
+  </a>
+
+  <div class="nav-links">
+    <a class="nav-link active" href="#">Início</a>
+    <a class="nav-link" href="#">Mapa</a>
+    <a class="nav-link" href="#">Turmas</a>
+    <a class="nav-link" href="#">Desafios</a>
+    <a class="nav-link" href="#">Conquistas</a>
+  </div>
+
+  <div class="nav-right">
+    <div class="nav-user">
+      <div class="nav-avatar">🧑‍💻</div>
+      <span class="nav-user-name">Professor</span>
+    </div>
+    <a href="index.html" class="btn-pill">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      Plataforma
+    </a>
+  </div>
+</nav>
+
+<!-- Main content -->
+<div class="page">
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-tag">
+      <div class="hero-dot"></div>
+      Plataforma Junidigital
+    </div>
+    <h1>Bem-vindo à tua<br><em>área de aprendizagem!</em></h1>
+    <p class="hero-sub">Explora o mapa, completa desafios e ganha conquistas. A tua jornada de programação começa aqui.</p>
+    <div class="hero-actions">
+      <button class="btn-primary" onclick="window.location='index.html'">
+        🗺️ Ir para o Mapa
+      </button>
+      <button class="btn-secondary" onclick="alert('Em breve!')">
+        ⚡ Desafio do Dia
+      </button>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats">
+    <div class="stat-item">
+      <div class="stat-val"><span class="accent">247</span></div>
+      <div class="stat-lbl">Alunos activos</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-val"><span class="accent">18</span></div>
+      <div class="stat-lbl">Turmas criadas</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-val"><span class="accent">1.4k</span></div>
+      <div class="stat-lbl">Desafios completados</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-val"><span class="accent">96%</span></div>
+      <div class="stat-lbl">Taxa de satisfação</div>
+    </div>
+  </div>
+
+  <!-- Feature cards -->
+  <div class="section-title">Secções principais</div>
+  <div class="cards-grid">
+
+    <div class="card card-blue" onclick="window.location='index.html'">
+      <div class="card-icon icon-blue">🗺️</div>
+      <h3>Mapa de Aprendizagem</h3>
+      <p>Explora ilhas temáticas, desbloqueia novos mundos e acompanha o progresso na aventura.</p>
+      <div class="prog-bar"><div class="prog-fill" style="width:65%"></div></div>
+      <div class="prog-txt">65% do mapa explorado</div>
+      <div class="card-footer">
+        <span class="card-badge badge-blue">Activo</span>
+        <div class="card-arrow">→</div>
+      </div>
+    </div>
+
+    <div class="card card-mint" onclick="window.location='index.html'">
+      <div class="card-icon icon-mint">🏫</div>
+      <h3>As Minhas Turmas</h3>
+      <p>Gere alunos, adiciona desafios personalizados e acompanha o desempenho de cada turma.</p>
+      <div class="card-footer">
+        <span class="card-badge badge-mint">4 turmas</span>
+        <div class="card-arrow">→</div>
+      </div>
+    </div>
+
+    <div class="card card-yellow" onclick="window.location='index.html'">
+      <div class="card-icon icon-yellow">⚡</div>
+      <h3>Desafios</h3>
+      <p>Cria e edita desafios de programação com Blockly, Python ou Scratch para os teus alunos.</p>
+      <div class="card-footer">
+        <span class="card-badge badge-yellow">12 novos</span>
+        <div class="card-arrow">→</div>
+      </div>
+    </div>
+
+    <div class="card card-orange" onclick="window.location='index.html'">
+      <div class="card-icon icon-orange">🏆</div>
+      <h3>Conquistas</h3>
+      <p>Vê os badges desbloqueados, pontos XP ganhos e o ranking da turma em tempo real.</p>
+      <div class="card-footer">
+        <span class="card-badge badge-orange">Ranking</span>
+        <div class="card-arrow">→</div>
+      </div>
+    </div>
+
+    <div class="card card-sky" onclick="window.location='index.html'">
+      <div class="card-icon icon-sky">📊</div>
+      <h3>Relatórios</h3>
+      <p>Análises de progresso detalhadas, estatísticas por aluno e exportação de resultados.</p>
+      <div class="card-footer">
+        <span class="card-badge badge-sky">Disponível</span>
+        <div class="card-arrow">→</div>
+      </div>
+    </div>
+
+    <div class="card card-purple" onclick="alert('Em breve!')">
+      <div class="card-icon icon-purple">🤖</div>
+      <h3>Diagnóstico IA</h3>
+      <p>Avaliação adaptativa inteligente que sugere o melhor percurso para cada aluno.</p>
+      <div class="card-footer">
+        <span class="card-badge badge-purple">Em breve</span>
+        <div class="card-arrow">→</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Big card + activity -->
+  <div class="section-title">Actividade recente</div>
+  <div class="cards-grid-2">
+
+    <div class="card-big">
+      <div class="card-big-deco"></div>
+      <div class="card-icon icon-blue" style="margin-bottom:18px;">🎯</div>
+      <h3>Continua de onde paraste!</h3>
+      <p>A turma 6.ºA tem 3 desafios por avaliar e 2 alunos pediram ajuda. Clica para ver o resumo completo da semana.</p>
+      <button class="btn-primary" onclick="window.location='index.html'" style="font-size:14px;padding:12px 24px;">
+        Ver painel da turma →
+      </button>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:12px;">
+      <div class="stat-item" style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:18px;padding:20px 22px;">
+        <div style="font-size:11px;font-weight:800;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px;">⏱ Hoje</div>
+        <div class="activity-list">
+          <div class="activity-item">
+            <div class="act-ico">🟢</div>
+            <div class="act-info">
+              <div class="act-title">Maria completou Ilha 3</div>
+              <div class="act-time">há 12 min</div>
+            </div>
+            <div class="act-xp">+120 XP</div>
+          </div>
+          <div class="activity-item">
+            <div class="act-ico">💬</div>
+            <div class="act-info">
+              <div class="act-title">João pediu ajuda no Desafio 7</div>
+              <div class="act-time">há 34 min</div>
+            </div>
+          </div>
+          <div class="activity-item">
+            <div class="act-ico">🏅</div>
+            <div class="act-info">
+              <div class="act-title">Ana ganhou badge "Explorador"</div>
+              <div class="act-time">há 1h</div>
+            </div>
+            <div class="act-xp">+50 XP</div>
+          </div>
+          <div class="activity-item">
+            <div class="act-ico">📝</div>
+            <div class="act-info">
+              <div class="act-title">Nova turma 5.ºB criada</div>
+              <div class="act-time">há 2h</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- Footer -->
+<footer>
+  <span>© 2026 Junicoders · Plataforma Junidigital · </span>
+  <a href="https://www.junicoders.pt" target="_blank">junicoders.pt</a>
+</footer>
+
+<script>
+// Generate starfield
+(function(){
+  const wrap = document.getElementById('starsWrap');
+  for(let i = 0; i < 120; i++){
+    const s = document.createElement('div');
+    s.className = 'star';
+    const size = Math.random() * 2.5 + 0.8;
+    s.style.cssText = `
+      width:${size}px; height:${size}px;
+      top:${Math.random()*100}%;
+      left:${Math.random()*100}%;
+      animation-duration:${2.5 + Math.random()*4}s;
+      animation-delay:${Math.random()*5}s;
+    `;
+    wrap.appendChild(s);
+  }
+})();
+</script>
+
+</body>
+</html>

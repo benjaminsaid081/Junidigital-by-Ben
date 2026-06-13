@@ -1,0 +1,3078 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Junicoders · Plataforma</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+<!-- Scratch embedded via TurboWarp iframe (Blockly removed) -->
+<style>
+/* Paleta oficial Junicoders — Manual de Normas Gráficas */
+:root{
+  --blue:#0364DB;   /* Azul Vibrante — cor institucional */
+  --bd:#012C56;     /* Azul Escuro — substitui o preto */
+  --mint:#71C8C0;   /* Verde Menta — cor de acento principal */
+  --ml:#7DDEF4;     /* secundária — azul claro da mascote */
+  --yel:#FBC92A;    /* Amarelo Solar */
+  --grn:#71C8C0;    /* sucesso → Verde Menta (paleta da marca) */
+  --red:#EC6C3B;    /* alerta → Laranja Quente (paleta da marca) */
+  --org:#EC6C3B;    /* Laranja Quente */
+  --bei:#F8F3E0;    /* Bege Areia */
+  --sky:#92D6FF;    /* secundária — azul céu */
+  --blue2:#1E99F7;  /* secundária — azul brilhante */
+  --blue3:#0469BC;  /* secundária — azul médio */
+  --mut:#5b6b82;    /* texto secundário (azul dessaturado) */
+  --bdr:#dbe3ec     /* contornos neutros */
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Outfit',sans-serif;background:#0364DB;min-height:100vh;overflow-x:hidden}
+/* layers */
+#SA{display:block}#SA.h{display:none}
+#PA{display:none}#PA.on{display:block;background:#f1f5f9;min-height:100vh}
+/* blobs */
+.bb{position:fixed;border-radius:50%;filter:blur(80px);opacity:.28;animation:bf ease-in-out infinite alternate;pointer-events:none;z-index:0}
+@keyframes bf{from{transform:translateY(0)}to{transform:translateY(-26px)}}
+.fi{position:absolute;opacity:.1;animation:fiu linear infinite;pointer-events:none}
+@keyframes fiu{from{transform:translateY(110vh) rotate(0)}to{transform:translateY(-10vh) rotate(360deg)}}
+/* topbar */
+.tb{position:fixed;top:0;left:0;right:0;z-index:100;padding:11px 26px;display:flex;align-items:center;background:rgba(1,44,86,.55);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,.1)}
+.logo{font-weight:900;font-size:20px;color:var(--bei);display:flex;align-items:center;gap:9px;text-decoration:none}
+.li{width:35px;height:35px;background:var(--blue);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:18px;border:1.5px solid rgba(255,255,255,.25)}
+.logo span{color:var(--mint)}
+/* card */
+.card-old{position:relative;z-index:10;background:white;border-radius:24px;width:100%;max-width:520px;margin:80px auto 40px;box-shadow:0 28px 70px rgba(1,44,86,.35);overflow:hidden}
+.ch{padding:24px 28px 16px;background:var(--bd)}
+.ch h1{font-size:21px;font-weight:900;color:white;margin-bottom:3px}
+.ch p{font-size:13px;color:var(--ml);font-family:'Quicksand',sans-serif}
+.tabs{display:flex;gap:4px;margin-top:14px;background:rgba(255,255,255,.08);border-radius:10px;padding:4px}
+.tab{flex:1;padding:8px;border:none;border-radius:7px;font-family:'Outfit',sans-serif;font-weight:700;font-size:13px;cursor:pointer;color:rgba(255,255,255,.5);background:transparent;transition:all .2s}
+.tab.on{background:white;color:var(--bd)}
+.cb{padding:24px 28px 28px}
+/* panels */
+.pnl{display:none}.pnl.on{display:block}
+/* steps bar */
+.sbar{display:flex;gap:5px;margin-bottom:18px}
+.sd{height:5px;flex:1;border-radius:3px;background:#e2e8f0;transition:background .3s}
+.sd.d{background:var(--grn)}.sd.a{background:var(--blue)}
+/* role cards */
+.rg{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px}
+.rc{border:2.5px solid #e2e8f0;border-radius:16px;padding:18px 14px;cursor:pointer;text-align:center;transition:all .2s;background:white}
+.rc:hover{border-color:var(--blue)}.rc.on{border-color:var(--blue);background:#eff6ff}
+.ri{width:60px;height:60px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:30px;margin:0 auto 9px}
+.rc h3{font-size:14px;font-weight:800;color:var(--bd);margin-bottom:3px}
+.rc p{font-size:11px;color:#94a3b8;font-family:'Quicksand',sans-serif;line-height:1.4}
+/* form */
+.f{margin-bottom:13px}
+.f label{display:block;font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px}
+.inp{width:100%;padding:11px 14px;border:2px solid #e2e8f0;border-radius:10px;font-family:'Outfit',sans-serif;font-size:14px;color:#1e293b;outline:none;transition:border-color .2s;background:#f8fafc}
+.inp:focus{border-color:var(--blue);background:white}.inp::placeholder{color:#94a3b8}.inp.er{border-color:var(--red)}
+.em{display:none;font-size:11px;color:var(--red);margin-top:4px;font-family:'Quicksand',sans-serif}.em.on{display:block}
+.fr{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.pw{position:relative}.pw .inp{padding-right:40px}
+.eye{position:absolute;right:11px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;font-size:15px;color:#94a3b8}
+/* pw bars */
+.pbs{display:flex;gap:4px;margin-top:7px}.pb{height:4px;flex:1;border-radius:2px;background:#e2e8f0;transition:background .3s}
+.pl{font-size:11px;color:#94a3b8;font-family:'Quicksand',sans-serif;margin-top:3px}
+/* divider */
+.dv{display:flex;align-items:center;gap:10px;margin:14px 0}
+.dv::before,.dv::after{content:'';flex:1;height:1px;background:#e2e8f0}
+.dv span{font-size:11px;color:#94a3b8;font-weight:600;white-space:nowrap}
+/* social */
+.sbs{display:flex;gap:8px;margin-bottom:4px}
+.sb{flex:1;padding:9px;border-radius:10px;border:2px solid #e2e8f0;background:white;display:flex;align-items:center;justify-content:center;gap:7px;font-family:'Outfit',sans-serif;font-weight:700;font-size:13px;cursor:pointer;color:#374151;transition:all .2s}
+.sb:hover{border-color:var(--blue)}
+.si{width:19px;height:19px}
+/* buttons */
+.bp{width:100%;padding:13px;border:none;border-radius:11px;background:var(--blue);color:white;font-family:'Outfit',sans-serif;font-weight:900;font-size:15px;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:8px;margin-top:5px}
+.bp:hover{background:#0255c0;transform:translateY(-1px);box-shadow:0 8px 20px rgba(3,100,219,.28)}
+.arr{transition:transform .2s}.bp:hover .arr{transform:translateX(4px)}
+/* Login button — Verde Menta (paleta da marca), estilo Apple */
+.bp-login{background:linear-gradient(180deg,#7FD3CB 0%,#62BDB4 100%);color:#012C56;border-radius:14px;padding:15px 20px;font-weight:800;font-size:16px;letter-spacing:-0.01em;box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 1px 2px rgba(0,0,0,.08),0 4px 14px rgba(113,200,192,.4);transition:transform .12s cubic-bezier(.2,.8,.2,1),box-shadow .2s ease,background .2s ease;-webkit-tap-highlight-color:transparent}
+.bp-login:hover{background:linear-gradient(180deg,#8BDAD2 0%,#6CC6BD 100%);transform:none;box-shadow:inset 0 1px 0 rgba(255,255,255,.4),0 1px 2px rgba(0,0,0,.08),0 6px 18px rgba(113,200,192,.5)}
+.bp-login:active{transform:scale(.97);transition-duration:.06s;box-shadow:inset 0 1px 2px rgba(0,0,0,.15),0 1px 2px rgba(0,0,0,.08)}
+.bp-login:focus-visible{outline:none;box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 0 0 4px rgba(113,200,192,.45),0 4px 14px rgba(113,200,192,.4)}
+.bp-login .arr{transition:transform .25s cubic-bezier(.2,.8,.2,1)}
+.bp-login:hover .arr{transform:translateX(3px)}
+/* Login mode toggle (Adulto / Criança) */
+.lt{display:flex;background:#f1f5f9;border-radius:10px;padding:3px;gap:2px;margin-bottom:14px}
+.lt button{flex:1;border:none;background:transparent;padding:9px 10px;border-radius:8px;font-family:'Outfit',sans-serif;font-weight:600;font-size:13px;color:#64748b;cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:center;gap:6px}
+.lt button:hover{color:#0f172a}
+.lt button.on{background:white;color:#012C56;box-shadow:0 1px 2px rgba(0,0,0,.05),0 1px 3px rgba(0,0,0,.08)}
+.lt button svg{width:16px;height:16px;flex-shrink:0}
+.bk{background:none;border:none;color:var(--blue);font-weight:700;font-size:13px;cursor:pointer;font-family:'Outfit',sans-serif;margin-top:11px;display:block;text-align:center}
+.terms{text-align:center;font-size:11px;color:#94a3b8;font-family:'Quicksand',sans-serif;margin-top:11px;line-height:1.6}
+.terms a{color:var(--blue);text-decoration:none;font-weight:600}
+.sl{text-align:center;font-size:13px;color:#64748b;font-family:'Quicksand',sans-serif;margin-top:14px}
+.sl a{color:var(--blue);font-weight:700;text-decoration:none;cursor:pointer}
+/* success */
+.sw{text-align:center;padding:8px 0}
+.be{font-size:66px;display:block;margin-bottom:11px;animation:pop .5s ease}
+@keyframes pop{from{transform:scale(0)}to{transform:scale(1)}}
+.sw h2{font-size:21px;font-weight:900;color:var(--bd);margin-bottom:5px}
+.sw p{font-size:13px;color:#64748b;font-family:'Quicksand',sans-serif;margin-bottom:18px;line-height:1.6}
+.rcs{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:20px}
+.rcc{background:#f1f5f9;border-radius:11px;padding:10px 14px;text-align:center}
+.rci{font-size:20px;margin-bottom:2px}.rcl{font-size:10px;color:#64748b;font-weight:600}
+.bg{display:inline-block;padding:13px 28px;background:var(--mint);color:var(--bd);border:none;border-radius:12px;font-family:'Outfit',sans-serif;font-weight:900;font-size:15px;cursor:pointer;transition:all .2s}
+.bg:hover{background:#5fb8b0;transform:translateY(-1px)}
+
+/* ═══════ PLATFORM ═══════ */
+.ps{display:flex;min-height:100vh}
+/* sidebar */
+.side{width:220px;background:var(--bd);position:fixed;top:0;left:0;bottom:0;z-index:50;display:flex;flex-direction:column;overflow-y:auto}
+.sl2{padding:16px 14px 13px;display:flex;align-items:center;gap:9px;border-bottom:1px solid rgba(255,255,255,.08)}
+.slo{font-weight:900;font-size:15px;color:var(--bei)}.slo span{color:var(--mint)}
+.si2{width:30px;height:30px;background:var(--blue);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px}
+.su{padding:11px 13px;border-bottom:1px solid rgba(255,255,255,.08);display:flex;align-items:center;gap:9px}
+.sav{width:36px;height:36px;border-radius:50%;background:var(--yel);display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0}
+.sn{font-size:13px;font-weight:700;color:white;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sr{font-size:11px;color:var(--ml);font-family:'Quicksand',sans-serif}
+.snav{padding:9px 7px;flex:1}
+.ns{font-size:10px;color:rgba(255,255,255,.3);font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:9px 8px 5px}
+.ni{display:flex;align-items:center;gap:9px;padding:9px 10px;border-radius:9px;cursor:pointer;transition:all .2s;margin-bottom:2px;color:rgba(255,255,255,.6);font-size:13px;font-weight:600;border:none;background:none;width:100%;text-align:left}
+.ni:hover{background:rgba(255,255,255,.08);color:white}.ni.on{background:var(--blue);color:white}
+.ni .ico{font-size:16px;flex-shrink:0}
+.sbot{padding:11px 9px;border-top:1px solid rgba(255,255,255,.08)}
+.lo{width:100%;padding:9px;border:1.5px solid rgba(255,255,255,.15);border-radius:9px;background:none;color:rgba(255,255,255,.6);font-family:'Outfit',sans-serif;font-weight:600;font-size:13px;cursor:pointer;transition:all .2s}
+.lo:hover{border-color:var(--red);color:var(--red)}
+/* main */
+.pm{margin-left:220px;flex:1;padding:26px;background:#f1f5f9;min-height:100vh}
+.pv{display:none!important}.pv.on{display:block!important}#v-map.pv.on,#v-ilha.pv.on,#v-desafio.pv.on{display:flex!important;flex-direction:column;min-height:0}#v-diag.pv.on{display:block!important}
+.pt{font-size:21px;font-weight:900;color:var(--bd);margin-bottom:3px}
+.ps2{font-size:13px;color:var(--mut);font-family:'Quicksand',sans-serif;margin-bottom:20px}
+/* stat row */
+.sr2{display:grid;gap:13px;margin-bottom:18px}
+.c4{grid-template-columns:repeat(4,1fr)}.c3{grid-template-columns:repeat(3,1fr)}
+.sc{background:white;border-radius:14px;padding:16px 18px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.sci{font-size:25px;margin-bottom:5px}.scv{font-size:26px;font-weight:900;color:var(--bd)}.scl{font-size:12px;color:var(--mut);font-family:'Quicksand',sans-serif;margin-top:2px}
+/* section card */
+.sec{background:white;border-radius:14px;padding:18px 20px;box-shadow:0 1px 4px rgba(0,0,0,.06);margin-bottom:16px}
+.sh{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px}
+.st{font-size:14px;font-weight:800;color:var(--bd)}
+.bsm{padding:7px 14px;border-radius:8px;font-family:'Outfit',sans-serif;font-weight:700;font-size:12px;cursor:pointer;transition:all .2s;border:none;white-space:nowrap}
+.bb2{background:var(--blue);color:white}.bb2:hover{background:#0255c0}
+.bo{background:none;border:2px solid #e2e8f0;color:var(--bd)}.bo:hover{border-color:var(--blue);color:var(--blue)}
+.by{background:#fef9c3;color:#854d0e}
+/* prog */
+.pb2{height:6px;background:#e2e8f0;border-radius:3px;overflow:hidden;margin-bottom:3px}
+.pf{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--grn),var(--mint))}
+.pt2{font-size:11px;color:var(--mut);font-family:'Quicksand',sans-serif}
+/* badge */
+.badge{display:inline-block;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:700}
+.bd{background:#dcfce7;color:#166534}.bp2{background:#dbeafe;color:#1e40af}.bl{background:#f1f5f9;color:#94a3b8}
+/* child cards */
+.cg{display:grid;grid-template-columns:repeat(auto-fill,minmax(185px,1fr));gap:13px}
+.cc{background:white;border-radius:14px;padding:16px;box-shadow:0 1px 4px rgba(0,0,0,.06);border:2px solid transparent;cursor:pointer;transition:all .2s}
+.cc:hover{border-color:var(--blue);transform:translateY(-2px)}
+.cc.add{border:2.5px dashed #cbd5e1;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:155px;gap:9px;color:#94a3b8}
+.cc.add:hover{border-color:var(--blue);color:var(--blue)}
+.cav{width:48px;height:48px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:26px;margin-bottom:9px}
+.cn{font-size:14px;font-weight:800;color:var(--bd)}.ca{font-size:12px;color:var(--mut);font-family:'Quicksand',sans-serif;margin-bottom:9px}
+.cas{display:flex;gap:6px;margin-top:11px}
+.cas button{flex:1;padding:6px;border-radius:7px;font-family:'Outfit',sans-serif;font-weight:700;font-size:11px;cursor:pointer;border:none}
+/* island prog */
+.il{display:flex;flex-direction:column;gap:9px}
+.ii{background:#f8fafc;border-radius:11px;padding:13px 15px;display:flex;align-items:center;gap:13px;border:1.5px solid #e2e8f0}
+.iico{font-size:24px;flex-shrink:0}
+.iname{font-size:13px;font-weight:700;color:var(--bd)}
+.istep{font-size:11px;color:var(--mut);font-family:'Quicksand',sans-serif;margin-top:2px}
+/* activity */
+.al{display:flex;flex-direction:column;gap:7px}
+.ai{display:flex;align-items:center;gap:11px;padding:11px 13px;background:#f8fafc;border-radius:9px}
+.aico{font-size:21px;flex-shrink:0}
+.att{font-size:13px;font-weight:700;color:var(--bd)}.atm{font-size:11px;color:var(--mut);font-family:'Quicksand',sans-serif}
+.axp{font-size:12px;font-weight:700;color:var(--grn)}
+/* class list */
+.cl{display:flex;flex-direction:column;gap:9px}
+.ci{background:#f8fafc;border-radius:13px;padding:15px 17px;border:1.5px solid #e2e8f0;display:flex;align-items:center;gap:14px;cursor:pointer;transition:all .2s}
+.ci:hover{border-color:var(--blue);background:#eff6ff}
+.cii{width:44px;height:44px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:21px;flex-shrink:0}
+.cin{font-size:14px;font-weight:800;color:var(--bd)}.cim{font-size:12px;color:var(--mut);font-family:'Quicksand',sans-serif;margin-top:2px}
+/* table */
+.tbl{width:100%;border-collapse:collapse}
+.tbl th{text-align:left;font-size:11px;font-weight:700;color:var(--mut);text-transform:uppercase;letter-spacing:.05em;padding:7px 11px;border-bottom:2px solid #e2e8f0}
+.tbl td{padding:11px 11px;border-bottom:1px solid #f1f5f9;font-size:13px;color:var(--bd)}
+.tbl tr:hover td{background:#f8fafc}
+.sav2{width:30px;height:30px;border-radius:7px;display:inline-flex;align-items:center;justify-content:center;font-size:16px;margin-right:7px;vertical-align:middle}
+/* challenge editor */
+.cel{display:flex;flex-direction:column;gap:9px}
+.ced{background:#f8fafc;border-radius:13px;padding:15px 17px;border:1.5px solid #e2e8f0}
+.ceh{display:flex;align-items:center;justify-content:space-between;margin-bottom:9px;gap:7px}
+.ceti{font-family:'Outfit',sans-serif;font-size:14px;font-weight:700;color:var(--bd);border:none;background:transparent;outline:none;flex:1}
+.ceti:focus{background:#fff;border-bottom:2px solid var(--blue);padding-bottom:2px}
+.cede{font-family:'Quicksand',sans-serif;font-size:13px;color:#64748b;width:100%;border:1.5px solid #e2e8f0;border-radius:7px;padding:7px 11px;resize:none;outline:none;min-height:55px}
+.cede:focus{border-color:var(--blue)}
+.cem{display:flex;gap:7px;margin-top:9px;align-items:center;flex-wrap:wrap}
+.ct{padding:3px 11px;border-radius:20px;font-size:11px;font-weight:700;cursor:pointer;border:none;font-family:'Outfit',sans-serif}
+.cti{background:#dbeafe;color:#1e40af}.ctd{background:#fef9c3;color:#854d0e}
+.add{border:2.5px dashed #cbd5e1;border-radius:13px;padding:15px;text-align:center;cursor:pointer;color:#94a3b8;font-weight:700;font-size:14px;transition:all .2s}
+.add:hover{border-color:var(--blue);color:var(--blue)}
+/* notif dot */
+.nd{width:7px;height:7px;border-radius:50%;background:var(--red);margin-left:auto;flex-shrink:0}
+/* modal */
+.mo{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;align-items:center;justify-content:center;padding:18px}
+.mo.on{display:flex}
+.md{background:white;border-radius:18px;padding:26px;max-width:420px;width:100%;box-shadow:0 28px 70px rgba(0,0,0,.2)}
+.md h3{font-size:17px;font-weight:900;color:var(--bd);margin-bottom:3px}
+.md p{font-size:13px;color:var(--mut);font-family:'Quicksand',sans-serif;margin-bottom:17px}
+.ma{display:flex;gap:9px}
+.ma button{flex:1;padding:11px;border-radius:10px;font-family:'Outfit',sans-serif;font-weight:700;font-size:14px;cursor:pointer;border:none}
+/* avatar picker */
+.ag{display:flex;gap:7px;flex-wrap:wrap;margin-top:5px}
+.av{width:46px;height:46px;border-radius:11px;border:2.5px solid #e2e8f0;display:flex;align-items:center;justify-content:center;font-size:23px;cursor:pointer;transition:all .2s;background:#f8fafc}
+.av:hover{border-color:var(--mint);transform:scale(1.08)}.av.on{border-color:var(--yel);background:#fffbeb;transform:scale(1.1)}
+/* big avatar preview */
+.bigAv{width:78px;height:78px;border-radius:18px;background:#dbeafe;display:flex;align-items:center;justify-content:center;font-size:42px;flex-shrink:0;border:2px solid #e2e8f0;transition:transform .25s cubic-bezier(.2,.8,.2,1)}
+.bigAv.pop{transform:scale(1.12)}
+/* theme toggle (Aparência) */
+.th-grp{display:flex;gap:6px;padding:4px;background:#f1f5f9;border-radius:12px;margin-top:5px}
+.th-btn{flex:1;padding:11px;border:none;background:transparent;border-radius:9px;cursor:pointer;font-family:'Outfit',sans-serif;font-weight:600;font-size:13px;color:#64748b;display:flex;align-items:center;justify-content:center;gap:8px;transition:all .15s}
+.th-btn:hover{color:#0f172a}
+.th-btn.on{background:white;color:#012C56;box-shadow:0 1px 2px rgba(0,0,0,.05),0 1px 3px rgba(0,0,0,.08)}
+.th-btn svg{width:16px;height:16px;flex-shrink:0}
+/* ═══ DARK MODE — scoped to body.dark ═══ */
+body.dark #PA.on{background:#0a1426}
+body.dark .pm{background:#0a1426}
+body.dark .pt,body.dark .st,body.dark .scv,body.dark .cn,body.dark .iname,body.dark .att,body.dark .bn,body.dark .cin,body.dark .ceti{color:#e2e8f0}
+body.dark .ps2,body.dark .ca,body.dark .pt2,body.dark .istep,body.dark .atm,body.dark .scl,body.dark .bd2,body.dark .cim,body.dark .f label,body.dark .cede{color:#94a3b8}
+body.dark .sec,body.dark .sc,body.dark .cc,body.dark .ai,body.dark .ii,body.dark .ci{background:#1a2433;box-shadow:0 1px 4px rgba(0,0,0,.3)}
+body.dark .inp{background:#0f172a;color:#e2e8f0;border-color:#334155}
+body.dark .inp:focus{border-color:var(--blue)}
+body.dark .inp::placeholder{color:#64748b}
+body.dark .pb2{background:#0f172a}
+body.dark .bgi{background:#1a2433!important}
+body.dark .bgi[style*="opacity"]{background:#0f172a!important}
+body.dark .cc.add{background:#1a2433;border:2px dashed #334155;color:#94a3b8}
+body.dark .th-grp{background:#0f172a}
+body.dark .th-btn{color:#94a3b8}
+body.dark .th-btn.on{background:#334155;color:#f1f5f9;box-shadow:0 1px 3px rgba(0,0,0,.3)}
+body.dark .bigAv{background:#1e3a5f;border-color:#334155}
+body.dark .av{background:#0f172a;border-color:#334155}
+body.dark .av.on{border-color:var(--yel);background:#3a2f0a}
+/* tabelas (professor) */
+body.dark .tbl th{color:#94a3b8;border-bottom-color:#334155}
+body.dark .tbl td{color:#cbd5e1;border-bottom-color:#1e293b}
+body.dark .tbl tr:hover td{background:#0f172a}
+/* modais */
+body.dark .md{background:#1a2433}
+body.dark .md h3{color:#e2e8f0}
+body.dark .md p{color:#94a3b8}
+/* editor de desafios */
+body.dark .ced{background:#0f172a;border-color:#334155}
+body.dark .cede{background:#1a2433;border-color:#334155}
+body.dark .ceti:focus{background:#1a2433}
+/* divisores e ligações */
+body.dark .dv{color:#64748b}
+body.dark .lt{background:#0f172a}
+/* mapa e ilhas em modo noturno */
+body.dark #v-map{background:#0b2545}
+body.dark #mapPan{background:#0b2545!important}
+body.dark #v-ilha>div{background:#0b2545!important}
+body.dark #worldGroup,body.dark #ilhaSVG{filter:brightness(.72) saturate(.92)}
+/* botão de tema (topo / menus) */
+.themeBtn{width:34px;height:34px;border-radius:9px;border:1.5px solid var(--bdr);background:#fff;color:var(--bd);cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .15s;padding:0}
+.themeBtn:hover{background:#f1f5f9}
+.themeBtn:active{transform:scale(.92)}
+.themeBtn svg{width:17px;height:17px}
+.themeBtn .ic-sun{display:none}
+body.dark .themeBtn .ic-moon{display:none}
+body.dark .themeBtn .ic-sun{display:block}
+.sl2 .themeBtn,body.dark .themeBtn{border-color:rgba(255,255,255,.22);background:rgba(255,255,255,.1);color:#fff}
+.sl2 .themeBtn:hover,body.dark .themeBtn:hover{background:rgba(255,255,255,.2)}
+/* ═══ LOGIN — página inteira (formulário + ilustração) ═══ */
+body.dark{background:#0a1426}
+#SA{background:#fff;min-height:100vh}
+body.dark #SA{background:#0a1426}
+.ltop{display:flex;align-items:center;gap:11px;padding:16px 30px;position:relative;z-index:10}
+.ltop .logo{font-weight:900;font-size:20px;color:var(--bd);display:flex;align-items:center;gap:9px;text-decoration:none}
+body.dark .ltop .logo{color:#e9eef5}
+.ltop .logo .li{width:33px;height:33px;background:var(--blue);border-radius:9px;display:flex;align-items:center;justify-content:center}
+.ltop .logo span{color:var(--mint)}
+.ltag{font-size:12.5px;color:var(--mut);font-weight:700;font-family:'Quicksand',sans-serif}
+.lpage{display:flex;align-items:stretch;min-height:calc(100vh - 66px)}
+.lform{flex:1 1 48%;display:flex;flex-direction:column;justify-content:center;padding:24px clamp(22px,5vw,70px)}
+.lform-inner{width:100%;max-width:432px;margin:0 auto}
+.lart{flex:1 1 52%;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;background:white}
+body.dark .lart{background:white}
+.lart svg{width:92%;max-width:560px;height:auto}
+.lart-img{width:72%;max-width:420px;height:auto;display:block;animation:robotFloat 3.8s ease-in-out infinite,robotEntry .7s cubic-bezier(.2,.8,.2,1) both;filter:drop-shadow(0 24px 40px rgba(3,100,219,.18))}
+@keyframes robotFloat{0%,100%{transform:translateY(0) rotate(0deg)}45%{transform:translateY(-18px) rotate(-1.5deg)}55%{transform:translateY(-16px) rotate(1.5deg)}}
+@keyframes robotEntry{from{opacity:0;transform:translateY(32px) scale(.92)}to{opacity:1;transform:translateY(0) scale(1)}}
+@media(prefers-reduced-motion:reduce){.lart-img{animation:none}}
+@keyframes juniFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-13px)}}
+@keyframes juniTwinkle{0%,100%{opacity:.4}50%{opacity:1}}
+@keyframes juniAnt{0%,100%{transform:scale(1)}50%{transform:scale(1.18)}}
+.juni-robot{animation:juniFloat 3.6s ease-in-out infinite}
+.spk{animation:juniTwinkle 2.8s ease-in-out infinite}
+.juni-ant{animation:juniAnt 2.2s ease-in-out infinite;transform-origin:250px 96px;transform-box:view-box}
+@media(prefers-reduced-motion:reduce){.juni-robot,.spk,.juni-ant{animation:none}}
+.lmark{width:70px;height:70px;border-radius:19px;background:var(--blue);display:flex;align-items:center;justify-content:center;margin-bottom:16px}
+.lh1{font-size:29px;font-weight:900;color:var(--bd);margin-bottom:20px;line-height:1.15}
+body.dark .lh1{color:#e9eef5}
+.lbtn2{width:100%;padding:13px;border-radius:13px;border:2px solid var(--bdr);background:#fff;color:var(--bd);font-family:'Outfit',sans-serif;font-weight:800;font-size:14.5px;cursor:pointer;margin-top:10px;transition:all .15s}
+.lbtn2:hover{border-color:var(--blue);background:#f3f8ff}
+body.dark .lbtn2{background:#1a2433;color:#e9eef5;border-color:#334155}
+body.dark .lbtn2:hover{border-color:var(--blue);background:#1f2b3d}
+@media(max-width:900px){.lart{display:none}.lform{flex-basis:100%}}
+/* modo escuro — elementos do registo no login */
+body.dark .rc{background:#1a2433;border-color:#334155}
+body.dark .rc.on{background:#0e2742}
+body.dark .rc h3{color:#e9eef5}
+body.dark .rc p{color:#94a3b8}
+body.dark .sb{background:#1a2433;border-color:#334155;color:#e9eef5}
+body.dark .dv span{background:#0a1426}
+body.dark .terms,body.dark .sl{color:#94a3b8}
+
+/* ═══ CHILD MAP ═══ */
+#v-map{min-height:calc(100vh - 28px);height:calc(100vh - 28px);margin:-26px;padding:0;overflow:hidden;background:#3B82F6;position:relative;flex-direction:column}
+.pv.on#v-map{display:flex}
+#mapPan::-webkit-scrollbar{width:8px;height:8px}
+#mapPan::-webkit-scrollbar-track{background:rgba(0,0,0,.15)}
+#mapPan::-webkit-scrollbar-thumb{background:rgba(255,255,255,.3);border-radius:4px}
+#mapPan::-webkit-scrollbar-thumb:hover{background:rgba(255,255,255,.45)}
+@keyframes ws{from{transform:translateX(0)}to{transform:translateX(120px)}}
+.whud{position:relative;z-index:20;background:rgba(1,44,86,.7);backdrop-filter:blur(10px);
+  padding:10px 18px;display:flex;align-items:center;gap:13px;border-bottom:1px solid rgba(255,255,255,.12)}
+.wscroll{position:relative;z-index:10;overflow-y:auto;flex:1;padding:24px 16px 50px}
+.wflex{display:flex;flex-direction:column;align-items:center;gap:0}
+.irow{display:flex;justify-content:space-around;width:100%;max-width:660px}
+.mi{cursor:pointer;transition:transform .25s;filter:drop-shadow(0 7px 18px rgba(0,0,0,.3));margin:8px}
+.mi:hover{transform:translateY(-6px) scale(1.04)}
+.mi.lk{cursor:default;filter:drop-shadow(0 4px 10px rgba(0,0,0,.2)) saturate(0.3) brightness(0.7)}
+.mi.lk:hover{transform:none}
+.itag{background:rgba(1,44,86,.85);color:white;font-size:11px;font-weight:800;padding:4px 13px;border-radius:20px;display:inline-block;backdrop-filter:blur(4px);text-align:center;margin-top:4px}
+/* island popup (bottom sheet) */
+.ipop{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;align-items:flex-end;justify-content:center}
+.ipop.on{display:flex}
+.isheet{background:white;border-radius:22px 22px 0 0;padding:22px 22px 30px;width:100%;max-width:480px;animation:sup .3s ease}
+@keyframes sup{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.ihandle{width:38px;height:4px;background:#e2e8f0;border-radius:2px;margin:0 auto 18px}
+/* diag */
+#v-diag{min-height:calc(100vh - 28px);margin:-26px;padding:28px;
+  background:linear-gradient(135deg,#0c4a6e,#0369a1 40%,#0ea5e9);
+  align-items:center;justify-content:center}
+.dcard{background:white;border-radius:22px;padding:26px 26px 22px;max-width:520px;width:100%;box-shadow:0 24px 60px rgba(0,0,0,.35)}
+@keyframes diagIn{from{opacity:0;transform:translateY(16px) scale(.97)}to{opacity:1;transform:none}}
+.diag-anim{animation:diagIn .35s cubic-bezier(.2,.8,.2,1)}
+.dopt{background:#f8fafc;border:2px solid #e2e8f0;border-radius:13px;padding:14px 16px;cursor:pointer;font-size:14.5px;font-weight:600;color:#1e293b;transition:all .18s;text-align:left;width:100%;font-family:'Outfit',sans-serif;margin-bottom:0;display:flex;align-items:center;gap:12px}
+.dopt:hover{border-color:var(--blue);background:#eff6ff;transform:translateX(4px)}
+.dopt:disabled{cursor:default}
+.dopt.sel{border-color:var(--grn);background:#f0fdf4;color:#166534}
+.dopt.dim{opacity:.45}
+.dlet{width:27px;height:27px;border-radius:8px;background:#e2e8f0;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;color:#64748b;flex-shrink:0;transition:all .18s}
+.dopt:hover .dlet{background:var(--blue);color:white}
+.dopt.sel .dlet{background:var(--grn);color:white}
+/* badges view */
+.bgg{display:grid;grid-template-columns:repeat(auto-fill,minmax(125px,1fr));gap:11px}
+.bgi{border-radius:13px;padding:15px;text-align:center}
+.bgi .bi{font-size:34px;margin-bottom:7px}.bgi .bn{font-size:12px;font-weight:800;color:var(--bd)}.bgi .bd2{font-size:11px;color:var(--mut);font-family:'Quicksand',sans-serif;margin-top:2px}
+
+@media(max-width:768px){.side{width:52px}.slo,.sn,.sr,.ni span,.ns{display:none}.ni{justify-content:center}.pm{margin-left:52px;padding:14px}.c4{grid-template-columns:1fr 1fr}.c3{grid-template-columns:1fr 1fr}}
+@media(max-width:480px){.card-old{margin:66px 10px 30px}.cb{padding:18px 16px 22px}.fr{grid-template-columns:1fr}.sbs{flex-direction:column}}
+
+/* ── TWO COLUMN LAYOUT ── */
+.card2col{
+  position:relative;z-index:10;
+  display:flex;align-items:stretch;
+  width:100%;max-width:900px;
+  margin:80px auto 40px;
+  background:white;border-radius:24px;
+  box-shadow:0 28px 70px rgba(1,44,86,.35);
+  overflow:hidden;
+  min-height:560px;
+}
+.col-login{width:42%;display:flex;flex-direction:column;border-right:1px solid #f1f5f9}
+.col-register{width:58%;display:flex;flex-direction:column}
+.col-header{padding:24px 26px 18px;background:var(--bd)}
+.col-header h2{font-size:20px;font-weight:900;color:white;margin-bottom:3px}
+.col-header p{font-size:13px;color:var(--ml);font-family:'Quicksand',sans-serif}
+.col-body{padding:22px 26px 26px;flex:1}
+.col-divider{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 6px;background:#f8fafc}
+.col-div-line{flex:1;width:1px;background:#e2e8f0}
+.col-div-txt{font-size:12px;color:#94a3b8;font-weight:700;padding:10px 0;writing-mode:vertical-lr}
+@media(max-width:700px){
+  .card2col{flex-direction:column;max-width:480px;margin:70px 12px 30px}
+  .col-login,.col-register{width:100%}
+  .col-divider{flex-direction:row;padding:6px 0;height:auto}
+  .col-div-line{flex:1;height:1px;width:auto}
+  .col-div-txt{writing-mode:horizontal-tb;padding:0 10px}
+  .col-login{border-right:none;border-bottom:1px solid #f1f5f9}
+}
+
+/* ═══ DIAGNÓSTICO MELHORADO ═══ */
+#v-diag{min-height:calc(100vh - 28px);margin:-26px;padding:0;
+  background:linear-gradient(135deg,#050f24 0%,#0a2a6e 45%,#0364DB 100%);
+  overflow-y:auto;overflow-x:hidden}
+.diag-bg{min-height:calc(100vh - 28px);width:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:36px 28px 52px;position:relative;z-index:2}
+.diag-blob{position:absolute;border-radius:50%;pointer-events:none;filter:blur(80px);animation:bf ease-in-out infinite alternate}
+.diag-prog{display:flex;gap:8px;margin-bottom:36px;align-items:center}
+.diag-pill{height:8px;border-radius:4px;transition:all .45s cubic-bezier(.2,.8,.2,1)}
+.diag-pill.done{background:#71C8C0;width:36px;box-shadow:0 0 8px rgba(113,200,192,.5)}
+.diag-pill.active{background:white;width:54px;box-shadow:0 0 14px rgba(255,255,255,.7)}
+.diag-pill.empty{background:rgba(255,255,255,.18);width:22px}
+.diag-layout{display:grid;grid-template-columns:1fr 1fr;gap:44px;align-items:center;width:100%;max-width:1080px}
+@media(max-width:860px){.diag-layout{grid-template-columns:1fr;gap:24px}}
+.diag-left{display:flex;flex-direction:column;align-items:flex-start}
+.diag-step-lbl{font-size:11px;font-weight:800;color:#7DDEF4;text-transform:uppercase;letter-spacing:.12em;margin-bottom:18px;font-family:'Outfit',sans-serif;display:flex;align-items:center;gap:8px}
+.diag-step-lbl::before{content:'';flex:0 0 24px;height:2px;background:#7DDEF4;border-radius:1px}
+.diag-emo-wrap{font-size:88px;margin-bottom:20px;line-height:1;display:block}
+@keyframes dEmoIn{from{transform:scale(0) rotate(-15deg);opacity:0}60%{transform:scale(1.15) rotate(5deg)}to{transform:none;opacity:1}}
+.diag-emo-anim{animation:dEmoIn .55s cubic-bezier(.2,.8,.2,1)}
+.diag-q-txt{font-size:30px;font-weight:900;color:white;line-height:1.22;margin-bottom:28px;font-family:'Outfit',sans-serif}
+@media(max-width:860px){.diag-q-txt{font-size:22px}.diag-emo-wrap{font-size:64px}}
+.diag-back-btn{background:rgba(255,255,255,.1);border:1.5px solid rgba(255,255,255,.22);color:rgba(255,255,255,.8);padding:10px 20px;border-radius:24px;font-family:'Outfit',sans-serif;font-weight:700;font-size:13px;cursor:pointer;transition:all .2s;display:none}
+.diag-back-btn:hover{background:rgba(255,255,255,.2);color:white}
+.diag-opts-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:520px){.diag-opts-grid{grid-template-columns:1fr}}
+.dopt2{border-radius:20px;padding:20px 18px;cursor:pointer;display:flex;align-items:center;gap:14px;transition:transform .2s cubic-bezier(.2,.8,.2,1),box-shadow .2s,opacity .25s;text-align:left;font-family:'Outfit',sans-serif;width:100%;border:2.5px solid transparent}
+.dopt2:hover:not(:disabled){transform:translateY(-5px) scale(1.03);box-shadow:0 16px 40px rgba(0,0,0,.22)}
+.dopt2:active:not(:disabled){transform:scale(.97)}
+.dopt2:disabled{cursor:default}
+.dopt2.sel{transform:translateY(-5px) scale(1.04)!important;box-shadow:0 18px 44px rgba(0,0,0,.3)!important}
+.dopt2.dim{opacity:.25;transform:none!important;filter:saturate(0)}
+.dopt2-badge{width:40px;height:40px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:900;flex-shrink:0;color:white;font-family:'Outfit',sans-serif}
+.dopt2-ico{font-size:26px;flex-shrink:0;transition:transform .3s}
+.dopt2:hover:not(:disabled) .dopt2-ico{transform:scale(1.2) rotate(-5deg)}
+.dopt2-txt{font-size:14px;font-weight:700;color:#012C56;line-height:1.35;flex:1}
+@keyframes optIn{from{opacity:0;transform:translateX(22px)}to{opacity:1;transform:none}}
+.dopt2:nth-child(1){animation:optIn .3s .05s both}
+.dopt2:nth-child(2){animation:optIn .3s .13s both}
+.dopt2:nth-child(3){animation:optIn .3s .21s both}
+.dopt2:nth-child(4){animation:optIn .3s .29s both}
+.diag-res{display:none;width:100%;max-width:560px}
+.diag-res-inner{background:white;border-radius:28px;padding:42px 38px;box-shadow:0 32px 80px rgba(0,0,0,.35);text-align:center;animation:diagIn .5s cubic-bezier(.2,.8,.2,1)}
+.diag-res-emo{font-size:88px;display:block;margin-bottom:14px;animation:dEmoIn .6s cubic-bezier(.2,.8,.2,1)}
+.diag-res-title{font-size:30px;font-weight:900;color:#012C56;margin-bottom:8px}
+.diag-res-desc{font-size:14px;color:#64748b;font-family:'Quicksand',sans-serif;line-height:1.7;margin-bottom:24px}
+.diag-unlock{background:linear-gradient(135deg,#eff6ff,#dbeafe);border:2px solid #bfdbfe;border-radius:16px;padding:16px 20px;margin-bottom:24px;display:flex;align-items:center;gap:13px;text-align:left}
+.diag-unlock-ico{font-size:30px;flex-shrink:0}
+.diag-unlock-txt{font-size:15px;font-weight:800;color:#1e40af;font-family:'Outfit',sans-serif}
+.diag-unlock-sub{font-size:12px;color:#3b82f6;font-family:'Quicksand',sans-serif;margin-top:3px}
+.diag-start-btn{background:linear-gradient(135deg,#71C8C0,#0364DB);color:white;border:none;padding:17px;border-radius:15px;font-family:'Outfit',sans-serif;font-weight:900;font-size:16px;cursor:pointer;width:100%;box-shadow:0 8px 26px rgba(3,100,219,.35);transition:all .2s}
+.diag-start-btn:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(3,100,219,.45)}
+
+/* ═══════════════════════════════════════════════
+   MELHORIAS v2
+═══════════════════════════════════════════════ */
+
+/* ── Toast notifications ── */
+.toast-wrap{position:fixed;bottom:24px;right:24px;z-index:9999;display:flex;flex-direction:column;gap:9px;pointer-events:none}
+.toast{background:#012C56;color:white;padding:12px 18px;border-radius:12px;font-family:'Outfit',sans-serif;font-size:13px;font-weight:600;display:flex;align-items:center;gap:10px;box-shadow:0 8px 28px rgba(0,0,0,.28);animation:tIn .3s ease;max-width:320px;pointer-events:auto;cursor:default}
+.toast.ok{border-left:4px solid #71C8C0}
+.toast.err{border-left:4px solid #EC6C3B}
+.toast.info{border-left:4px solid #FBC92A}
+@keyframes tIn{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:none}}
+@keyframes tOut{from{opacity:1}to{opacity:0;transform:translateX(20px)}}
+
+/* ── Notification bell & dropdown ── */
+.notif-wrap{position:relative}
+.notif-badge{position:absolute;top:-2px;right:-2px;min-width:16px;height:16px;border-radius:8px;background:#EC6C3B;color:white;font-size:9px;font-weight:800;display:flex;align-items:center;justify-content:center;border:2px solid var(--bd);padding:0 3px;line-height:1}
+.notif-dd{display:none;position:fixed;left:228px;background:white;border-radius:14px;width:300px;box-shadow:0 20px 50px rgba(0,0,0,.22);z-index:500;overflow:hidden;border:1px solid #e2e8f0}
+.notif-dd.on{display:block}
+.notif-head{padding:13px 16px;border-bottom:1px solid #f1f5f9;font-size:13px;font-weight:800;color:var(--bd);display:flex;align-items:center;justify-content:space-between}
+.notif-head button{background:none;border:none;font-size:11px;color:var(--blue);font-weight:700;cursor:pointer;font-family:'Outfit',sans-serif}
+.notif-item{padding:12px 16px;border-bottom:1px solid #f8fafc;display:flex;gap:11px;align-items:flex-start;cursor:pointer;transition:background .15s}
+.notif-item:hover{background:#f8fafc}
+.notif-item.unread{background:#f0f7ff}
+.notif-ico{font-size:20px;flex-shrink:0;margin-top:1px}
+.notif-txt{font-size:12px;font-weight:700;color:var(--bd);line-height:1.3}
+.notif-sub{font-size:11px;color:var(--mut);font-family:'Quicksand',sans-serif;margin-top:2px}
+body.dark .notif-dd{background:#1a2433;border-color:#334155}
+body.dark .notif-head{border-color:#334155;color:#e2e8f0}
+body.dark .notif-item:hover{background:#0f172a}
+body.dark .notif-item.unread{background:#0e2742}
+body.dark .notif-txt{color:#e2e8f0}
+
+/* ── Search bar ── */
+.srch{position:relative;margin-bottom:13px}
+.srch input{width:100%;padding:9px 14px 9px 36px;border:2px solid #e2e8f0;border-radius:9px;font-family:'Outfit',sans-serif;font-size:13px;color:#1e293b;outline:none;transition:border-color .2s;background:#f8fafc}
+.srch input:focus{border-color:var(--blue);background:white}
+.srch svg{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:#94a3b8;pointer-events:none}
+body.dark .srch input{background:#0f172a;border-color:#334155;color:#e2e8f0}
+body.dark .srch input:focus{border-color:var(--blue)}
+
+/* ── Mini chart ── */
+.chart-bars{display:flex;align-items:flex-end;gap:5px;height:52px}
+.chart-bar{flex:1;border-radius:4px 4px 0 0;background:var(--blue);opacity:.45;transition:height .6s ease,opacity .3s}
+.chart-bar.hi{opacity:1;background:var(--mint)}
+.chart-bar:hover{opacity:.8;cursor:default}
+.chart-lbl{display:flex;gap:5px;margin-top:5px}
+.chart-lbl span{flex:1;font-size:9px;color:var(--mut);text-align:center;font-family:'Quicksand',sans-serif}
+
+/* ── Ranking ── */
+.rank-row{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:12px;margin-bottom:7px;background:#f8fafc;border:1.5px solid #e2e8f0;transition:all .2s}
+.rank-row:hover{transform:translateX(3px);border-color:var(--blue)}
+.rank-row.gold{background:#fffbeb;border-color:#FBC92A}
+.rank-row.silver{background:#f8fafc;border-color:#CBD5E1}
+.rank-row.bronze{background:#fff7ed;border-color:#FDBA74}
+.rank-num{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:900;flex-shrink:0;background:#e2e8f0;color:#64748b}
+.rank-num.g{background:#FBC92A;color:#7C2D12}
+.rank-num.s{background:#CBD5E1;color:#374151}
+.rank-num.b{background:#FDBA74;color:#9A3412}
+body.dark .rank-row{background:#1a2433;border-color:#334155}
+body.dark .rank-row:hover{background:#0f172a}
+
+/* ── Stat card hover ── */
+.sc{transition:transform .2s,box-shadow .2s}
+.sc:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,.1)}
+
+/* ── Improved activity feed ── */
+.al .ai{transition:all .2s}
+.al .ai:hover{background:#eff6ff;transform:translateX(3px)}
+
+/* ── Sidebar collapsed dark ── */
+body.dark .sbot{border-color:rgba(255,255,255,.08)}
+
+/* ── Responsive notif (collapsed sidebar) ── */
+@media(max-width:768px){
+  .notif-dd{left:58px}
+  .notif-badge{top:-3px;right:-3px}
+}
+
+/* ═══════════════════════════════════════════
+   LOGIN PAGE — estilo junicoders.com
+═══════════════════════════════════════════ */
+
+/* Background escuro com estrelas */
+#SA{background:var(--bd)!important;min-height:100vh;position:relative;overflow-x:hidden}
+body.dark #SA{background:#060f1f!important}
+
+/* Blobs decorativos */
+.sa-blob{position:absolute;border-radius:50%;filter:blur(100px);pointer-events:none;z-index:0;animation:bf ease-in-out infinite alternate}
+#sa-stars-wrap{position:absolute;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.sa-star{position:absolute;border-radius:50%;background:white;animation:sasTwinkle ease-in-out infinite}
+@keyframes sasTwinkle{0%,100%{opacity:.15;transform:scale(1)}50%{opacity:.85;transform:scale(1.4)}}
+
+/* ── Navbar estilo junicoders.com ── */
+.ltop{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  height:68px;padding:0 44px;
+  display:flex;align-items:center;gap:0;
+  background:rgba(1,28,60,.82);
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
+  border-bottom:1px solid rgba(255,255,255,.09);
+}
+.ltop .logo{color:white;font-size:21px;font-weight:900;letter-spacing:-.02em;gap:10px}
+.ltop .logo .li{width:34px;height:34px;border-radius:9px;border:1.5px solid rgba(255,255,255,.22)}
+.ltop .logo span{color:var(--mint)}
+.ltag{display:none}
+
+/* Nav links centro */
+.ltop-nav{display:flex;align-items:center;gap:2px;margin-left:36px;flex:1}
+.ltop-navlink{
+  color:rgba(255,255,255,.68);font-weight:700;font-size:14px;
+  text-decoration:none;padding:8px 15px;border-radius:8px;
+  transition:all .18s;cursor:pointer;white-space:nowrap;
+  font-family:'Outfit',sans-serif;border:none;background:none;
+}
+.ltop-navlink:hover{color:white;background:rgba(255,255,255,.09)}
+
+/* Botões direita */
+.ltop-right{display:flex;align-items:center;gap:10px;margin-left:auto;flex-shrink:0}
+.ltop-btn-outline{
+  padding:9px 20px;border-radius:40px;
+  border:1.5px solid rgba(255,255,255,.28);
+  background:transparent;color:rgba(255,255,255,.8);
+  font-family:'Outfit',sans-serif;font-weight:700;font-size:14px;
+  cursor:pointer;transition:all .18s;
+}
+.ltop-btn-outline:hover{border-color:white;color:white;background:rgba(255,255,255,.07)}
+.ltop-btn-pill{
+  padding:10px 22px;border-radius:40px;
+  background:white;color:var(--bd);border:none;
+  font-family:'Outfit',sans-serif;font-weight:800;font-size:14px;
+  cursor:pointer;transition:all .18s;
+}
+.ltop-btn-pill:hover{background:var(--mint);transform:translateY(-1px);box-shadow:0 6px 20px rgba(113,200,192,.4)}
+
+/* ── Page layout ── */
+.lpage{margin-top:68px;min-height:calc(100vh - 68px);position:relative;z-index:10}
+.lform{background:transparent;position:relative;z-index:10}
+.lart{background:transparent;position:relative;z-index:10}
+body.dark .lart{background:transparent}
+
+/* Form inner — glass card */
+.lform-inner{
+  background:rgba(255,255,255,.07);
+  border:1px solid rgba(255,255,255,.14);
+  border-radius:26px;
+  padding:36px;
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
+  box-shadow:0 24px 64px rgba(0,0,0,.25);
+  max-width:440px;
+}
+
+/* Logo mark */
+.lmark{background:var(--blue);border-radius:16px;box-shadow:0 6px 24px rgba(3,100,219,.4)}
+
+/* Heading */
+.lh1{color:white!important;font-size:clamp(24px,3.5vw,30px)}
+body.dark .lh1{color:white!important}
+
+/* Inputs */
+.lform-inner .inp{
+  background:rgba(255,255,255,.09);
+  border-color:rgba(255,255,255,.18);
+  color:white;
+}
+.lform-inner .inp:focus{border-color:var(--blue);background:rgba(255,255,255,.13)}
+.lform-inner .inp::placeholder{color:rgba(255,255,255,.35)}
+.lform-inner .inp.er{border-color:var(--red)}
+.lform-inner .f label{color:rgba(255,255,255,.65)}
+
+/* Login tabs */
+.lform-inner .lt{background:rgba(255,255,255,.09)}
+.lform-inner .lt button{color:rgba(255,255,255,.5)}
+.lform-inner .lt button.on{background:rgba(255,255,255,.95);color:var(--bd)}
+.lform-inner .lt button:hover{color:rgba(255,255,255,.85)}
+
+/* Role cards */
+.lform-inner .rc{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.14)}
+.lform-inner .rc:hover{border-color:var(--blue);background:rgba(3,100,219,.15)}
+.lform-inner .rc.on{border-color:var(--blue);background:rgba(3,100,219,.2)}
+.lform-inner .rc h3{color:white}
+.lform-inner .rc p{color:rgba(255,255,255,.5)}
+
+/* Social buttons */
+.lform-inner .sb{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.16);color:white}
+.lform-inner .sb:hover{border-color:var(--blue);background:rgba(255,255,255,.12)}
+
+/* Divider */
+.lform-inner .dv::before,.lform-inner .dv::after{background:rgba(255,255,255,.18)}
+.lform-inner .dv span{color:rgba(255,255,255,.45);background:transparent}
+
+/* Links e textos secundários */
+.lform-inner .sl{color:rgba(255,255,255,.45)}
+.lform-inner .sl a{color:var(--mint)}
+.lform-inner .terms{color:rgba(255,255,255,.35)}
+.lform-inner .terms a{color:var(--mint)}
+.lform-inner .bk{color:var(--mint)}
+.lform-inner a[href="#"]{color:var(--mint)!important}
+
+/* Password bars */
+.lform-inner .pb{background:rgba(255,255,255,.12)}
+.lform-inner .pl{color:rgba(255,255,255,.4)}
+
+/* Steps bar */
+.lform-inner .sd{background:rgba(255,255,255,.15)}
+
+/* Login hint demo */
+#loginHint{color:rgba(255,255,255,.38)!important}
+#loginHint strong{color:rgba(255,255,255,.7)}
+
+/* Secondary button "Criar conta" */
+.lbtn2{
+  background:rgba(255,255,255,.09)!important;
+  border-color:rgba(255,255,255,.2)!important;
+  color:white!important;
+  border-radius:13px;
+}
+.lbtn2:hover{background:rgba(255,255,255,.15)!important;border-color:rgba(255,255,255,.35)!important}
+
+/* Robot illustration */
+.lart-img{filter:drop-shadow(0 32px 56px rgba(3,100,219,.35))}
+
+/* Success screen on dark */
+.lform-inner .sw h2{color:white}
+.lform-inner .sw p{color:rgba(255,255,255,.55)}
+.lform-inner .rcc{background:rgba(255,255,255,.09)}
+.lform-inner .rcl{color:rgba(255,255,255,.5)}
+
+/* Eye button */
+.lform-inner .eye{color:rgba(255,255,255,.4)}
+.lform-inner .eye:hover{color:rgba(255,255,255,.8)}
+
+/* Forgot password */
+#forgotWrap a{color:var(--mint)!important}
+
+/* Steps bar active/done */
+.lform-inner .sd.a{background:var(--blue)}
+.lform-inner .sd.d{background:var(--mint)}
+
+@media(max-width:900px){
+  .ltop{padding:0 18px}
+  .ltop-nav{display:none}
+  .ltop-btn-outline{display:none}
+  .lform-inner{padding:24px 20px;border-radius:20px}
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════ SIGNUP ══════════════ -->
+<div id="SA">
+<div id="FI" style="display:none"></div>
+
+<!-- Stars background -->
+<div id="sa-stars-wrap"></div>
+<!-- Blobs -->
+<div class="sa-blob" style="width:650px;height:650px;background:#0364DB;top:-250px;left:-200px;opacity:.18;animation-duration:10s"></div>
+<div class="sa-blob" style="width:500px;height:500px;background:#71C8C0;bottom:-150px;right:-100px;opacity:.15;animation-duration:13s;animation-delay:-5s"></div>
+<div class="sa-blob" style="width:280px;height:280px;background:#FBC92A;top:35%;left:50%;opacity:.1;animation-duration:16s;animation-delay:-8s"></div>
+
+<!-- Navbar -->
+<header class="ltop">
+  <a href="https://www.junicoders.pt" target="_blank" aria-label="Junicoders"
+     style="display:flex;align-items:center;gap:0;text-decoration:none;font-family:'Outfit',sans-serif;font-weight:900;font-size:22px;color:white;letter-spacing:-.025em;line-height:1">
+    juni<svg viewBox="0 0 54 46" width="36" height="31" style="display:block;margin:0 1px 0 2px;flex-shrink:0" aria-hidden="true">
+      <rect x="2" y="2" width="50" height="42" rx="10" fill="none" stroke="white" stroke-width="4.5"/>
+      <polyline points="8,31 19,16 30,31"  fill="none" stroke="white" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <polyline points="26,31 37,16 48,31" fill="none" stroke="white" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>coders
+  </a>
+
+  <!-- Right actions -->
+  <div class="ltop-right">
+    <button class="themeBtn" type="button" onclick="toggleTheme()" aria-label="Mudar tema" title="Tema claro / escuro" style="border-color:rgba(255,255,255,.22);background:rgba(255,255,255,.1);color:#fff">
+      <svg class="ic-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      <svg class="ic-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+    </button>
+    <button class="ltop-btn-outline" onclick="showRegister()">Criar conta</button>
+    <button class="ltop-btn-pill" onclick="(function(){showLogin();var el=document.getElementById('le');if(el){el.scrollIntoView({behavior:'smooth',block:'center'});setTimeout(function(){el.focus()},350);}})()">Iniciar Sessão</button>
+  </div>
+</header>
+
+<div class="lpage">
+  <div class="lform"><div class="lform-inner">
+    <div class="lmark"><svg viewBox="0 0 32 24" width="40" height="30" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="28" height="20" rx="6"/><path d="M9 14.5l3-3 3 3"/><path d="M17 14.5l3-3 3 3"/></svg></div>
+    <h1 class="lh1">Olá! Bem-vindo à Junicoders</h1>
+    <div id="loginView">
+      <div class="lt" id="loginTabs">
+        <button type="button" class="on" onclick="setLoginMode('child')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="3.5"/><path d="M6 21c0-3.3 2.7-6 6-6s6 2.7 6 6"/><path d="M9 6c0-1 1-2 3-2s3 1 3 2"/></svg>
+          Sou aluno
+        </button>
+        <button type="button" onclick="setLoginMode('adult')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg>
+          Sou adulto
+        </button>
+      </div>
+      <div id="adultOnly">
+        <div class="sbs" style="margin-bottom:13px">
+          <button class="sb"><svg class="si" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>Google</button>
+          <button class="sb"><svg class="si" viewBox="0 0 24 24"><rect x="1" y="1" width="10" height="10" fill="#F25022"/><rect x="13" y="1" width="10" height="10" fill="#7FBA00"/><rect x="1" y="13" width="10" height="10" fill="#00A4EF"/><rect x="13" y="13" width="10" height="10" fill="#FFB900"/></svg>Microsoft</button>
+        </div>
+        <div class="dv"><span>ou usa o teu email</span></div>
+      </div>
+      <div class="f"><label id="leLab">Email</label><input class="inp" type="email" id="le" placeholder="email@exemplo.pt" autocomplete="email"/></div>
+      <div class="f"><label>Palavra-passe</label>
+        <div class="pw"><input class="inp" type="password" id="lp" placeholder="••••••••" autocomplete="current-password"/>
+          <button class="eye" onclick="togP('lp',this)" type="button">👁</button></div>
+        <div class="em" id="lErr">Credenciais inválidas</div></div>
+      <div id="forgotWrap" style="text-align:right;margin-bottom:13px"><a href="#" style="font-size:12px;color:var(--blue);font-weight:600;text-decoration:none">Esqueci a palavra-passe</a></div>
+      <button class="bp bp-login" onclick="doL()">Entrar <span class="arr">→</span></button>
+      <div id="loginHint" style="margin-top:14px;text-align:center;font-size:12px;color:#94a3b8;font-family:'Quicksand',sans-serif">
+        Testa: <strong>prof@test.pt</strong> · <strong>pai@test.pt</strong><br>password: qualquer coisa
+      </div>
+      <button class="lbtn2" type="button" onclick="showRegister()">Criar nova conta</button>
+    </div><!-- /loginView -->
+
+    <div id="registerView" style="display:none">
+      <!-- steps bar -->
+      <div class="sbar"><div class="sd a" id="b1"></div><div class="sd" id="b2"></div><div class="sd" id="b3"></div></div>
+
+      <!-- step 1 -->
+      <div id="s1" class="pnl on">
+        <div style="font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.06em;margin-bottom:11px">Qual é o teu papel?</div>
+        <div class="rg">
+          <div class="rc on" onclick="pickR(this,'enc')">
+            <div class="ri" style="background:#eff6ff">
+              <svg viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="#0364DB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="9" r="3.5"/><path d="M5 23.5c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="22" cy="13" r="2.5"/><path d="M17.5 25c0-2.5 2-4.5 4.5-4.5s4.5 2 4.5 4.5"/></svg>
+            </div>
+            <h3>Enc. de Educação</h3>
+            <p>Cria contas para os teus filhos e acompanha o progresso</p>
+          </div>
+          <div class="rc" onclick="pickR(this,'prof')">
+            <div class="ri" style="background:#f0fdf4">
+              <svg viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="#15803d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12L16 6l13 6-13 6z"/><path d="M8 15v5c0 1.7 3.6 3 8 3s8-1.3 8-3v-5"/><path d="M29 12v6"/><circle cx="29" cy="19.5" r="1.2" fill="#15803d" stroke="none"/></svg>
+            </div>
+            <h3>Professor</h3>
+            <p>Gere turmas e personaliza os desafios da plataforma</p>
+          </div>
+        </div>
+        <button class="bp" onclick="gS(2)">Continuar <span class="arr">→</span></button>
+      </div>
+
+      <!-- step 2 -->
+      <div id="s2" class="pnl">
+        <div class="fr">
+          <div class="f"><label>Nome</label><input class="inp" type="text" id="fn" placeholder="João"/></div>
+          <div class="f"><label>Apelido</label><input class="inp" type="text" id="ln" placeholder="Silva"/></div>
+        </div>
+        <div class="f"><label>Email</label><input class="inp" type="email" id="rem" placeholder="joao@email.com"/>
+          <div class="em" id="eErr">Introduz um email válido</div></div>
+        <div class="f" id="scWrap" style="display:none"><label>Escola</label>
+          <input class="inp" type="text" placeholder="Agrupamento de Escolas..."/></div>
+        <div class="dv"><span>ou regista com</span></div>
+        <div class="sbs">
+          <button class="sb"><svg class="si" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>Google</button>
+          <button class="sb"><svg class="si" viewBox="0 0 24 24"><rect x="1" y="1" width="10" height="10" fill="#F25022"/><rect x="13" y="1" width="10" height="10" fill="#7FBA00"/><rect x="1" y="13" width="10" height="10" fill="#00A4EF"/><rect x="13" y="13" width="10" height="10" fill="#FFB900"/></svg>Microsoft</button>
+        </div>
+        <button class="bp" onclick="vS2()">Continuar <span class="arr">→</span></button>
+        <button class="bk" onclick="gS(1)">← Voltar</button>
+      </div>
+
+      <!-- step 3 -->
+      <div id="s3" class="pnl">
+        <div class="f"><label>Palavra-passe</label>
+          <div class="pw"><input class="inp" type="password" id="pw" oninput="chkP()" placeholder="Mínimo 8 caracteres"/>
+            <button class="eye" onclick="togP('pw',this)" type="button">👁</button></div>
+          <div class="em" id="pErr">Mínimo 8 caracteres</div>
+          <div class="pbs"><div class="pb" id="pb1"></div><div class="pb" id="pb2"></div><div class="pb" id="pb3"></div><div class="pb" id="pb4"></div></div>
+          <div class="pl" id="pl"></div></div>
+        <div class="f"><label>Confirmar</label>
+          <div class="pw"><input class="inp" type="password" id="pw2" placeholder="Repete"/>
+            <button class="eye" onclick="togP('pw2',this)" type="button">👁</button></div>
+          <div class="em" id="p2Err">As palavras-passe não coincidem</div></div>
+        <button class="bp" onclick="vS3()">Criar conta 🚀</button>
+        <div class="terms">Concordas com os <a href="#">Termos</a> e <a href="#">Privacidade</a>. Seguimos o RGPD.</div>
+        <button class="bk" onclick="gS(2)">← Voltar</button>
+      </div>
+
+      <!-- success -->
+      <div id="sOk" class="pnl">
+        <div class="sw">
+          <span class="be">🎉</span>
+          <h2>Bem-vindo, <span id="wN">João</span>!</h2>
+          <p id="wM">Conta criada com sucesso!</p>
+          <div class="rcs">
+            <div class="rcc"><div class="rci" id="wI">👪</div><div class="rcl" id="wR">Enc. Educação</div></div>
+            <div class="rcc"><div class="rci">🏝️</div><div class="rcl">Plataforma activa</div></div>
+            <div class="rcc"><div class="rci">🔒</div><div class="rcl">RGPD protegido</div></div>
+          </div>
+          <button class="bg" onclick="goP()">Entrar na plataforma →</button>
+        </div>
+      </div>
+      <button class="bk" type="button" onclick="showLogin()" style="margin-top:8px">← Já tenho conta</button>
+    </div><!-- /registerView -->
+  </div></div><!-- /lform -->
+  <div class="lart">
+    <img src="robot-login.png" alt="Mascote Junicoders" class="lart-img"/>
+    <!-- SVG original mantido como fallback oculto -->
+    <svg viewBox="0 0 500 520" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="display:none">
+      <circle cx="250" cy="238" r="174" fill="#ffffff" opacity="0.5"/>
+      <circle cx="98" cy="116" r="52" fill="#FBC92A" opacity="0.45"/>
+      <circle cx="418" cy="104" r="36" fill="#71C8C0" opacity="0.6"/>
+      <circle cx="430" cy="388" r="58" fill="#EC6C3B" opacity="0.22"/>
+      <g fill="#FBC92A" class="spk">
+        <path d="M58 252l6 15 15 6-15 6-6 15-6-15-15-6 15-6z"/>
+        <path d="M448 222l5 12 12 5-12 5-5 12-5-12-12-5 12-5z"/>
+        <path d="M150 58l4 10 10 4-10 4-4 10-4-10-10-4 10-4z"/>
+        <path d="M392 446l4 10 10 4-10 4-4 10-4-10-10-4 10-4z"/>
+      </g>
+      <g transform="translate(46,302)">
+        <ellipse cx="42" cy="36" rx="42" ry="14" fill="#7C4B20"/>
+        <ellipse cx="42" cy="24" rx="42" ry="17" fill="#71C8C0"/>
+        <ellipse cx="36" cy="19" rx="27" ry="9" fill="#8FD8D1" opacity="0.7"/>
+      </g>
+      <g transform="translate(372,306)">
+        <ellipse cx="40" cy="32" rx="38" ry="12" fill="#7C4B20"/>
+        <ellipse cx="40" cy="22" rx="38" ry="15" fill="#FBC92A"/>
+        <ellipse cx="35" cy="18" rx="24" ry="8" fill="#FDE08A" opacity="0.7"/>
+      </g>
+      <ellipse cx="250" cy="450" rx="150" ry="40" fill="#5C3310"/>
+      <ellipse cx="250" cy="432" rx="156" ry="44" fill="#7C4B20"/>
+      <ellipse cx="250" cy="412" rx="156" ry="44" fill="#71C8C0"/>
+      <ellipse cx="238" cy="402" rx="120" ry="29" fill="#8FD8D1" opacity="0.65"/>
+      <circle cx="132" cy="406" r="16" fill="#5BB0A8"/>
+      <circle cx="368" cy="404" r="18" fill="#5BB0A8"/>
+      <!-- ROBOT — mascote Juni (animado) -->
+      <g class="juni-robot">
+      <g class="juni-ant">
+      <circle cx="250" cy="96" r="14" fill="#71C8C0"/>
+      <circle cx="245" cy="92" r="4.5" fill="#A6E2DD"/>
+      </g>
+      <rect x="243" y="104" width="14" height="30" rx="5" fill="#0469BC"/>
+      <rect x="158" y="296" width="28" height="66" rx="14" fill="#0469BC"/>
+      <rect x="314" y="296" width="28" height="66" rx="14" fill="#0469BC"/>
+      <circle cx="172" cy="366" r="15" fill="#99CEF2"/>
+      <circle cx="328" cy="366" r="15" fill="#99CEF2"/>
+      <rect x="190" y="286" width="120" height="98" rx="28" fill="#0364DB"/>
+      <rect x="218" y="306" width="64" height="38" rx="11" fill="#1E99F7"/>
+      <circle cx="234" cy="325" r="5.5" fill="#71C8C0"/>
+      <circle cx="266" cy="325" r="5.5" fill="#FBC92A"/>
+      <rect x="206" y="376" width="36" height="24" rx="10" fill="#012C56"/>
+      <rect x="258" y="376" width="36" height="24" rx="10" fill="#012C56"/>
+      <rect x="146" y="178" width="20" height="48" rx="10" fill="#5BA8E5"/>
+      <rect x="334" y="178" width="20" height="48" rx="10" fill="#5BA8E5"/>
+      <rect x="164" y="128" width="172" height="156" rx="40" fill="#99CEF2"/>
+      <rect x="188" y="152" width="124" height="108" rx="28" fill="#1E99F7"/>
+      <circle cx="224" cy="198" r="22" fill="#012C56"/>
+      <circle cx="276" cy="198" r="22" fill="#012C56"/>
+      <circle cx="232" cy="190" r="7" fill="#BFE3FB"/>
+      <circle cx="284" cy="190" r="7" fill="#BFE3FB"/>
+      <circle cx="218" cy="207" r="3.6" fill="#BFE3FB"/>
+      <circle cx="270" cy="207" r="3.6" fill="#BFE3FB"/>
+      <path d="M234 232 Q250 250 266 232" fill="none" stroke="#012C56" stroke-width="7" stroke-linecap="round"/>
+      </g>
+    </svg>
+  </div>
+</div><!-- /lpage -->
+</div><!-- SA -->
+
+<!-- ══════════════ PLATFORM ══════════════ -->
+<div id="PA">
+<div class="ps">
+  <aside class="side">
+    <div class="sl2"><a href="#" style="display:flex;align-items:center;gap:0;text-decoration:none;font-family:'Outfit',sans-serif;font-weight:900;font-size:15px;color:white;letter-spacing:-.02em;line-height:1">juni<svg viewBox="0 0 54 46" width="22" height="19" style="display:block;margin:0 1px;flex-shrink:0" aria-hidden="true"><rect x="2" y="2" width="50" height="42" rx="10" fill="none" stroke="white" stroke-width="5"/><polyline points="8,31 19,16 30,31" fill="none" stroke="white" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><polyline points="26,31 37,16 48,31" fill="none" stroke="white" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg>coders</a><button class="themeBtn" type="button" onclick="toggleTheme()" aria-label="Mudar tema claro/escuro" title="Tema claro / escuro" style="margin-left:auto;width:30px;height:30px">
+      <svg class="ic-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      <svg class="ic-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+    </button></div>
+    <div class="su"><div class="sav" id="sAv">👪</div><div><div class="sn" id="sNm">João</div><div class="sr" id="sRl">Enc. de Educação</div></div></div>
+    <nav class="snav" id="sNav"></nav>
+    <div class="sbot">
+      <div class="notif-wrap" id="notifWrap" style="margin-bottom:8px;display:none">
+        <button class="ni" id="notifBtn" onclick="toggleNotifs(event)">
+          <span class="ico">🔔</span><span>Notificações</span>
+          <div class="notif-badge" id="notifBadge">3</div>
+        </button>
+        <div class="notif-dd" id="notifDd">
+          <div class="notif-head">
+            <span>Notificações</span>
+            <button onclick="markAllRead()">Marcar tudo lido</button>
+          </div>
+          <div class="notif-item unread"><div class="notif-ico">⚡</div><div><div class="notif-txt">Maria completou "Semáforo com LED"</div><div class="notif-sub">Hoje · 15:32 · +80 XP</div></div></div>
+          <div class="notif-item unread"><div class="notif-ico">🏝️</div><div><div class="notif-txt">Pedro desbloqueou a Ilha Principal</div><div class="notif-sub">Ontem · 18:10 · +50 XP</div></div></div>
+          <div class="notif-item unread"><div class="notif-ico">🏆</div><div><div class="notif-txt">Maria ganhou conquista "3 dias seguidos"</div><div class="notif-sub">Ontem · 17:05 · +20 XP</div></div></div>
+          <div class="notif-item"><div class="notif-ico">🎓</div><div><div class="notif-txt">Sofia Costa atingiu Nível 3</div><div class="notif-sub">2 dias atrás · +100 XP</div></div></div>
+        </div>
+      </div>
+      <button class="lo" onclick="logout()">← Sair</button>
+    </div>
+  </aside>
+
+  <main class="pm">
+
+    <!-- ── ENC VIEWS ── -->
+    <div class="pv on" id="v-enc">
+      <div class="pt">👋 Olá, <span id="dN">João</span>!</div>
+      <div class="ps2">Acompanha o progresso dos teus filhos</div>
+      <div class="sr2 c3">
+        <div class="sc"><div class="sci">👶</div><div class="scv">2</div><div class="scl">Filhos na plataforma</div></div>
+        <div class="sc"><div class="sci">⭐</div><div class="scv">850</div><div class="scl">XP total acumulado</div></div>
+        <div class="sc"><div class="sci">🔥</div><div class="scv">12</div><div class="scl">Dias consecutivos</div></div>
+      </div>
+      <div class="sec">
+        <div class="sh"><div class="st">Os meus filhos</div><button class="bsm bb2" onclick="shM('addC')">+ Adicionar filho</button></div>
+        <div class="cg">
+          <div class="cc" onclick="shV('v-c1')">
+            <div class="cav" style="background:#dbeafe">🤖</div>
+            <div class="cn">Maria Silva</div><div class="ca">10 anos · Nível 3</div>
+            <div class="pb2"><div class="pf" style="width:62%"></div></div>
+            <div class="pt2">3/7 desafios · Ilha Principal</div>
+            <div class="cas">
+              <button style="background:#eff6ff;color:var(--blue)" onclick="event.stopPropagation();shV('v-c1')">Progresso</button>
+              <button style="background:#fef9c3;color:#854d0e" onclick="event.stopPropagation()">Editar</button>
+            </div>
+          </div>
+          <div class="cc" onclick="shV('v-c2')">
+            <div class="cav" style="background:#f0fdf4">👾</div>
+            <div class="cn">Pedro Silva</div><div class="ca">8 anos · Nível 1</div>
+            <div class="pb2"><div class="pf" style="width:20%"></div></div>
+            <div class="pt2">1/5 desafios · Diagnóstico</div>
+            <div class="cas">
+              <button style="background:#eff6ff;color:var(--blue)" onclick="event.stopPropagation();shV('v-c2')">Progresso</button>
+              <button style="background:#fef9c3;color:#854d0e" onclick="event.stopPropagation()">Editar</button>
+            </div>
+          </div>
+          <div class="cc add" onclick="shM('addC')"><div style="font-size:34px">＋</div><div style="font-size:13px;font-weight:700">Adicionar filho</div></div>
+        </div>
+      </div>
+      <div class="sec">
+        <div class="sh"><div class="st">Actividade recente</div></div>
+        <div class="al">
+          <div class="ai"><div class="aico">⚡</div><div style="flex:1"><div class="att">Maria completou "Semáforo com LED"</div><div class="atm">Hoje · 15:32</div></div><div class="axp">+80 XP</div></div>
+          <div class="ai"><div class="aico">🏝️</div><div style="flex:1"><div class="att">Pedro desbloqueou a Ilha Principal</div><div class="atm">Ontem · 18:10</div></div><div class="axp">+50 XP</div></div>
+          <div class="ai"><div class="aico">🏆</div><div style="flex:1"><div class="att">Maria ganhou conquista "3 dias seguidos"</div><div class="atm">Ontem · 17:05</div></div><div class="axp">+20 XP</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pv" id="v-c1">
+      <div style="display:flex;align-items:center;gap:9px;margin-bottom:3px">
+        <button class="bsm bo" onclick="shV('v-enc')">← Voltar</button>
+        <div class="pt">🤖 Maria Silva</div></div>
+      <div class="ps2">10 anos · Nível 3 · 620 XP</div>
+      <div class="sr2 c4">
+        <div class="sc"><div class="sci">⭐</div><div class="scv">620</div><div class="scl">XP Total</div></div>
+        <div class="sc"><div class="sci">✅</div><div class="scv">3</div><div class="scl">Desafios OK</div></div>
+        <div class="sc"><div class="sci">🔥</div><div class="scv">12</div><div class="scl">Dias seguidos</div></div>
+        <div class="sc"><div class="sci">🪙</div><div class="scv">240</div><div class="scl">Moedas</div></div>
+      </div>
+      <div class="sec"><div class="sh"><div class="st">Progresso por ilha</div></div>
+        <div class="il">
+          <div class="ii"><div class="iico">🧭</div><div style="flex:1"><div class="iname">Diagnóstico</div><div class="istep">5/5 passos</div><div class="pb2" style="margin-top:5px"><div class="pf" style="width:100%"></div></div></div><span class="badge bd">Completo ✓</span></div>
+          <div class="ii"><div class="iico">🏝️</div><div style="flex:1"><div class="iname">Ilha Principal</div><div class="istep">3/7 passos</div><div class="pb2" style="margin-top:5px"><div class="pf" style="width:43%"></div></div></div><span class="badge bp2">Em progresso</span></div>
+          <div class="ii" style="opacity:.5"><div class="iico">🔍</div><div style="flex:1"><div class="iname">Nível 2</div><div class="istep">Bloqueada</div></div><span class="badge bl">🔒</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pv" id="v-c2">
+      <div style="display:flex;align-items:center;gap:9px;margin-bottom:3px">
+        <button class="bsm bo" onclick="shV('v-enc')">← Voltar</button>
+        <div class="pt">👾 Pedro Silva</div></div>
+      <div class="ps2">8 anos · Nível 1 · 120 XP</div>
+      <div class="sr2 c4">
+        <div class="sc"><div class="sci">⭐</div><div class="scv">120</div><div class="scl">XP Total</div></div>
+        <div class="sc"><div class="sci">✅</div><div class="scv">1</div><div class="scl">Desafios OK</div></div>
+        <div class="sc"><div class="sci">🔥</div><div class="scv">3</div><div class="scl">Dias seguidos</div></div>
+        <div class="sc"><div class="sci">🪙</div><div class="scv">40</div><div class="scl">Moedas</div></div>
+      </div>
+      <div class="sec"><div class="sh"><div class="st">Progresso por ilha</div></div>
+        <div class="il">
+          <div class="ii"><div class="iico">🧭</div><div style="flex:1"><div class="iname">Diagnóstico</div><div class="istep">1/5 passos</div><div class="pb2" style="margin-top:5px"><div class="pf" style="width:20%"></div></div></div><span class="badge bp2">Em progresso</span></div>
+          <div class="ii" style="opacity:.5"><div class="iico">🏝️</div><div style="flex:1"><div class="iname">Ilha Principal</div><div class="istep">Bloqueada</div></div><span class="badge bl">🔒</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── PROF VIEWS ── -->
+    <div class="pv" id="v-prof">
+      <div class="pt">👋 Olá, <span id="dNP">Ana</span>!</div>
+      <div class="ps2">Gere as tuas turmas e personaliza os desafios</div>
+      <div class="sr2 c4">
+        <div class="sc"><div class="sci">🏫</div><div class="scv">3</div><div class="scl">Turmas activas</div></div>
+        <div class="sc"><div class="sci">👩‍🎓</div><div class="scv">68</div><div class="scl">Alunos totais</div></div>
+        <div class="sc"><div class="sci">✅</div><div class="scv">142</div><div class="scl">Desafios completos</div></div>
+        <div class="sc"><div class="sci">📊</div><div class="scv">76%</div><div class="scl">Taxa de conclusão</div></div>
+      </div>
+      <div class="sec">
+        <div class="sh"><div class="st">📊 Atividade semanal</div><span style="font-size:12px;color:var(--mut);font-family:'Quicksand',sans-serif">desafios completados</span></div>
+        <div class="chart-bars" id="weekChart">
+          <div class="chart-bar" style="height:35%"></div>
+          <div class="chart-bar" style="height:55%"></div>
+          <div class="chart-bar" style="height:40%"></div>
+          <div class="chart-bar" style="height:70%"></div>
+          <div class="chart-bar hi" style="height:90%"></div>
+          <div class="chart-bar" style="height:60%"></div>
+          <div class="chart-bar" style="height:45%"></div>
+        </div>
+        <div class="chart-lbl"><span>Seg</span><span>Ter</span><span>Qua</span><span>Qui</span><span>Sex</span><span>Sáb</span><span>Dom</span></div>
+      </div>
+
+      <div class="sec">
+        <div class="sh"><div class="st">As minhas turmas</div><button class="bsm bb2" onclick="shM('addCl')">+ Nova turma</button></div>
+        <div class="cl">
+          <div class="ci" onclick="shV('v-turma')"><div class="cii" style="background:#dbeafe">🅰️</div><div style="flex:1"><div class="cin">6º A — Robótica</div><div class="cim">24 alunos · 72% conclusão</div></div><button class="bsm bo" onclick="event.stopPropagation();shV('v-turma')">Ver</button></div>
+          <div class="ci" onclick="shV('v-turma')"><div class="cii" style="background:#f0fdf4">🅱️</div><div style="flex:1"><div class="cin">6º B — Programação</div><div class="cim">22 alunos · 45% conclusão</div></div><button class="bsm bo" onclick="event.stopPropagation();shV('v-turma')">Ver</button></div>
+          <div class="ci" onclick="shV('v-turma')"><div class="cii" style="background:#fff7ed">🆗</div><div style="flex:1"><div class="cin">ATL — Tarde</div><div class="cim">22 alunos · 88% conclusão</div></div><button class="bsm bo" onclick="event.stopPropagation();shV('v-turma')">Ver</button></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pv" id="v-turma">
+      <div style="display:flex;align-items:center;gap:9px;margin-bottom:3px">
+        <button class="bsm bo" onclick="shV('v-prof')">← Voltar</button>
+        <div class="pt">🅰️ 6º A — Robótica</div></div>
+      <div class="ps2">24 alunos · EB 2,3 de Matosinhos</div>
+      <div class="sec"><div class="sh"><div class="st">Alunos</div><button class="bsm bb2" onclick="toast('Funcionalidade em breve!','info')">+ Adicionar</button></div>
+        <div class="srch"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg><input type="text" placeholder="Pesquisar aluno..." oninput="searchStudents(this.value)" id="studentSearch"/></div>
+        <div style="overflow-x:auto">
+        <table class="tbl">
+          <thead><tr><th>Aluno</th><th>Nível</th><th>Progresso</th><th>Última actividade</th><th>Estado</th></tr></thead>
+          <tbody>
+            <tr><td><span class="sav2" style="background:#dbeafe">🤖</span>Ana Ferreira</td><td>3</td><td><div class="pb2" style="width:100px;display:inline-block"><div class="pf" style="width:62%"></div></div></td><td>Hoje</td><td><span class="badge bd">Activo</span></td></tr>
+            <tr><td><span class="sav2" style="background:#fef9c3">👾</span>Rui Santos</td><td>2</td><td><div class="pb2" style="width:100px;display:inline-block"><div class="pf" style="width:35%"></div></div></td><td>Ontem</td><td><span class="badge bd">Activo</span></td></tr>
+            <tr><td><span class="sav2" style="background:#f0fdf4">🦾</span>Sofia Costa</td><td>3</td><td><div class="pb2" style="width:100px;display:inline-block"><div class="pf" style="width:78%"></div></div></td><td>Hoje</td><td><span class="badge bd">Activo</span></td></tr>
+            <tr><td><span class="sav2" style="background:#fce7f3">🧑‍💻</span>Miguel Lopes</td><td>1</td><td><div class="pb2" style="width:100px;display:inline-block"><div class="pf" style="width:18%"></div></div></td><td>3 dias</td><td><span class="badge bp2">A começar</span></td></tr>
+          </tbody>
+        </table></div>
+      </div>
+    </div>
+
+    <div class="pv" id="v-desfios">
+      <div class="pt">⚡ Editor de Desafios</div>
+      <div class="ps2">Os desafios aqui publicados aparecem diretamente aos alunos</div>
+      <div class="sec">
+        <div class="sh">
+          <div class="st" id="edIslandTitle">🏝️ Ilha Principal</div>
+          <select class="inp" id="edIslandSel" style="width:auto;padding:6px 11px;font-size:13px"
+            onchange="renderChallengeEditor(parseInt(this.value))">
+            <option value="2">🏝️ Ilha Principal</option>
+            <option value="1">🧭 Diagnóstico</option>
+            <option value="3">🔍 Nível 2</option>
+          </select>
+        </div>
+        <div class="cel" id="challengeEditorList"></div>
+        <div class="add" onclick="shM('addCh')" style="margin-top:9px">＋ Adicionar novo desafio</div>
+      </div>
+    </div>
+
+    <!-- ── CHILD VIEWS ── -->
+    <!-- DIAGNÓSTICO -->
+    <div class="pv" id="v-diag">
+      <div class="diag-bg">
+        <!-- background blobs -->
+        <div class="diag-blob" style="width:500px;height:500px;background:rgba(125,222,244,.10);top:-180px;right:-120px;animation-duration:7s"></div>
+        <div class="diag-blob" style="width:360px;height:360px;background:rgba(251,201,42,.09);bottom:-120px;left:-100px;animation-duration:9s;animation-delay:-3s"></div>
+        <div class="diag-blob" style="width:240px;height:240px;background:rgba(236,108,59,.07);top:40%;left:10%;animation-duration:11s;animation-delay:-5s"></div>
+
+        <!-- progress pills -->
+        <div class="diag-prog" id="dDots"></div>
+
+        <!-- split layout: left = question, right = options -->
+        <div class="diag-layout" id="dCard">
+          <div class="diag-left">
+            <div class="diag-step-lbl" id="dCount">Pergunta 1 de 5</div>
+            <span class="diag-emo-wrap" id="dEmo">🤖</span>
+            <div class="diag-q-txt" id="dQ"></div>
+            <button class="diag-back-btn" id="dBack" onclick="diagBack()">← Pergunta anterior</button>
+          </div>
+          <div class="diag-opts-grid" id="dOpts"></div>
+        </div>
+
+        <!-- result screen -->
+        <div class="diag-res" id="dRes">
+          <div class="diag-res-inner">
+            <span class="diag-res-emo" id="rEmo">🌱</span>
+            <h2 class="diag-res-title" id="rT">Principiante</h2>
+            <p class="diag-res-desc" id="rD"></p>
+            <div class="diag-unlock" id="rIs">
+              <div class="diag-unlock-ico">🏝️</div>
+              <div>
+                <div class="diag-unlock-txt">Ilha Principal desbloqueada!</div>
+                <div class="diag-unlock-sub">+50 XP de bónus por completares o diagnóstico</div>
+              </div>
+            </div>
+            <button class="diag-start-btn" onclick="goMap()">Começar a aventura! 🚀</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MAPA -->
+    <div class="pv" id="v-map">
+      <!-- HUD -->
+      <div class="whud">
+        <div style="width:34px;height:34px;background:var(--yel);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:19px;border:2px solid white;flex-shrink:0">🤖</div>
+        <div><div style="font-weight:800;font-size:13px;color:white" id="mCN">Maria</div>
+          <div style="font-size:11px;color:#7DDEF4;font-family:'Quicksand',sans-serif" id="mLv">Nível 1 · Principiante</div></div>
+        <div style="flex:1;max-width:150px">
+          <div style="font-size:10px;color:#7DDEF4;font-weight:600;margin-bottom:3px" id="mXP">0 / 300 XP</div>
+          <div style="height:7px;background:rgba(255,255,255,.2);border-radius:4px;overflow:hidden"><div id="mXF" style="height:100%;border-radius:4px;background:linear-gradient(90deg,#FBC92A,#EC6C3B);width:0%;transition:width 1s"></div></div>
+        </div>
+        <div style="display:flex;gap:11px;margin-left:auto">
+          <div style="color:#FBC92A;font-weight:800;font-size:13px">🪙 <span id="mC">0</span></div>
+          <div style="color:#7DDEF4;font-weight:800;font-size:13px">🔥 <span id="mS">0</span></div>
+        </div>
+      </div>
+
+      <!-- ISO MAP CANVAS -->
+      <div id="mapPan" style="flex:1;overflow:hidden;position:relative;background:#3B82F6;cursor:grab;user-select:none;-webkit-user-select:none;min-height:0;touch-action:none">
+        <!-- subtle grid pattern like Code Club World -->
+        <div style="position:absolute;inset:0;background-image:radial-gradient(circle,rgba(255,255,255,.06) 1px,transparent 1px);background-size:40px 40px;pointer-events:none"></div>
+        <!-- pan hint (fades after first drag) -->
+        <div id="panHint" style="position:absolute;top:14px;left:50%;transform:translateX(-50%);background:rgba(1,44,86,.75);backdrop-filter:blur(8px);color:white;padding:7px 14px;border-radius:20px;font-size:12px;font-weight:600;font-family:'Outfit',sans-serif;display:inline-flex;align-items:center;gap:8px;z-index:5;pointer-events:none;transition:opacity .4s ease;width:max-content">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 9l-3 3 3 3"/><path d="M9 5l3-3 3 3"/><path d="M15 19l-3 3-3-3"/><path d="M19 9l3 3-3 3"/><path d="M2 12h20"/><path d="M12 2v20"/></svg>
+          Clica e arrasta para explorar
+        </div>
+
+        <svg id="isoMap" viewBox="0 0 1330 900" xmlns="http://www.w3.org/2000/svg"
+             preserveAspectRatio="xMidYMid slice"
+             style="display:block;width:100%;height:100%;pointer-events:visiblePainted">
+          <g id="worldGroup" transform="translate(0,0)">
+
+          <!-- ══ ILHA 1 — DIAGNÓSTICO (Home/Start) — green cross shape ══ -->
+          <g id="mi1" style="cursor:pointer" onclick="iClick(1)" transform="translate(140,580)">
+            <!-- brown base (3D side) -->
+            <path d="M20,170 L20,188 L80,204 L230,204 L290,188 L290,170 Z" fill="#7C4B20" opacity="0.9"/>
+            <path d="M20,170 L20,188 L60,198 L60,180 Z" fill="#5C3310"/>
+            <path d="M290,170 L290,188 L250,198 L250,180 Z" fill="#5C3310"/>
+            <!-- arm left brown -->
+            <path d="M0,110 L0,128 L30,138 L30,120 Z" fill="#7C4B20"/>
+            <path d="M0,110 L0,128 L20,133 L20,115 Z" fill="#5C3310"/>
+            <!-- arm right brown -->
+            <path d="M310,110 L310,128 L280,138 L280,120 Z" fill="#7C4B20"/>
+            <!-- arm bottom brown -->
+            <path d="M100,210 L100,228 L155,238 L210,228 L210,210 Z" fill="#7C4B20"/>
+
+            <!-- GREEN TOP — cross/plus shape -->
+            <!-- main body -->
+            <rect x="20" y="80" width="270" height="90" rx="14" fill="#34D399"/>
+            <!-- left arm -->
+            <rect x="0" y="100" width="50" height="50" rx="10" fill="#34D399"/>
+            <!-- right arm -->
+            <rect x="260" y="100" width="50" height="50" rx="10" fill="#34D399"/>
+            <!-- bottom arm -->
+            <rect x="90" y="160" width="130" height="55" rx="10" fill="#34D399"/>
+
+            <!-- highlight -->
+            <rect x="20" y="80" width="270" height="18" rx="14" fill="#6EE7B7" opacity="0.5"/>
+            <rect x="0" y="100" width="50" height="14" rx="10" fill="#6EE7B7" opacity="0.4"/>
+
+            <!-- TREE -->
+            <rect x="58" y="95" width="9" height="30" rx="3" fill="#7C4B20"/>
+            <ellipse cx="62" cy="90" rx="18" ry="20" fill="#16A34A"/>
+            <ellipse cx="62" cy="79" rx="13" ry="14" fill="#22C55E"/>
+
+            <!-- robot character -->
+            <rect x="195" y="96" width="26" height="22" rx="5" fill="#0364DB"/>
+            <rect x="197" y="99" width="22" height="14" rx="3" fill="#012C56"/>
+            <circle cx="203" cy="105" r="4" fill="#92D6FF"/>
+            <circle cx="213" cy="105" r="4" fill="#92D6FF"/>
+            <circle cx="204" cy="106" r="2.5" fill="#012C56"/>
+            <circle cx="214" cy="106" r="2.5" fill="#012C56"/>
+            <path d="M202,112 Q208,115 214,112" fill="none" stroke="#71C8C0" stroke-width="1.5" stroke-linecap="round"/>
+            <!-- antenna -->
+            <line x1="208" y1="96" x2="208" y2="88" stroke="#0364DB" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="208" cy="86" r="3" fill="#FBC92A"/>
+
+            <!-- label -->
+            <rect x="85" y="190" width="140" height="50" rx="12" fill="white" filter="url(#shadow)"/>
+            <text x="155" y="211" text-anchor="middle" font-size="11" fill="#64748b" font-family="Outfit,Arial" font-weight="600">Início</text>
+            <text x="155" y="230" text-anchor="middle" font-size="16" fill="#012C56" font-family="Outfit,Arial" font-weight="900">Diagnóstico ✓</text>
+
+            <!-- done badge -->
+            <circle cx="285" cy="88" r="16" fill="#71C8C0" stroke="white" stroke-width="2.5"/>
+            <text x="285" y="94" text-anchor="middle" font-size="14" fill="#012C56" font-family="Arial" font-weight="bold">✓</text>
+          </g>
+
+          <!-- ══ ILHA 2 — BOT STARTER (Level 1) — yellow/gold, bigger ══ -->
+          <g id="mi2" style="cursor:pointer" onclick="iClick(2)" transform="translate(620,280)">
+            <!-- brown base -->
+            <path d="M10,190 L10,210 L80,228 L280,228 L340,210 L340,190 Z" fill="#7C4B20" opacity="0.9"/>
+            <path d="M10,190 L10,210 L50,220 L50,200 Z" fill="#5C3310"/>
+            <path d="M340,190 L340,210 L300,220 L300,200 Z" fill="#5C3310"/>
+            <!-- top notch brown -->
+            <path d="M120,10 L120,28 L175,38 L230,28 L230,10 Z" fill="#7C4B20"/>
+
+            <!-- YELLOW TOP — L-shape (puzzle piece style) -->
+            <!-- main body -->
+            <rect x="10" y="70" width="330" height="120" rx="16" fill="#F59E0B"/>
+            <!-- top notch going up -->
+            <rect x="110" y="10" width="130" height="80" rx="14" fill="#F59E0B"/>
+
+            <!-- highlights -->
+            <rect x="10" y="70" width="330" height="20" rx="16" fill="#FDE68A" opacity="0.5"/>
+            <rect x="110" y="10" width="130" height="16" rx="14" fill="#FDE68A" opacity="0.4"/>
+
+            <!-- PALM TREE 1 -->
+            <rect x="55" y="80" width="10" height="40" rx="3" fill="#7C4B20"/>
+            <ellipse cx="60" cy="76" rx="22" ry="10" fill="#16A34A" transform="rotate(-25 60 76)"/>
+            <ellipse cx="60" cy="77" rx="22" ry="10" fill="#22C55E" transform="rotate(20 60 77)"/>
+            <ellipse cx="60" cy="78" rx="18" ry="8" fill="#16A34A" transform="rotate(65 60 78)"/>
+
+            <!-- PALM TREE 2 (top notch) -->
+            <rect x="168" y="18" width="8" height="30" rx="3" fill="#7C4B20"/>
+            <ellipse cx="172" cy="14" rx="18" ry="8" fill="#16A34A" transform="rotate(-22 172 14)"/>
+            <ellipse cx="172" cy="15" rx="18" ry="8" fill="#22C55E" transform="rotate(22 172 15)"/>
+
+            <!-- winding path -->
+            <polyline points="50,170 50,140 100,120 175,110 250,120 300,140 300,170"
+              fill="none" stroke="rgba(255,255,255,0.8)" stroke-width="5"
+              stroke-linecap="round" stroke-linejoin="round"/>
+            <!-- progress dots (start + mid + end) -->
+            <circle cx="50" cy="170" r="10" fill="white" stroke="#D97706" stroke-width="2.5"/>
+            <text x="50" y="175" text-anchor="middle" font-size="9" fill="#D97706" font-family="Arial" font-weight="800">1</text>
+            <circle cx="175" cy="110" r="10" fill="#FBC92A" stroke="#D97706" stroke-width="2.5"/>
+            <text x="175" y="115" text-anchor="middle" font-size="9" fill="#7C2D12" font-family="Arial" font-weight="800">9</text>
+            <circle cx="300" cy="170" r="10" fill="white" stroke="#D97706" stroke-width="2.5" opacity="0.4"/>
+            <text x="300" y="175" text-anchor="middle" font-size="9" fill="#D97706" font-family="Arial" font-weight="800" opacity="0.4">18</text>
+
+            <!-- label -->
+            <rect x="105" y="195" width="140" height="54" rx="12" fill="white"/>
+            <text x="175" y="215" text-anchor="middle" font-size="11" fill="#64748b" font-family="Outfit,Arial" font-weight="600">Nível 1 · 18 desafios</text>
+            <text x="175" y="237" text-anchor="middle" font-size="17" fill="#012C56" font-family="Outfit,Arial" font-weight="900">Bot Starter 🤖</text>
+          </g>
+
+          <!-- ══ ILHA 3 — SMART FARM LAB (Level 2) — green/earth ══ -->
+          <g id="mi3" style="cursor:pointer;opacity:0.7" onclick="iClick(3)" transform="translate(920,180)">
+            <!-- brown base -->
+            <path d="M10,165 L10,183 L70,197 L270,197 L320,183 L320,165 Z" fill="#7C4B20" opacity="0.9"/>
+            <path d="M10,165 L10,183 L50,191 L50,175 Z" fill="#5C3310"/>
+            <!-- left notch brown -->
+            <path d="M0,90 L0,108 L30,118 L30,100 Z" fill="#7C4B20"/>
+            <!-- GREEN TOP -->
+            <rect x="10" y="65" width="310" height="100" rx="14" fill="#16A34A"/>
+            <rect x="0" y="80" width="50" height="52" rx="10" fill="#16A34A"/>
+            <rect x="10" y="65" width="310" height="18" rx="14" fill="#4ADE80" opacity="0.4"/>
+            <!-- ESP32 chip -->
+            <rect x="48" y="85" width="62" height="44" rx="6" fill="#1f2937"/>
+            <rect x="54" y="91" width="50" height="32" rx="3" fill="#0F172A"/>
+            <text x="79" y="112" text-anchor="middle" font-size="8" fill="#4ADE80" font-family="Courier,monospace" font-weight="700">ESP32</text>
+            <!-- antenna -->
+            <line x1="79" y1="85" x2="79" y2="72" stroke="#4ADE80" stroke-width="2.5" stroke-linecap="round"/>
+            <circle cx="79" cy="70" r="3.5" fill="#FBC92A"/>
+            <!-- plant -->
+            <rect x="178" y="96" width="10" height="34" rx="3" fill="#7C4B20"/>
+            <ellipse cx="183" cy="90" rx="22" ry="10" fill="#166534" transform="rotate(-22 183 90)"/>
+            <ellipse cx="183" cy="91" rx="22" ry="10" fill="#22C55E" transform="rotate(22 183 91)"/>
+            <!-- soil sensor -->
+            <rect x="248" y="108" width="8" height="28" rx="2" fill="#94A3B8"/>
+            <rect x="244" y="102" width="16" height="10" rx="3" fill="#64748B"/>
+            <circle cx="252" cy="102" r="3" fill="#22C55E"/>
+            <!-- label -->
+            <rect x="88" y="135" width="154" height="50" rx="12" fill="white" opacity="0.92"/>
+            <text x="165" y="155" text-anchor="middle" font-size="10" fill="#64748b" font-family="Outfit,Arial" font-weight="600">Nível 2 · IoT · 18 desafios</text>
+            <text x="165" y="175" text-anchor="middle" font-size="15" fill="#14532d" font-family="Outfit,Arial" font-weight="900">Smart Farm 🌾</text>
+            <!-- lock -->
+            <circle cx="316" cy="73" r="14" fill="#22C55E" stroke="white" stroke-width="2.5"/>
+            <text x="316" y="79" text-anchor="middle" font-size="12" font-family="Arial">🔒</text>
+          </g>
+
+          <!-- ══ ILHA 4 — ARCADE STUDIO (Level 3) — purple ══ -->
+          <g id="mi4" style="cursor:pointer;opacity:0.65" onclick="iClick(4)" transform="translate(1280,460)">
+            <!-- brown base -->
+            <path d="M10,165 L10,183 L70,197 L280,197 L330,183 L330,165 Z" fill="#7C4B20" opacity="0.9"/>
+            <path d="M10,165 L10,183 L50,191 L50,175 Z" fill="#5C3310"/>
+            <!-- top notch brown -->
+            <path d="M220,15 L220,33 L275,43 L330,33 L330,15 Z" fill="#7C4B20"/>
+            <!-- PURPLE TOP -->
+            <rect x="10" y="65" width="320" height="100" rx="14" fill="#7C3AED"/>
+            <rect x="210" y="15" width="130" height="68" rx="12" fill="#7C3AED"/>
+            <rect x="10" y="65" width="320" height="18" rx="14" fill="#A78BFA" opacity="0.4"/>
+            <rect x="210" y="15" width="130" height="16" rx="12" fill="#A78BFA" opacity="0.3"/>
+            <!-- game controller -->
+            <rect x="100" y="83" width="96" height="60" rx="16" fill="#4C1D95"/>
+            <rect x="120" y="103" width="24" height="8" rx="2" fill="#6D28D9"/>
+            <rect x="126" y="97" width="8" height="20" rx="2" fill="#6D28D9"/>
+            <circle cx="180" cy="99" r="5.5" fill="#EF4444"/>
+            <circle cx="190" cy="108" r="5.5" fill="#22C55E"/>
+            <circle cx="170" cy="108" r="5.5" fill="#FBC92A"/>
+            <circle cx="180" cy="117" r="5.5" fill="#3B82F6"/>
+            <!-- game screen on top notch -->
+            <rect x="218" y="22" width="100" height="54" rx="6" fill="#1e1b4b"/>
+            <rect x="222" y="26" width="92" height="46" rx="4" fill="#0F0A2A"/>
+            <!-- pixel art character -->
+            <rect x="265" y="36" width="7" height="7" rx="1" fill="#FBC92A"/>
+            <rect x="252" y="43" width="7" height="7" rx="1" fill="#EF4444"/>
+            <rect x="265" y="50" width="7" height="7" rx="1" fill="#22C55E"/>
+            <rect x="278" y="43" width="7" height="7" rx="1" fill="#3B82F6"/>
+            <text x="268" y="70" text-anchor="middle" font-size="7" fill="#4ADE80" font-family="Courier,monospace">SCORE:9999</text>
+            <!-- label -->
+            <rect x="100" y="135" width="160" height="50" rx="12" fill="white" opacity="0.92"/>
+            <text x="180" y="155" text-anchor="middle" font-size="10" fill="#64748b" font-family="Outfit,Arial" font-weight="600">Nível 3 · Jogos · 18 desafios</text>
+            <text x="180" y="175" text-anchor="middle" font-size="14" fill="#4c1d95" font-family="Outfit,Arial" font-weight="900">Arcade Studio 🎮</text>
+            <!-- lock -->
+            <circle cx="326" cy="73" r="14" fill="#A78BFA" stroke="white" stroke-width="2.5"/>
+            <text x="326" y="79" text-anchor="middle" font-size="12" font-family="Arial">🔒</text>
+          </g>
+
+          <!-- ══ ILHA 5 — SCRATCH JR (Iniciação) — amber/orange ══ -->
+          <g id="mi5" style="cursor:pointer;opacity:0.75" onclick="iClick(5)" transform="translate(150,100)">
+            <!-- brown base -->
+            <path d="M20,142 L20,158 L80,172 L210,172 L260,158 L260,142 Z" fill="#7C4B20" opacity="0.85"/>
+            <!-- AMBER TOP (rounded blob) -->
+            <rect x="20" y="50" width="240" height="95" rx="16" fill="#F59E0B"/>
+            <rect x="20" y="50" width="240" height="18" rx="16" fill="#FDE68A" opacity="0.5"/>
+            <!-- Cat face -->
+            <ellipse cx="185" cy="90" rx="36" ry="34" fill="#FF8C00"/>
+            <polygon points="164,65 152,46 178,63" fill="#FF8C00"/>
+            <polygon points="206,65 218,46 192,63" fill="#FF8C00"/>
+            <polygon points="166,64 156,49 177,63" fill="#FFDAB9"/>
+            <polygon points="204,64 214,49 193,63" fill="#FFDAB9"/>
+            <ellipse cx="172" cy="85" rx="8" ry="9" fill="white"/>
+            <ellipse cx="198" cy="85" rx="8" ry="9" fill="white"/>
+            <circle cx="173" cy="86" r="5" fill="#1f2937"/>
+            <circle cx="199" cy="86" r="5" fill="#1f2937"/>
+            <circle cx="175" cy="84" r="2" fill="white"/>
+            <circle cx="201" cy="84" r="2" fill="white"/>
+            <ellipse cx="185" cy="97" rx="4" ry="3" fill="#e85d04"/>
+            <path d="M179,102 Q185,107 191,102" fill="none" stroke="#1f2937" stroke-width="1.5"/>
+            <line x1="155" y1="96" x2="168" y2="99" stroke="#1f2937" stroke-width="1.2" opacity="0.5"/>
+            <line x1="155" y1="103" x2="168" y2="102" stroke="#1f2937" stroke-width="1.2" opacity="0.5"/>
+            <line x1="202" y1="99" x2="215" y2="96" stroke="#1f2937" stroke-width="1.2" opacity="0.5"/>
+            <line x1="202" y1="102" x2="215" y2="103" stroke="#1f2937" stroke-width="1.2" opacity="0.5"/>
+            <!-- small cat on left for deco -->
+            <rect x="42" y="72" width="10" height="12" rx="3" fill="#7C4B20"/>
+            <ellipse cx="47" cy="68" rx="9" ry="8" fill="#f97316"/>
+            <!-- label -->
+            <rect x="58" y="122" width="144" height="50" rx="10" fill="white" opacity="0.92"/>
+            <text x="130" y="141" text-anchor="middle" font-size="10" fill="#92400e" font-family="Outfit,Arial" font-weight="600">Iniciação · 10 desafios</text>
+            <text x="130" y="161" text-anchor="middle" font-size="15" fill="#78350f" font-family="Outfit,Arial" font-weight="900">Scratch Jr 🐱</text>
+            <!-- lock -->
+            <circle cx="252" cy="60" r="14" fill="#FBC92A" stroke="white" stroke-width="2.5"/>
+            <text x="252" y="66" text-anchor="middle" font-size="12" font-family="Arial">🔒</text>
+          </g>
+
+          <!-- ══ ILHA 6 — SCRATCH (Programação) — blue ══ -->
+          <g id="mi6" style="cursor:pointer;opacity:0.7" onclick="iClick(6)" transform="translate(700,650)">
+            <!-- brown base -->
+            <path d="M10,160 L10,178 L70,192 L280,192 L320,178 L320,160 Z" fill="#7C4B20" opacity="0.9"/>
+            <path d="M10,160 L10,178 L50,186 L50,170 Z" fill="#5C3310"/>
+            <!-- right notch brown -->
+            <path d="M250,10 L250,28 L295,38 L320,28 L320,10 Z" fill="#7C4B20"/>
+            <!-- BLUE TOP -->
+            <rect x="10" y="60" width="310" height="102" rx="14" fill="#3B82F6"/>
+            <rect x="238" y="10" width="90" height="66" rx="12" fill="#3B82F6"/>
+            <rect x="10" y="60" width="310" height="18" rx="14" fill="#93C5FD" opacity="0.4"/>
+            <rect x="238" y="10" width="90" height="16" rx="12" fill="#93C5FD" opacity="0.3"/>
+            <!-- Scratch blocks on left -->
+            <rect x="45" y="75" width="100" height="16" rx="4" fill="#FFAB19" opacity="0.95"/>
+            <text x="95" y="87" text-anchor="middle" font-size="8.5" fill="#1f2937" font-family="Courier,monospace" font-weight="700">quando ▶ clicado</text>
+            <rect x="45" y="95" width="100" height="16" rx="4" fill="#9966FF" opacity="0.95"/>
+            <text x="95" y="107" text-anchor="middle" font-size="8.5" fill="white" font-family="Courier,monospace" font-weight="700">mover 10 passos</text>
+            <rect x="45" y="115" width="100" height="16" rx="4" fill="#5CB1D6" opacity="0.95"/>
+            <text x="95" y="127" text-anchor="middle" font-size="8.5" fill="white" font-family="Courier,monospace" font-weight="700">dizer "Olá!" </text>
+            <!-- Scratch cat on right -->
+            <ellipse cx="198" cy="100" rx="30" ry="28" fill="#FF8C00"/>
+            <polygon points="179,76 168,58 193,74" fill="#FF8C00"/>
+            <polygon points="217,76 228,58 203,74" fill="#FF8C00"/>
+            <polygon points="181,75 171,60 192,74" fill="#FFDAB9"/>
+            <polygon points="215,75 225,60 204,74" fill="#FFDAB9"/>
+            <ellipse cx="186" cy="95" rx="7" ry="8" fill="white"/>
+            <ellipse cx="210" cy="95" rx="7" ry="8" fill="white"/>
+            <circle cx="187" cy="96" r="4.5" fill="#1f2937"/>
+            <circle cx="211" cy="96" r="4.5" fill="#1f2937"/>
+            <circle cx="189" cy="94" r="1.5" fill="white"/>
+            <circle cx="213" cy="94" r="1.5" fill="white"/>
+            <ellipse cx="198" cy="106" rx="3.5" ry="2.5" fill="#e85d04"/>
+            <path d="M193,110 Q198,115 203,110" fill="none" stroke="#1f2937" stroke-width="1.5"/>
+            <!-- screen in notch -->
+            <rect x="244" y="16" width="80" height="50" rx="5" fill="#1e3a8a"/>
+            <rect x="248" y="20" width="72" height="42" rx="3" fill="#0F172A"/>
+            <text x="284" y="35" text-anchor="middle" font-size="7" fill="#93C5FD" font-family="Courier,monospace">if touching</text>
+            <text x="284" y="45" text-anchor="middle" font-size="7" fill="#FFAB19" font-family="Courier,monospace">  mover 10</text>
+            <text x="284" y="55" text-anchor="middle" font-size="7" fill="#4ADE80" font-family="Courier,monospace">  +10 pontos</text>
+            <!-- label -->
+            <rect x="98" y="132" width="154" height="50" rx="12" fill="white" opacity="0.92"/>
+            <text x="175" y="152" text-anchor="middle" font-size="10" fill="#64748b" font-family="Outfit,Arial" font-weight="600">Programação · 18 desafios</text>
+            <text x="175" y="172" text-anchor="middle" font-size="16" fill="#1e3a8a" font-family="Outfit,Arial" font-weight="900">Scratch 🐈</text>
+            <!-- lock -->
+            <circle cx="316" cy="68" r="14" fill="#60A5FA" stroke="white" stroke-width="2.5"/>
+            <text x="316" y="74" text-anchor="middle" font-size="12" font-family="Arial">🔒</text>
+          </g>
+
+          <!-- ══ ILHA PÁSCOA — purple/pink (seasonal) ══ -->
+          <g id="mi-p" style="cursor:pointer;opacity:0.55" onclick="iClick('pascoa')" transform="translate(160,1000)">
+            <!-- brown base -->
+            <path d="M10,120 L10,136 L80,150 L210,150 L260,136 L260,120 Z" fill="#7C4B20" opacity="0.85"/>
+            <!-- PURPLE TOP -->
+            <rect x="10" y="50" width="250" height="72" rx="14" fill="#A855F7"/>
+            <rect x="10" y="50" width="250" height="15" rx="14" fill="#C084FC" opacity="0.5"/>
+            <!-- egg + bunny deco -->
+            <ellipse cx="90" cy="80" rx="14" ry="18" fill="#F472B6"/>
+            <path d="M76,80 Q90,73 104,80" fill="#FDE68A"/>
+            <path d="M77,84 Q90,91 103,84" fill="#60A5FA"/>
+            <ellipse cx="160" cy="84" rx="11" ry="13" fill="white"/>
+            <ellipse cx="156" cy="70" rx="5" ry="9" fill="white"/>
+            <ellipse cx="164" cy="70" rx="5" ry="9" fill="white"/>
+            <ellipse cx="156" cy="71" rx="2.5" ry="6" fill="#F9A8D4"/>
+            <ellipse cx="164" cy="71" rx="2.5" ry="6" fill="#F9A8D4"/>
+            <circle cx="157" cy="81" r="2" fill="#1f2937"/>
+            <circle cx="163" cy="81" r="2" fill="#1f2937"/>
+            <!-- label -->
+            <rect x="55" y="105" width="140" height="44" rx="10" fill="white" opacity="0.9"/>
+            <text x="125" y="122" text-anchor="middle" font-size="10" fill="#7c3aed" font-family="Outfit,Arial" font-weight="600">Sazonal · março</text>
+            <text x="125" y="139" text-anchor="middle" font-size="14" fill="#5b21b6" font-family="Outfit,Arial" font-weight="900">🐣 Páscoa</text>
+          </g>
+
+          <!-- ══ ILHA NATAL — white/snow (seasonal) ══ -->
+          <g id="mi-n" style="cursor:pointer;opacity:0.55" onclick="iClick('natal')" transform="translate(1080,80)">
+            <!-- brown base -->
+            <path d="M10,130 L10,147 L80,162 L220,162 L260,147 L260,130 Z" fill="#7C4B20" opacity="0.85"/>
+            <!-- SNOW TOP -->
+            <rect x="10" y="55" width="250" height="78" rx="14" fill="#E2E8F0"/>
+            <rect x="10" y="55" width="250" height="16" rx="14" fill="white" opacity="0.7"/>
+            <!-- snow bumps -->
+            <ellipse cx="50" cy="56" rx="20" ry="8" fill="white" opacity="0.8"/>
+            <ellipse cx="100" cy="53" rx="16" ry="7" fill="white" opacity="0.8"/>
+            <ellipse cx="155" cy="55" rx="20" ry="8" fill="white" opacity="0.75"/>
+            <ellipse cx="210" cy="53" rx="16" ry="7" fill="white" opacity="0.7"/>
+            <!-- xmas tree -->
+            <rect x="81" y="95" width="8" height="14" rx="2" fill="#7C4B20"/>
+            <polygon points="85,44 68,78 102,78" fill="#166534"/>
+            <polygon points="85,58 70,88 100,88" fill="#22C55E"/>
+            <circle cx="75" cy="74" r="3.5" fill="#EF4444"/>
+            <circle cx="94" cy="70" r="3.5" fill="#FBC92A"/>
+            <polygon points="85,40 87,48 94,48 89,52 91,60 85,56 79,60 81,52 76,48 83,48" fill="#FBC92A"/>
+            <!-- snowman -->
+            <ellipse cx="170" cy="100" rx="14" ry="14" fill="white" stroke="#CBD5E1" stroke-width="1"/>
+            <ellipse cx="170" cy="83" rx="11" ry="11" fill="white" stroke="#CBD5E1" stroke-width="1"/>
+            <rect x="163" y="72" width="14" height="2.5" rx="1" fill="#1f2937"/>
+            <rect x="165" y="60" width="10" height="13" rx="2" fill="#1f2937"/>
+            <circle cx="167" cy="80" r="1.8" fill="#1f2937"/>
+            <circle cx="173" cy="80" r="1.8" fill="#1f2937"/>
+            <path d="M162,86 Q170,83 178,86" fill="none" stroke="#EF4444" stroke-width="2.5" stroke-linecap="round"/>
+            <!-- label -->
+            <rect x="65" y="117" width="130" height="44" rx="10" fill="white" opacity="0.9"/>
+            <text x="130" y="134" text-anchor="middle" font-size="10" fill="#475569" font-family="Outfit,Arial" font-weight="600">Sazonal · dezembro</text>
+            <text x="130" y="151" text-anchor="middle" font-size="14" fill="#1e3a5f" font-family="Outfit,Arial" font-weight="900">🎄 Natal</text>
+          </g>
+
+          <!-- ══ ILHA VERÃO — sand (seasonal) ══ -->
+          <g id="mi-v" style="cursor:pointer;opacity:0.55" onclick="iClick('verao')" transform="translate(1430,1050)">
+            <!-- brown base -->
+            <path d="M10,128 L10,145 L75,158 L215,158 L255,145 L255,128 Z" fill="#7C4B20" opacity="0.85"/>
+            <!-- SAND TOP -->
+            <rect x="10" y="52" width="245" height="78" rx="14" fill="#FCD34D"/>
+            <rect x="10" y="52" width="245" height="15" rx="14" fill="#FEF3C7" opacity="0.6"/>
+            <!-- palm -->
+            <rect x="75" y="68" width="9" height="32" rx="3" fill="#7C4B20"/>
+            <ellipse cx="79" cy="64" rx="22" ry="9" fill="#16A34A" transform="rotate(-22 79 64)"/>
+            <ellipse cx="79" cy="65" rx="22" ry="9" fill="#22C55E" transform="rotate(22 79 65)"/>
+            <ellipse cx="79" cy="67" rx="18" ry="8" fill="#16A34A" transform="rotate(65 79 67)"/>
+            <!-- sun -->
+            <circle cx="195" cy="70" r="18" fill="#F59E0B" opacity="0.9"/>
+            <line x1="195" y1="48" x2="195" y2="41" stroke="#F59E0B" stroke-width="3" stroke-linecap="round"/>
+            <line x1="213" y1="55" x2="218" y2="50" stroke="#F59E0B" stroke-width="3" stroke-linecap="round"/>
+            <line x1="220" y1="70" x2="227" y2="70" stroke="#F59E0B" stroke-width="3" stroke-linecap="round"/>
+            <!-- beach ball -->
+            <circle cx="145" cy="100" r="16" fill="#EF4444"/>
+            <path d="M133,92 Q145,85 157,92" fill="none" stroke="white" stroke-width="2"/>
+            <path d="M131,100 Q145,107 159,100" fill="none" stroke="white" stroke-width="2"/>
+            <!-- label -->
+            <rect x="60" y="115" width="130" height="44" rx="10" fill="white" opacity="0.9"/>
+            <text x="125" y="132" text-anchor="middle" font-size="10" fill="#92400e" font-family="Outfit,Arial" font-weight="600">Sazonal · junho</text>
+            <text x="125" y="149" text-anchor="middle" font-size="14" fill="#78350f" font-family="Outfit,Arial" font-weight="900">☀️ Verão</text>
+          </g>
+
+          <!-- ══ PATHS between islands ══ -->
+          <!-- Diagnóstico → Bot Starter (main) -->
+          <path d="M 390,660 Q 500,550 680,410" fill="none" stroke="rgba(255,255,255,0.40)" stroke-width="7" stroke-dasharray="14 10" stroke-linecap="round"/>
+          <polygon points="678,408 695,422 668,425" fill="rgba(255,255,255,0.55)"/>
+          <!-- Bot Starter → Smart Farm -->
+          <path d="M 960,370 Q 1020,290 1085,310" fill="none" stroke="rgba(255,255,255,0.28)" stroke-width="5" stroke-dasharray="12 10" stroke-linecap="round"/>
+          <polygon points="1083,308 1098,320 1074,324" fill="rgba(255,255,255,0.4)"/>
+          <!-- Smart Farm → Arcade Studio -->
+          <path d="M 1260,310 Q 1310,380 1395,520" fill="none" stroke="rgba(255,255,255,0.22)" stroke-width="5" stroke-dasharray="12 10" stroke-linecap="round"/>
+          <polygon points="1393,518 1408,532 1384,532" fill="rgba(255,255,255,0.35)"/>
+          <!-- Diagnóstico → Scratch Jr -->
+          <path d="M 280,600 Q 280,430 290,280" fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="4" stroke-dasharray="10 10" stroke-linecap="round"/>
+          <polygon points="288,278 302,264 278,264" fill="rgba(255,255,255,0.38)"/>
+          <!-- Scratch Jr → Scratch -->
+          <path d="M 410,185 Q 580,350 780,710" fill="none" stroke="rgba(255,255,255,0.20)" stroke-width="4" stroke-dasharray="10 10" stroke-linecap="round"/>
+          <!-- Bot Starter → Scratch (shortcut) -->
+          <path d="M 860,480 Q 840,570 870,710" fill="none" stroke="rgba(255,255,255,0.18)" stroke-width="3" stroke-dasharray="8 10" stroke-linecap="round"/>
+          <!-- Scratch → Arcade (crossover) -->
+          <path d="M 1020,740 Q 1150,680 1340,620" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="3" stroke-dasharray="8 10" stroke-linecap="round"/>
+          <!-- Seasonal: Diagnóstico → Páscoa -->
+          <path d="M 290,820 Q 270,910 280,1005" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="3" stroke-dasharray="8 10" stroke-linecap="round"/>
+          <!-- Seasonal: Smart Farm → Natal -->
+          <path d="M 1100,190 Q 1200,120 1290,100" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="3" stroke-dasharray="8 10" stroke-linecap="round"/>
+          <!-- Seasonal: Arcade → Verão -->
+          <path d="M 1520,680 Q 1560,800 1570,1000" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="3" stroke-dasharray="8 10" stroke-linecap="round"/>
+          </g><!-- /worldGroup -->
+
+          <!-- ══ DEFS ══ -->
+          <defs>
+            <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+              <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="rgba(0,0,0,0.15)"/>
+            </filter>
+          </defs>
+
+        </svg>
+
+        <!-- Island popup (bottom sheet) -->
+        <div class="ipop" id="ipop" onclick="cPop(event)">
+          <div class="isheet">
+            <div class="ihandle"></div>
+            <div id="iContent"></div>
+          </div>
+        </div>
+      </div>
+    </div><!-- v-map -->
+
+
+
+    <!-- ILHA DETALHE -->
+    <div class="pv" id="v-ilha">
+      <div style="min-height:calc(100vh - 28px);margin:-26px;padding:0;background:#3B82F6;display:flex;flex-direction:column;position:relative;overflow:hidden">
+
+        <!-- bg pattern -->
+        <div style="position:absolute;inset:0;background-image:radial-gradient(circle,rgba(255,255,255,.06) 1px,transparent 1px);background-size:40px 40px;pointer-events:none;z-index:0"></div>
+
+        <!-- top bar -->
+        <div style="position:relative;z-index:20;background:rgba(1,44,86,.7);backdrop-filter:blur(10px);padding:12px 18px;display:flex;align-items:center;gap:12px;border-bottom:1px solid rgba(255,255,255,.12);flex-shrink:0">
+          <button onclick="goMap()" style="background:rgba(255,255,255,.15);border:none;color:white;padding:7px 14px;border-radius:20px;font-family:'Outfit',sans-serif;font-weight:700;font-size:13px;cursor:pointer;transition:background .2s" onmouseover="this.style.background='rgba(255,255,255,.25)'" onmouseout="this.style.background='rgba(255,255,255,.15)'">← Mapa</button>
+          <div id="ilhaNome" style="font-size:16px;font-weight:900;color:white"></div>
+          <div id="ilhaProgHUD" style="margin-left:auto;font-size:12px;color:#7DDEF4;font-family:'Quicksand',sans-serif;background:rgba(255,255,255,.1);padding:4px 12px;border-radius:20px"></div>
+        </div>
+
+        <!-- scrollable island SVG + steps -->
+        <div style="flex:1;overflow-y:auto;display:flex;flex-direction:column;align-items:center;padding:30px 20px 60px;position:relative;z-index:10">
+
+          <!-- island label card (white pill top) -->
+          <div id="ilhaLabelCard" style="background:white;border-radius:16px;padding:14px 28px;margin-bottom:24px;text-align:center;box-shadow:0 4px 20px rgba(0,0,0,.2)">
+            <div id="ilhaLabelSub" style="font-size:12px;color:#64748b;font-family:'Quicksand',sans-serif;font-weight:600;margin-bottom:2px"></div>
+            <div id="ilhaLabelName" style="font-size:22px;font-weight:900;color:#012C56"></div>
+          </div>
+
+          <!-- SVG island with steps path -->
+          <svg id="ilhaSVG" viewBox="0 0 360 480" style="width:100%;max-width:380px;flex-shrink:0" xmlns="http://www.w3.org/2000/svg">
+
+            <!-- ILHA 1 style (green, done) -->
+            <g id="ilhaBody">
+              <!-- top piece (puzzle notch going up) -->
+              <g id="topPiece">
+                <rect id="topRect" x="120" y="10" width="120" height="130" rx="18" fill="#F59E0B"/>
+                <rect id="topRect2" x="120" y="10" width="120" height="22" rx="18" fill="#FDE68A" opacity="0.5"/>
+                <!-- brown base top -->
+                <path id="topBase" d="M122,128 L122,148 L175,158 L238,148 L238,128 Z" fill="#7C4B20"/>
+              </g>
+
+              <!-- main piece -->
+              <rect id="mainRect" x="20" y="200" width="320" height="200" rx="20" fill="#F59E0B"/>
+              <!-- highlight -->
+              <rect id="mainHL" x="20" y="200" width="320" height="26" rx="20" fill="#FDE68A" opacity="0.5"/>
+              <!-- brown base main -->
+              <path id="mainBase" d="M20,378 L20,400 L60,414 L300,414 L340,400 L340,378 Z" fill="#7C4B20"/>
+              <path id="mainBaseL" d="M20,378 L20,400 L55,410 L55,388 Z" fill="#5C3310"/>
+              <path id="mainBaseR" d="M340,378 L340,400 L305,410 L305,388 Z" fill="#5C3310"/>
+
+              <!-- connecting piece -->
+              <rect id="connRect" x="160" y="130" width="80" height="90" rx="0" fill="#F59E0B"/>
+              <!-- side shadow on connector -->
+              <rect id="connBase" x="160" y="200" width="80" height="20" fill="#D97706" opacity="0.4"/>
+            </g>
+
+            <!-- STEPS PATH (rendered by JS) -->
+            <g id="stepsGroup"></g>
+
+            <!-- DECORATIONS (rendered by JS) -->
+            <g id="decoGroup"></g>
+
+          </svg>
+
+          <!-- steps list below -->
+          <div id="stepsList" style="width:100%;max-width:420px;display:flex;flex-direction:column;gap:9px;margin-top:8px"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DESAFIO -->
+    <div class="pv" id="v-desafio">
+      <div style="min-height:calc(100vh - 28px);margin:-26px;padding:0;background:#0f172a;display:flex;flex-direction:column">
+        <!-- challenge header -->
+        <div style="background:#012C56;padding:12px 20px;display:flex;align-items:center;gap:14px;border-bottom:2px solid #0364DB;flex-shrink:0">
+          <button onclick="voltarIlha()" style="background:none;border:none;color:#71C8C0;font-weight:700;cursor:pointer;font-family:'Outfit',sans-serif;font-size:14px">← Ilha</button>
+          <div id="desTitle" style="font-weight:800;font-size:15px;color:white;flex:1"></div>
+          <div id="desProg" style="display:flex;gap:5px;align-items:center"></div>
+        </div>
+        <!-- challenge body -->
+        <div style="display:flex;flex:1;overflow:hidden;position:relative">
+          <!-- left: instruction panel (collapsible) -->
+          <div id="desPanel" style="width:260px;min-width:260px;padding:16px;border-right:1px solid #1e3a5f;display:flex;flex-direction:column;gap:12px;overflow-y:auto;transition:width .25s,min-width .25s,padding .25s;flex-shrink:0">
+            <div style="background:#1e3a5f;border-radius:14px;padding:15px;border-left:4px solid #71C8C0;flex-shrink:0">
+              <div id="desEmoji" style="font-size:23px;margin-bottom:4px"></div>
+              <h3 id="desH3" style="font-size:16px;font-weight:800;color:white;margin-bottom:5px"></h3>
+              <p id="desP" style="font-size:12.5px;color:#7dd3fc;font-family:'Quicksand',sans-serif;line-height:1.5"></p>
+            </div>
+            <div style="background:#0f2a47;border-radius:12px;padding:14px;border:1px solid #1e3a5f;flex:1">
+              <div style="font-size:11px;font-weight:700;color:#71C8C0;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">🧩 Como fazer</div>
+              <div id="desInst" style="font-size:12px;color:#94a3b8;font-family:'Quicksand',sans-serif;line-height:1.7"></div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:8px;flex-shrink:0">
+              <button onclick="showHint()" style="background:transparent;border:2px solid #FBC92A;color:#FBC92A;padding:11px;border-radius:10px;font-weight:700;font-size:13px;cursor:pointer;font-family:'Outfit',sans-serif">💡 Pedir dica</button>
+              <button onclick="completarDesafio()" style="background:#71C8C0;color:#012C56;border:none;padding:13px;border-radius:10px;font-weight:900;font-size:14px;cursor:pointer;font-family:'Outfit',sans-serif">✅ Marcar como concluído →</button>
+            </div>
+          </div>
+          <!-- toggle button -->
+          <button id="desPanelToggle" onclick="toggleDesPanel()" title="Mostrar/esconder instruções" style="position:absolute;left:252px;top:50%;transform:translateY(-50%);z-index:10;width:16px;height:48px;background:#1e3a5f;border:1px solid #2a3a5f;border-radius:0 6px 6px 0;cursor:pointer;color:#71C8C0;font-size:11px;display:flex;align-items:center;justify-content:center;transition:left .25s;padding:0">◀</button>
+          <!-- right: Scratch editor (embedded) -->
+          <div style="flex:1;display:flex;flex-direction:column;overflow:hidden;background:#0f172a">
+            <!-- Scratch iframe -->
+            <iframe src="./scratch/index.html" style="flex:1;border:none;width:100%;height:100%;display:block" allow="microphone" title="Editor Scratch"></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- CONQUISTAS -->
+    <div class="pv" id="v-badges">
+      <div class="pt">🏆 Conquistas</div>
+      <div class="ps2">3 de 12 desbloqueadas</div>
+      <div class="sec"><div class="sh"><div class="st">Conquistadas ✅</div></div>
+        <div class="bgg">
+          <div class="bgi" style="background:#fffbeb;border:2px solid var(--yel)"><div class="bi">🎯</div><div class="bn">Primeira missão</div><div class="bd2">Completa o 1º desafio</div></div>
+          <div class="bgi" style="background:#f0fdf4;border:2px solid var(--grn)"><div class="bi">🔥</div><div class="bn">3 dias seguidos</div><div class="bd2">Entra 3 dias seguidos</div></div>
+          <div class="bgi" style="background:#eff6ff;border:2px solid var(--blue)"><div class="bi">💡</div><div class="bn">LED mestre</div><div class="bd2">Completa o semáforo</div></div>
+        </div>
+      </div>
+      <div class="sec"><div class="sh"><div class="st">Por desbloquear 🔒</div></div>
+        <div class="bgg">
+          <div class="bgi" style="background:#f8fafc;border:2px dashed #e2e8f0;opacity:.55"><div class="bi">🤖</div><div class="bn">Robótico</div><div class="bd2">Completa a Ilha Principal</div></div>
+          <div class="bgi" style="background:#f8fafc;border:2px dashed #e2e8f0;opacity:.55"><div class="bi">🏆</div><div class="bn">Campeão</div><div class="bd2">Completa todas as ilhas</div></div>
+          <div class="bgi" style="background:#f8fafc;border:2px dashed #e2e8f0;opacity:.55"><div class="bi">🚀</div><div class="bn">Astronauta</div><div class="bd2">Atinge o Nível 5</div></div>
+          <div class="bgi" style="background:#f8fafc;border:2px dashed #e2e8f0;opacity:.55"><div class="bi">⚡</div><div class="bn">Relâmpago</div><div class="bd2">7 dias seguidos</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RANKING -->
+    <div class="pv" id="v-ranking">
+      <div class="pt">🏆 Ranking da Turma</div>
+      <div class="ps2">6º A — Robótica · semana atual</div>
+      <div class="sr2 c3">
+        <div class="sc"><div class="sci">👑</div><div class="scv">Sofia</div><div class="scl">Líder da semana</div></div>
+        <div class="sc"><div class="sci">⭐</div><div class="scv">1.240</div><div class="scl">XP total da turma</div></div>
+        <div class="sc"><div class="sci">🔥</div><div class="scv">74%</div><div class="scl">Participação ativa</div></div>
+      </div>
+      <div class="sec">
+        <div class="sh">
+          <div class="st">Classificação geral</div>
+          <select class="inp" style="width:auto;padding:6px 11px;font-size:13px" onchange="filterRanking(this.value)">
+            <option value="xp">Por XP</option>
+            <option value="desafios">Por desafios</option>
+            <option value="streak">Por streak</option>
+          </select>
+        </div>
+        <div id="rankingList">
+          <div class="rank-row gold">
+            <div class="rank-num g">🥇</div>
+            <div style="width:36px;height:36px;border-radius:9px;background:#f0fdf4;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">🦾</div>
+            <div style="flex:1"><div style="font-size:14px;font-weight:800;color:var(--bd)">Sofia Costa</div><div style="font-size:11px;color:var(--mut);font-family:'Quicksand',sans-serif">Nível 3 · 7 desafios · 🔥 15 dias</div></div>
+            <div style="text-align:right"><div style="font-size:16px;font-weight:900;color:var(--bd)">480 XP</div><div class="pb2" style="width:80px;margin:4px 0 0"><div class="pf" style="width:78%"></div></div></div>
+          </div>
+          <div class="rank-row gold">
+            <div class="rank-num g">🥇</div>
+            <div style="width:36px;height:36px;border-radius:9px;background:#dbeafe;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">🤖</div>
+            <div style="flex:1"><div style="font-size:14px;font-weight:800;color:var(--bd)">Ana Ferreira</div><div style="font-size:11px;color:var(--mut);font-family:'Quicksand',sans-serif">Nível 3 · 6 desafios · 🔥 12 dias</div></div>
+            <div style="text-align:right"><div style="font-size:16px;font-weight:900;color:var(--bd)">460 XP</div><div class="pb2" style="width:80px;margin:4px 0 0"><div class="pf" style="width:75%"></div></div></div>
+          </div>
+          <div class="rank-row silver">
+            <div class="rank-num s">🥈</div>
+            <div style="width:36px;height:36px;border-radius:9px;background:#fef9c3;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">👾</div>
+            <div style="flex:1"><div style="font-size:14px;font-weight:800;color:var(--bd)">Rui Santos</div><div style="font-size:11px;color:var(--mut);font-family:'Quicksand',sans-serif">Nível 2 · 4 desafios · 🔥 7 dias</div></div>
+            <div style="text-align:right"><div style="font-size:16px;font-weight:900;color:var(--bd)">280 XP</div><div class="pb2" style="width:80px;margin:4px 0 0"><div class="pf" style="width:46%"></div></div></div>
+          </div>
+          <div class="rank-row bronze">
+            <div class="rank-num b">🥉</div>
+            <div style="width:36px;height:36px;border-radius:9px;background:#fce7f3;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">🧑‍💻</div>
+            <div style="flex:1"><div style="font-size:14px;font-weight:800;color:var(--bd)">Miguel Lopes</div><div style="font-size:11px;color:var(--mut);font-family:'Quicksand',sans-serif">Nível 1 · 1 desafio · 🔥 2 dias</div></div>
+            <div style="text-align:right"><div style="font-size:16px;font-weight:900;color:var(--bd)">80 XP</div><div class="pb2" style="width:80px;margin:4px 0 0"><div class="pf" style="width:13%"></div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SETTINGS -->
+    <div class="pv" id="v-set">
+      <div class="pt">⚙️ Definições</div><div class="ps2">Gere o teu perfil</div>
+
+      <!-- CRIANÇA: avatar picker -->
+      <div class="sec roleOnly-child">
+        <div class="sh"><div class="st">O meu avatar</div></div>
+        <div style="display:flex;align-items:center;gap:18px;margin-top:6px">
+          <div id="bigAv" class="bigAv">🤖</div>
+          <div style="flex:1">
+            <p style="font-size:12px;color:#64748b;font-family:'Quicksand',sans-serif;margin-bottom:9px">Clica para escolher o teu avatar</p>
+            <div class="ag" id="avatarPicker">
+              <div class="av on" onclick="setAvatar('🤖',this)">🤖</div>
+              <div class="av" onclick="setAvatar('👾',this)">👾</div>
+              <div class="av" onclick="setAvatar('🦾',this)">🦾</div>
+              <div class="av" onclick="setAvatar('🧑‍💻',this)">🧑‍💻</div>
+              <div class="av" onclick="setAvatar('👩‍🚀',this)">👩‍🚀</div>
+              <div class="av" onclick="setAvatar('🐱',this)">🐱</div>
+              <div class="av" onclick="setAvatar('🦊',this)">🦊</div>
+              <div class="av" onclick="setAvatar('🐼',this)">🐼</div>
+              <div class="av" onclick="setAvatar('🦄',this)">🦄</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CRIANÇA: nome (sem email) -->
+      <div class="sec roleOnly-child">
+        <div class="sh"><div class="st">Perfil</div><button class="bsm bb2">Guardar</button></div>
+        <div class="f"><label>O meu nome</label><input class="inp" id="cName" type="text" value="Maria"/></div>
+      </div>
+
+      <!-- ADULTO: perfil completo -->
+      <div class="sec roleOnly-adult">
+        <div class="sh"><div class="st">Perfil</div><button class="bsm bb2">Guardar</button></div>
+        <div class="fr" style="margin-bottom:13px">
+          <div class="f"><label>Nome</label><input class="inp" type="text" value="João"/></div>
+          <div class="f"><label>Apelido</label><input class="inp" type="text" value="Silva"/></div>
+        </div>
+        <div class="f"><label>Email</label><input class="inp" type="email" value="joao@email.pt"/></div>
+      </div>
+    </div>
+
+  </main>
+</div><!-- ps -->
+</div><!-- PA -->
+
+<!-- MODALS -->
+<div class="toast-wrap" id="toastWrap"></div>
+
+<div class="mo" id="mo-addC"><div class="md">
+  <h3>👶 Adicionar filho</h3><p>Cria as credenciais que o teu filho vai usar para entrar.</p>
+  <div class="fr">
+    <div class="f"><label>Nome</label><input class="inp" type="text" placeholder="Maria"/></div>
+    <div class="f"><label>Idade</label><input class="inp" type="number" placeholder="10" min="7" max="14"/></div>
+  </div>
+  <div class="f"><label>Nome de utilizador <span style="color:#94a3b8;font-weight:500;text-transform:none;letter-spacing:0">(login do filho)</span></label><input class="inp" type="text" placeholder="maria_silva" autocomplete="off"/></div>
+  <div class="f"><label>Palavra-passe</label>
+    <div class="pw"><input class="inp" type="password" placeholder="Mínimo 6 caracteres"/>
+      <button class="eye" type="button" onclick="togPw(this)">👁</button></div>
+  </div>
+  <div class="f"><label>Avatar</label><div class="ag"><div class="av on">🤖</div><div class="av">👾</div><div class="av">🦾</div><div class="av">🧑‍💻</div><div class="av">👩‍🚀</div><div class="av">🐱</div></div></div>
+  <div class="ma"><button style="background:#f1f5f9;color:#374151" onclick="cMo('addC')">Cancelar</button><button style="background:var(--blue);color:white" onclick="cMo('addC',true)">Criar ✓</button></div>
+</div></div>
+
+<div class="mo" id="mo-addCl"><div class="md">
+  <h3>🏫 Nova turma</h3><p>Cria uma turma. O nome e a palavra-passe serão usados pelos alunos para entrar.</p>
+  <div class="f"><label>Nome da turma <span style="color:#94a3b8;font-weight:500;text-transform:none;letter-spacing:0">(login partilhado pelos alunos)</span></label><input class="inp" type="text" placeholder="6º A — Robótica"/></div>
+  <div class="f"><label>Escola</label><input class="inp" type="text" placeholder="Agrupamento..."/></div>
+  <div class="f"><label>Palavra-passe da turma</label>
+    <div class="pw"><input class="inp" type="password" placeholder="Os alunos usam esta password"/>
+      <button class="eye" type="button" onclick="togPw(this)">👁</button></div>
+  </div>
+  <div class="ma"><button style="background:#f1f5f9;color:#374151" onclick="cMo('addCl')">Cancelar</button><button style="background:var(--blue);color:white" onclick="cMo('addCl',true)">Criar ✓</button></div>
+</div></div>
+
+<div class="mo" id="mo-addCh"><div class="md">
+  <h3>⚡ Novo desafio</h3><p>O desafio fica visível imediatamente para os alunos da ilha selecionada.</p>
+  <div class="fr">
+    <div class="f" style="flex:0 0 60px"><label>Emoji</label><input class="inp" type="text" id="newChEmo" placeholder="🔌" maxlength="4" style="text-align:center;font-size:20px"/></div>
+    <div class="f" style="flex:1"><label>Título</label><input class="inp" type="text" id="newChTitle" placeholder="Ex: Semáforo com LED"/></div>
+  </div>
+  <div class="f"><label>Descrição / Instruções</label><textarea class="cede" id="newChDesc" style="width:100%;min-height:70px" placeholder="O que o aluno tem de fazer..."></textarea></div>
+  <div class="fr">
+    <div class="f"><label>Ilha</label>
+      <select class="inp" id="newChIsland">
+        <option value="2">🏝️ Ilha Principal</option>
+        <option value="1">🧭 Diagnóstico</option>
+        <option value="3">🔍 Nível 2</option>
+      </select>
+    </div>
+    <div class="f"><label>Dificuldade</label>
+      <select class="inp" id="newChDif">
+        <option value="Fácil">Fácil</option>
+        <option value="Médio">Médio</option>
+        <option value="Difícil">Difícil</option>
+      </select>
+    </div>
+  </div>
+  <div class="f"><label>Tempo estimado (ex: 10–15 min)</label><input class="inp" type="text" id="newChMins" placeholder="5–10 min"/></div>
+  <div class="ma">
+    <button style="background:#f1f5f9;color:#374151" onclick="cMo('addCh')">Cancelar</button>
+    <button style="background:var(--blue);color:white" onclick="addNewChallenge()">Publicar desafio ✓</button>
+  </div>
+</div></div>
+
+<script>
+// ── globals
+let role = 'enc';
+let uName = '';
+let diagA = [];
+let curQ = 0;
+let cLvl = 0;
+let loginMode = 'child';
+let _mapDragged = false;
+
+// ── TOAST ─────────────────────────────────────────────────────────────────────
+function toast(msg, type='ok') {
+  const wrap = document.getElementById('toastWrap');
+  if (!wrap) return;
+  const icons = { ok:'✅', err:'❌', info:'💡' };
+  const t = document.createElement('div');
+  t.className = 'toast ' + type;
+  t.innerHTML = `<span style="flex-shrink:0">${icons[type]||'ℹ️'}</span><span>${msg}</span>`;
+  wrap.appendChild(t);
+  setTimeout(() => {
+    t.style.animation = 'tOut .3s ease forwards';
+    setTimeout(() => t.remove(), 320);
+  }, 3200);
+}
+
+// ── NOTIFICAÇÕES ──────────────────────────────────────────────────────────────
+let notifOpen = false;
+function toggleNotifs(e) {
+  if (e) e.stopPropagation();
+  notifOpen = !notifOpen;
+  const dd = document.getElementById('notifDd');
+  const btn = document.getElementById('notifBtn');
+  if (!dd) return;
+  dd.classList.toggle('on', notifOpen);
+  if (notifOpen && btn) {
+    const r = btn.getBoundingClientRect();
+    dd.style.top = (r.bottom + 6) + 'px';
+  }
+}
+function markAllRead() {
+  document.querySelectorAll('.notif-item.unread').forEach(el => el.classList.remove('unread'));
+  const badge = document.getElementById('notifBadge');
+  if (badge) badge.style.display = 'none';
+  notifOpen = false;
+  const dd = document.getElementById('notifDd');
+  if (dd) dd.classList.remove('on');
+  toast('Notificações lidas ✓', 'ok');
+}
+document.addEventListener('click', function(e) {
+  if (notifOpen && !e.target.closest('#notifWrap')) {
+    notifOpen = false;
+    const dd = document.getElementById('notifDd');
+    if (dd) dd.classList.remove('on');
+  }
+});
+
+// ── PESQUISA DE ALUNOS ────────────────────────────────────────────────────────
+function searchStudents(q) {
+  q = (q || '').toLowerCase();
+  document.querySelectorAll('#v-turma .tbl tbody tr').forEach(tr => {
+    const name = (tr.querySelector('td:first-child')?.textContent || '').toLowerCase();
+    tr.style.display = name.includes(q) ? '' : 'none';
+  });
+}
+
+// ── RANKING ───────────────────────────────────────────────────────────────────
+function filterRanking(by) {
+  const labels = { xp:'XP total', desafios:'desafios completos', streak:'dias consecutivos' };
+  toast('A ordenar por ' + (labels[by]||by) + '...', 'info');
+}
+
+// ── PERSISTÊNCIA DE DESAFIOS (localStorage) ───────────────────────────────────
+function saveIslandsData() {
+  try { localStorage.setItem('jc_ilhas', JSON.stringify(ilhasData)); } catch(e) {}
+}
+function loadIslandsData() {
+  try {
+    const saved = localStorage.getItem('jc_ilhas');
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      // Merge saved data into ilhasData (preserves any new keys added in code)
+      Object.keys(parsed).forEach(k => {
+        if (ilhasData[k]) ilhasData[k].steps = parsed[k].steps;
+      });
+    }
+  } catch(e) {}
+}
+
+// ── EDITOR DE DESAFIOS DO PROFESSOR ──────────────────────────────────────────
+let currentEdIsland = 2;
+
+function renderChallengeEditor(islandId) {
+  currentEdIsland = islandId || 2;
+  const ilha = ilhasData[currentEdIsland];
+  if (!ilha) return;
+
+  const title = document.getElementById('edIslandTitle');
+  if (title) title.textContent = ilha.emoji + ' ' + ilha.nome.replace(/^[①②③] /, '');
+
+  const container = document.getElementById('challengeEditorList');
+  if (!container) return;
+
+  if (!ilha.steps || ilha.steps.length === 0) {
+    container.innerHTML = '<div style="text-align:center;padding:24px;color:#94a3b8;font-family:\'Quicksand\',sans-serif;font-size:13px">Sem desafios nesta ilha. Adiciona o primeiro! ⬇️</div>';
+    return;
+  }
+
+  container.innerHTML = ilha.steps.map(s => {
+    const isDone = s.done;
+    const isActive = s.active && !s.done;
+    const isLocked = !s.done && !s.active;
+    const statusTxt = isDone ? 'Completo' : isActive ? 'Ativo ▶' : 'Bloqueado 🔒';
+    const statusBg = isDone ? '#dcfce7;color:#166534' : isActive ? '#fef9c3;color:#854d0e' : '#f1f5f9;color:#94a3b8';
+    const activeBtnLabel = isActive ? '⏸ Desativar' : '▶ Ativar';
+    return `
+    <div class="ced" id="ced-${currentEdIsland}-${s.n}">
+      <div class="ceh">
+        <div style="display:flex;align-items:center;gap:9px;flex:1;min-width:0">
+          <span style="font-size:20px;flex-shrink:0">${s.emo||'📋'}</span>
+          <input class="ceti" value="${s.titulo.replace(/"/g,'&quot;')}"
+            onchange="updateChallenge(${currentEdIsland},${s.n},'titulo',this.value)"
+            style="flex:1;min-width:0"/>
+        </div>
+        <div style="display:flex;gap:6px;align-items:center;flex-shrink:0;margin-left:8px">
+          <span style="background:${statusBg};padding:2px 9px;border-radius:20px;font-size:10px;font-weight:700;white-space:nowrap">${statusTxt}</span>
+          <button class="bsm bo" onclick="toggleActive(${currentEdIsland},${s.n})" style="font-size:11px;white-space:nowrap">${activeBtnLabel}</button>
+          <button class="bsm" style="background:#fee2e2;color:#991b1b;border:none" onclick="deleteChallenge(${currentEdIsland},${s.n})">🗑</button>
+        </div>
+      </div>
+      <textarea class="cede"
+        onchange="updateChallenge(${currentEdIsland},${s.n},'desc',this.value)"
+        placeholder="Descrição do desafio...">${(s.desc||'').replace(/</g,'&lt;')}</textarea>
+      <div class="cem">
+        <span class="ct cti">${ilha.nome.replace(/^[①②③] /,'')}</span>
+        <span class="ct ctd">${s.dif||'Fácil'}</span>
+        <span style="font-size:11px;color:#94a3b8;font-family:'Quicksand',sans-serif">Scratch · ${s.mins||'5–10'} min</span>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function updateChallenge(islandId, stepN, field, value) {
+  const step = (ilhasData[islandId]||{steps:[]}).steps.find(s => s.n === stepN);
+  if (!step) return;
+  step[field] = value;
+  saveIslandsData();
+}
+
+function toggleActive(islandId, stepN) {
+  const ilha = ilhasData[islandId];
+  if (!ilha) return;
+  const step = ilha.steps.find(s => s.n === stepN);
+  if (!step) return;
+  if (step.done) {
+    toast('Desafio já concluído pelos alunos — não pode ser desativado.', 'err');
+    return;
+  }
+  step.active = !step.active;
+  saveIslandsData();
+  renderChallengeEditor(islandId);
+  toast(step.active ? '▶ Desafio ativado — visível para os alunos!' : '⏸ Desafio desativado.', step.active ? 'ok' : 'info');
+}
+
+function deleteChallenge(islandId, stepN) {
+  const ilha = ilhasData[islandId];
+  if (!ilha) return;
+  const step = ilha.steps.find(s => s.n === stepN);
+  if (step && step.done) {
+    toast('Não é possível remover um desafio já concluído.', 'err');
+    return;
+  }
+  ilha.steps = ilha.steps.filter(s => s.n !== stepN);
+  // Re-number
+  ilha.steps.forEach((s, i) => { s.n = i + 1; });
+  saveIslandsData();
+  renderChallengeEditor(islandId);
+  toast('Desafio removido.', 'info');
+}
+
+function addNewChallenge() {
+  const title = (document.getElementById('newChTitle')||{}).value?.trim();
+  const desc  = (document.getElementById('newChDesc')||{}).value?.trim();
+  const emo   = (document.getElementById('newChEmo')||{}).value?.trim() || '📋';
+  const islandId = parseInt((document.getElementById('newChIsland')||{}).value || '2');
+  const dif   = (document.getElementById('newChDif')||{}).value || 'Fácil';
+  const mins  = (document.getElementById('newChMins')||{}).value?.trim() || '5–10 min';
+
+  if (!title) { toast('Adiciona um título ao desafio!', 'err'); return; }
+
+  const ilha = ilhasData[islandId];
+  if (!ilha) return;
+
+  const newStep = {
+    n: ilha.steps.length + 1,
+    titulo: title,
+    desc: desc || title,
+    done: false,
+    active: true,          // publicado imediatamente
+    emo: emo,
+    dif: dif,
+    mins: mins,
+    inst: desc || title,
+    blocks: [],
+    robotTxt: '🤖',
+    output: 'Clica ▶ para executar!'
+  };
+
+  ilha.steps.push(newStep);
+  saveIslandsData();
+
+  // Sync island selector if needed
+  const sel = document.getElementById('edIslandSel');
+  if (sel) sel.value = String(islandId);
+
+  // Close modal & refresh editor
+  document.getElementById('mo-addCh').classList.remove('on');
+
+  // Clear form
+  ['newChTitle','newChDesc','newChEmo','newChMins'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = '';
+  });
+
+  renderChallengeEditor(islandId);
+  toast('✅ Desafio "' + title + '" publicado! Os alunos já o podem ver.', 'ok');
+}
+
+// ── THEME (claro / escuro) ────────────────────────────────────────────────────
+function setTheme(mode){
+  document.body.classList.toggle('dark', mode==='dark');
+  try{ localStorage.setItem('jc_theme', mode); }catch(e){}
+  const btns = document.querySelectorAll('#themeToggle .th-btn');
+  if(btns.length===2){
+    btns[0].classList.toggle('on', mode==='light');
+    btns[1].classList.toggle('on', mode==='dark');
+  }
+}
+function loadTheme(){
+  let saved = 'light';
+  try{ saved = localStorage.getItem('jc_theme') || 'light'; }catch(e){}
+  setTheme(saved);
+}
+function toggleTheme(){
+  setTheme(document.body.classList.contains('dark') ? 'light' : 'dark');
+}
+
+// ── AVATAR (apenas criança) ───────────────────────────────────────────────────
+function setAvatar(emoji, el){
+  // visual selection in picker
+  if(el){
+    el.parentElement.querySelectorAll('.av').forEach(x => x.classList.remove('on'));
+    el.classList.add('on');
+  }
+  // big preview animation
+  const big = document.getElementById('bigAv');
+  if(big){
+    big.textContent = emoji;
+    big.classList.add('pop');
+    setTimeout(()=>big.classList.remove('pop'), 250);
+  }
+  // top-bar avatar in sidebar
+  const sAv = document.getElementById('sAv');
+  if(sAv && role==='child') sAv.textContent = emoji;
+  try{ localStorage.setItem('jc_avatar', emoji); }catch(e){}
+}
+function loadAvatar(){
+  let saved = '🤖';
+  try{ saved = localStorage.getItem('jc_avatar') || '🤖'; }catch(e){}
+  const big = document.getElementById('bigAv');
+  if(big) big.textContent = saved;
+  // mark the matching .av as on
+  document.querySelectorAll('#avatarPicker .av').forEach(el => {
+    el.classList.toggle('on', el.textContent.trim() === saved);
+  });
+  return saved;
+}
+
+// Apply theme as early as possible to avoid flash
+loadTheme();
+// Load persisted island/challenge data
+if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', loadIslandsData);
+else loadIslandsData();
+
+// Login arranca em modo "Sou aluno"
+if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', () => setLoginMode('child'));
+else setLoginMode('child');
+
+// ── MAP PAN (transform-based — funciona nos dois eixos, em qualquer ecrã) ─────
+const VBW = 1330, VBH = 900;        // janela visível (viewBox)
+const WORLD_W = 1760, WORLD_H = 1280; // dimensão total do mundo (até às ilhas mais distantes)
+let mapPan = { x: 0, y: 0 };
+
+function applyMapPan(){
+  const wg = document.getElementById('worldGroup');
+  if(wg) wg.setAttribute('transform', 'translate(' + mapPan.x + ',' + mapPan.y + ')');
+}
+
+function clampMapPan(){
+  const svg = document.getElementById('isoMap');
+  let visW = VBW, visH = VBH;
+  if(svg){
+    const r = svg.getBoundingClientRect();
+    if(r.width > 0 && r.height > 0){
+      // preserveAspectRatio=slice => escala = maior rácio; área visível = container/escala
+      const scale = Math.max(r.width / VBW, r.height / VBH);
+      visW = r.width / scale;
+      visH = r.height / scale;
+    }
+  }
+  const minX = Math.min(0, visW - WORLD_W);
+  const minY = Math.min(0, visH - WORLD_H);
+  mapPan.x = Math.max(minX, Math.min(0, mapPan.x));
+  mapPan.y = Math.max(minY, Math.min(0, mapPan.y));
+}
+
+(function setupMapPan(){
+  const init = () => {
+    const c = document.getElementById('mapPan');
+    const svg = document.getElementById('isoMap');
+    const hint = document.getElementById('panHint');
+    if(!c || !svg) return;
+    let down = false, sx = 0, sy = 0, px = 0, py = 0, moved = 0, hintGone = false;
+
+    const hideHint = () => {
+      if(hintGone || !hint) return;
+      hintGone = true;
+      hint.style.opacity = '0';
+      setTimeout(() => { if(hint) hint.style.display = 'none'; }, 500);
+    };
+    const vbScale = () => {
+      const r = svg.getBoundingClientRect();
+      return Math.max(r.width / VBW, r.height / VBH) || 1;
+    };
+    const start = (cx,cy) => {
+      down = true; moved = 0;
+      sx = cx; sy = cy; px = mapPan.x; py = mapPan.y;
+      c.style.cursor = 'grabbing';
+    };
+    const move = (cx,cy) => {
+      if(!down) return;
+      const s = vbScale();
+      moved = Math.max(moved, Math.abs(cx-sx) + Math.abs(cy-sy));
+      mapPan.x = px + (cx - sx) / s;
+      mapPan.y = py + (cy - sy) / s;
+      clampMapPan();
+      applyMapPan();
+      if(moved > 5) hideHint();
+    };
+    const end = () => {
+      if(!down) return;
+      down = false;
+      c.style.cursor = 'grab';
+      if(moved > 5){ _mapDragged = true; setTimeout(() => { _mapDragged = false; }, 30); }
+    };
+
+    c.addEventListener('mousedown', e => { if(e.button!==0) return; start(e.clientX,e.clientY); e.preventDefault(); });
+    window.addEventListener('mousemove', e => move(e.clientX,e.clientY));
+    window.addEventListener('mouseup', end);
+    c.addEventListener('touchstart', e => { if(e.touches.length===1) start(e.touches[0].clientX,e.touches[0].clientY); }, {passive:true});
+    c.addEventListener('touchmove', e => { if(e.touches.length===1) move(e.touches[0].clientX,e.touches[0].clientY); }, {passive:true});
+    c.addEventListener('touchend', end);
+    setTimeout(hideHint, 4000);
+  };
+  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
+})();
+
+// ── floating bg icons
+(function(){
+  const icons=['🤖','⚡','🔌','💡','🔧','🎯','🚀','⭐','🧩','💻'];
+  const c=document.getElementById('FI');
+  for(let i=0;i<12;i++){
+    const el=document.createElement('div');
+    el.className='fi';
+    el.textContent=icons[i%icons.length];
+    const d=12+Math.random()*16;
+    el.style.cssText=`left:${Math.random()*100}%;top:${Math.random()*100}%;font-size:${16+Math.random()*14}px;animation-duration:${d}s;animation-delay:-${Math.random()*d}s`;
+    c.appendChild(el);
+  }
+})();
+
+// ── SIGNUP ────────────────────────────────────────────────────────────────────
+// Alternar entre formulário de login e fluxo de registo
+function showRegister(){
+  document.getElementById('loginView').style.display = 'none';
+  document.getElementById('registerView').style.display = 'block';
+  ['s1','s2','s3','sOk'].forEach(id => { const e=document.getElementById(id); if(e) e.classList.remove('on'); });
+  const s1=document.getElementById('s1'); if(s1) s1.classList.add('on');
+  window.scrollTo(0,0);
+}
+function showLogin(){
+  document.getElementById('registerView').style.display = 'none';
+  document.getElementById('loginView').style.display = 'block';
+  window.scrollTo(0,0);
+}
+
+function setPnl(id, show) {
+  const el = document.getElementById(id);
+  if (el) { el.classList.toggle('on', show); }
+}
+
+function pickR(el, r) {
+  role = r;
+  document.querySelectorAll('.rc').forEach(c => c.classList.remove('on'));
+  el.classList.add('on');
+  document.getElementById('scWrap').style.display = r==='prof' ? 'block' : 'none';
+}
+
+function gS(n) {
+  ['s1','s2','s3','sOk'].forEach(id => { const e=document.getElementById(id); if(e) e.classList.remove('on'); });
+  const t = n==='Ok' ? 'sOk' : 's'+n;
+  const el = document.getElementById(t);
+  if (el) el.classList.add('on');
+}
+
+function vS2() {
+  const email = document.getElementById('rem').value.trim();
+  const ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  document.getElementById('eErr').classList.toggle('on', !ok);
+  document.getElementById('rem').classList.toggle('er', !ok);
+  if (ok) gS(3);
+}
+
+function chkP() {
+  const pw = document.getElementById('pw').value;
+  const s = (pw.length>=8?1:0)+(/[A-Z]/.test(pw)?1:0)+(/\d/.test(pw)?1:0)+(/[^A-Za-z0-9]/.test(pw)?1:0);
+  const cols = ['#e2e8f0','#ef4444','#f59e0b','#3b82f6','#22c55e'];
+  const lbls = ['','Fraca','Razoável','Boa','Muito forte'];
+  for(let i=1;i<=4;i++) document.getElementById('pb'+i).style.background = i<=s ? cols[s] : '#e2e8f0';
+  document.getElementById('pl').textContent = s ? 'Segurança: '+lbls[s] : '';
+}
+
+function vS3() {
+  const pw = document.getElementById('pw').value;
+  const pw2 = document.getElementById('pw2').value;
+  let ok = true;
+  if (pw.length < 8) { document.getElementById('pErr').classList.add('on'); document.getElementById('pw').classList.add('er'); ok=false; }
+  else { document.getElementById('pErr').classList.remove('on'); document.getElementById('pw').classList.remove('er'); }
+  if (pw !== pw2) { document.getElementById('p2Err').classList.add('on'); document.getElementById('pw2').classList.add('er'); ok=false; }
+  else { document.getElementById('p2Err').classList.remove('on'); document.getElementById('pw2').classList.remove('er'); }
+  if (!ok) return;
+  uName = document.getElementById('fn').value || 'Utilizador';
+  document.getElementById('wN').textContent = uName;
+  document.getElementById('wM').textContent = role==='enc'
+    ? 'Conta criada! Podes adicionar os teus filhos e acompanhar o progresso.'
+    : 'Conta criada! Podes criar turmas e personalizar os desafios.';
+  document.getElementById('wI').textContent = role==='enc' ? '👪' : '🏫';
+  document.getElementById('wR').textContent = role==='enc' ? 'Enc. de Educação' : 'Professor';
+  gS('Ok');
+}
+
+function togP(id, btn) {
+  const el = document.getElementById(id);
+  el.type = el.type==='text' ? 'password' : 'text';
+  btn.textContent = el.type==='text' ? '🙈' : '👁';
+}
+
+function setLoginMode(m){
+  loginMode = m;
+  const tabs = document.querySelectorAll('#loginTabs button');
+  tabs[0].classList.toggle('on', m==='child');
+  tabs[1].classList.toggle('on', m==='adult');
+  const inp = document.getElementById('le');
+  const lab = document.getElementById('leLab');
+  const adultOnly = document.getElementById('adultOnly');
+  const forgot = document.getElementById('forgotWrap');
+  const hint = document.getElementById('loginHint');
+  if(m==='child'){
+    lab.textContent = 'Nome de utilizador ou turma';
+    inp.type = 'text';
+    inp.placeholder = 'maria_silva, user1 ou 6A...';
+    inp.value = '';
+    inp.setAttribute('autocomplete','username');
+    adultOnly.style.display = 'none';
+    forgot.style.display = 'none';
+    hint.innerHTML = 'Testa: <strong>maria</strong> · <strong>user1</strong> · <strong>6A</strong><br>password: qualquer coisa';
+  } else {
+    lab.textContent = 'Email';
+    inp.type = 'email';
+    inp.placeholder = 'email@exemplo.pt';
+    inp.value = '';
+    inp.setAttribute('autocomplete','email');
+    adultOnly.style.display = '';
+    forgot.style.display = '';
+    hint.innerHTML = 'Testa: <strong>prof@test.pt</strong> · <strong>pai@test.pt</strong><br>password: qualquer coisa';
+  }
+  document.getElementById('lErr').classList.remove('on');
+}
+
+function togPw(btn){
+  const inp = btn.previousElementSibling;
+  if(inp && inp.tagName==='INPUT'){
+    inp.type = inp.type==='text' ? 'password' : 'text';
+    btn.textContent = inp.type==='text' ? '🙈' : '👁';
+  }
+}
+
+function doL() {
+  const e = document.getElementById('le').value.trim();
+  const p = document.getElementById('lp').value;
+  const err = document.getElementById('lErr');
+  if (!e || !p) { err.classList.add('on'); return; }
+  err.classList.remove('on');
+  if(loginMode === 'child'){
+    role = 'child';
+    // Derive display name from username (split on common separators, capitalize first chunk)
+    const base = e.split(/[_\-\.\s]/)[0] || e;
+    uName = base.charAt(0).toUpperCase() + base.slice(1).toLowerCase();
+  } else {
+    role = e.includes('prof') ? 'prof' : 'enc';
+    uName = e.includes('prof') ? 'Ana' : 'João';
+  }
+  goP();
+}
+
+// ── PLATFORM ──────────────────────────────────────────────────────────────────
+function goP() {
+  document.getElementById('SA').classList.add('h');
+  document.getElementById('PA').classList.add('on');
+  window.scrollTo(0,0);
+
+  const isP = role==='prof';
+  const isC = role==='child';
+  // For children, load saved avatar; for adults use role icon
+  let childAvatar = '🤖';
+  if(isC) { childAvatar = loadAvatar(); }
+  document.getElementById('sAv').textContent = isP ? '🏫' : isC ? childAvatar : '👪';
+  document.getElementById('sNm').textContent = uName;
+  document.getElementById('sRl').textContent = isP ? 'Professor' : isC ? 'Criança' : 'Enc. de Educação';
+  document.getElementById('dN').textContent = uName;
+  document.getElementById('dNP').textContent = uName;
+  // child name field in settings
+  const cn = document.getElementById('cName');
+  if(cn && isC) cn.value = uName;
+
+  // Show/hide settings sections per role
+  document.querySelectorAll('.roleOnly-child').forEach(el => { el.style.display = isC ? '' : 'none'; });
+  document.querySelectorAll('.roleOnly-adult').forEach(el => { el.style.display = (!isC) ? '' : 'none'; });
+
+  // Notification bell — only for enc/prof
+  const notifWrap = document.getElementById('notifWrap');
+  if (notifWrap) notifWrap.style.display = isC ? 'none' : '';
+
+  // Welcome toast
+  const roleLabel = isP ? 'Professor' : isC ? 'Aluno' : 'Enc. de Educação';
+  setTimeout(() => toast('Bem-vindo de volta, ' + uName + '! 👋', 'info'), 500);
+
+  const nav = document.getElementById('sNav');
+  if (isP) {
+    nav.innerHTML = `
+      <div class="ns">Principal</div>
+      <button class="ni on" onclick="shV('v-prof',this)"><span class="ico">🏠</span><span>Dashboard</span></button>
+      <button class="ni" onclick="shV('v-turma',this)"><span class="ico">🏫</span><span>Turmas</span></button>
+      <button class="ni" onclick="shV('v-desfios',this);renderChallengeEditor(currentEdIsland)"><span class="ico">⚡</span><span>Desafios</span><div class="nd"></div></button>
+      <button class="ni" onclick="shV('v-ranking',this)"><span class="ico">🏆</span><span>Ranking</span></button>
+      <div class="ns">Conta</div>
+      <button class="ni" onclick="shV('v-set',this)"><span class="ico">⚙️</span><span>Definições</span></button>`;
+    shV('v-prof');
+    setTimeout(() => renderChallengeEditor(2), 50);
+  } else if (isC) {
+    nav.innerHTML = `
+      <div class="ns">Aventura</div>
+      <button class="ni on" onclick="shV('v-map',this)"><span class="ico">🗺️</span><span>Mapa</span></button>
+      <button class="ni" onclick="shV('v-badges',this)"><span class="ico">🏆</span><span>Conquistas</span></button>
+      <div class="ns">Conta</div>
+      <button class="ni" onclick="shV('v-set',this)"><span class="ico">⚙️</span><span>Perfil</span></button>`;
+    initDiag();
+    shV('v-diag');
+  } else {
+    nav.innerHTML = `
+      <div class="ns">Principal</div>
+      <button class="ni on" onclick="shV('v-enc',this)"><span class="ico">🏠</span><span>Dashboard</span></button>
+      <button class="ni" onclick="shV('v-c1',this)"><span class="ico">🤖</span><span>Maria</span></button>
+      <button class="ni" onclick="shV('v-c2',this)"><span class="ico">👾</span><span>Pedro</span></button>
+      <div class="ns">Conta</div>
+      <button class="ni" onclick="shV('v-set',this)"><span class="ico">⚙️</span><span>Definições</span></button>`;
+    shV('v-enc');
+  }
+}
+
+function shV(id, btn) {
+  document.querySelectorAll('.pv').forEach(v => v.classList.remove('on'));
+  const el = document.getElementById(id);
+  if (el) el.classList.add('on');
+  if (btn) { document.querySelectorAll('.ni').forEach(b => b.classList.remove('on')); btn.classList.add('on'); }
+  window.scrollTo(0,0);
+}
+
+function shM(id) { document.getElementById('mo-'+id).classList.add('on'); }
+function cMo(id, saved) {
+  document.getElementById('mo-'+id).classList.remove('on');
+  if (saved) {
+    const msgs = { addC:'Filho adicionado com sucesso! 🎉', addCl:'Turma criada! 🏫', addCh:'Desafio adicionado! ⚡' };
+    if (msgs[id]) toast(msgs[id], 'ok');
+  }
+}
+
+document.querySelectorAll('.mo').forEach(m => m.addEventListener('click', e => { if(e.target===m) m.classList.remove('on'); }));
+document.querySelectorAll('.av').forEach(a => a.addEventListener('click', function() {
+  this.closest('.ag').querySelectorAll('.av').forEach(x => x.classList.remove('on'));
+  this.classList.add('on');
+}));
+
+function logout() {
+  document.getElementById('PA').classList.remove('on');
+  document.getElementById('SA').classList.remove('h');
+  ['s1','s2','s3','sOk'].forEach(id => { const e=document.getElementById(id); if(e) e.classList.remove('on'); });
+  const s1=document.getElementById('s1'); if(s1) s1.classList.add('on');
+  if(typeof showLogin === 'function') showLogin();
+  window.scrollTo(0,0);
+}
+
+// ── DIAGNÓSTICO ───────────────────────────────────────────────────────────────
+const Qs = [
+  { e:'🤔', q:'Já alguma vez programaste ou usaste robótica?',
+    opts:['Nunca!','Já vi mas nunca experimentei','Já fiz Scratch ou similar','Já programei em Python ou Arduino'],
+    icos:['😅','👀','🎯','🚀'], sc:[0,1,2,3] },
+  { e:'💡', q:'O que é um LED?',
+    opts:['Não sei','Uma lâmpada pequena','Um componente que emite luz com corrente','Um microcontrolador programável'],
+    icos:['🤷','💡','⚡','🖥️'], sc:[0,1,2,3] },
+  { e:'🔢', q:'Semáforo: verde 30s, amarelo 5s, vermelho 25s. Duração de 1 ciclo?',
+    opts:['Não sei','~50 segundos','60 segundos','60s — e já posso programar!'],
+    icos:['🤷','⏱️','🟢','🤖'], sc:[0,1,2,3] },
+  { e:'🎮', q:'Como preferes aprender?',
+    opts:['A ver vídeos','Passo a passo com instruções','A explorar e experimentar','A criar os meus próprios projetos'],
+    icos:['📺','📖','🔬','🛠️'], sc:[0,0,1,2] },
+  { e:'🏆', q:'O que mais te interessa criar?',
+    opts:['Quero descobrir!','Um robot que se move','Um sistema com sensores e luzes','Um projeto com IA e internet'],
+    icos:['🌟','🤖','🔌','🌐'], sc:[0,1,2,3] },
+];
+
+const Lvs = [
+  { e:'🌱', t:'Principiante', d:'Estás a começar! Vamos aprender tudo desde o início, de forma divertida.', lv:'Nível 1 · Principiante', xp:'0 / 300 XP', xpF:'0%', coins:50, streak:0, i2:'0/7 passos' },
+  { e:'⚙️', t:'Explorador',   d:'Já tens algumas bases! Vais avançar mais depressa e saltar passos básicos.', lv:'Nível 2 · Explorador', xp:'120 / 500 XP', xpF:'24%', coins:120, streak:3, i2:'2/7 passos' },
+  { e:'🚀', t:'Inventor',     d:'Tens boas bases! Começas com desafios mais interessantes.', lv:'Nível 3 · Inventor', xp:'280 / 500 XP', xpF:'56%', coins:240, streak:8, i2:'4/7 passos' },
+];
+
+function initDiag() {
+  diagA = []; curQ = 0;
+  document.getElementById('dCard').style.display = '';
+  document.getElementById('dRes').style.display = 'none';
+  renderQ();
+}
+
+const _BADGE_COLORS  = ['#0364DB','#10b981','#F59E0B','#EC6C3B'];
+const _BADGE_BG      = ['#eff6ff','#f0fdf4','#fffbeb','#fff7ed'];
+const _BADGE_BORDER  = ['#bfdbfe','#a7f3d0','#fde68a','#fed7aa'];
+const _BADGE_LETTERS = ['A','B','C','D'];
+
+function renderQ() {
+  const q = Qs[curQ];
+
+  // progress pills
+  document.getElementById('dDots').innerHTML = Qs.map((_,i) =>
+    `<div class="diag-pill ${i < curQ ? 'done' : i === curQ ? 'active' : 'empty'}"></div>`
+  ).join('');
+
+  // step label
+  document.getElementById('dCount').textContent = 'Pergunta ' + (curQ+1) + ' de ' + Qs.length;
+
+  // emoji with animation
+  const emoEl = document.getElementById('dEmo');
+  emoEl.textContent = q.e;
+  emoEl.classList.remove('diag-emo-anim');
+  void emoEl.offsetWidth;
+  emoEl.classList.add('diag-emo-anim');
+
+  // question text
+  document.getElementById('dQ').textContent = q.q;
+
+  // options
+  const icos = q.icos || ['🌱','🔍','⚡','🚀'];
+  document.getElementById('dOpts').innerHTML = q.opts.map((o, i) => `
+    <button class="dopt2" onclick="diagAns(${i})"
+      style="background:${_BADGE_BG[i]};border-color:${_BADGE_BORDER[i]}">
+      <div class="dopt2-badge" style="background:${_BADGE_COLORS[i]}">${_BADGE_LETTERS[i]}</div>
+      <span class="dopt2-ico">${icos[i]}</span>
+      <span class="dopt2-txt">${o}</span>
+    </button>`).join('');
+
+  document.getElementById('dBack').style.display = curQ > 0 ? 'block' : 'none';
+}
+
+function diagAns(idx) {
+  const btns = document.querySelectorAll('.dopt2');
+  btns.forEach((b, i) => {
+    b.disabled = true;
+    if (i === idx) {
+      b.classList.add('sel');
+      // fill with the option's color
+      b.style.background = _BADGE_COLORS[i];
+      b.style.borderColor = _BADGE_COLORS[i];
+      b.querySelector('.dopt2-txt').style.color = 'white';
+      b.querySelector('.dopt2-badge').style.background = 'rgba(255,255,255,.25)';
+      // checkmark
+      b.querySelector('.dopt2-ico').textContent = '✓';
+    } else {
+      b.classList.add('dim');
+    }
+  });
+  diagA[curQ] = Qs[curQ].sc[idx];
+  setTimeout(() => {
+    curQ++;
+    if (curQ < Qs.length) renderQ();
+    else showRes();
+  }, 720);
+}
+
+function diagBack(){
+  if(curQ === 0) return;
+  curQ--;
+  diagA.length = curQ;
+  renderQ();
+}
+
+function showRes() {
+  const total = diagA.reduce((a,b) => a+b, 0);
+  const pct = total / (Qs.length * 3);
+  cLvl = pct < 0.33 ? 0 : pct < 0.66 ? 1 : 2;
+  const lv = Lvs[cLvl];
+
+  // hide pills + question layout
+  document.getElementById('dDots').style.display = 'none';
+  document.getElementById('dCard').style.display = 'none';
+
+  // show result
+  const res = document.getElementById('dRes');
+  res.style.display = 'block';
+
+  document.getElementById('rEmo').textContent = lv.e;
+  document.getElementById('rT').textContent = lv.t;
+  document.getElementById('rD').textContent = lv.d;
+
+  const xpBonus = ['+50 XP de bónus', '+75 XP de bónus', '+100 XP de bónus'];
+  document.getElementById('rIs').innerHTML = `
+    <div class="diag-unlock-ico">🏝️</div>
+    <div>
+      <div class="diag-unlock-txt">Ilha Principal desbloqueada!</div>
+      <div class="diag-unlock-sub">${xpBonus[cLvl]} por completares o diagnóstico</div>
+    </div>`;
+}
+
+
+
+// ── ISLAND POPUP ──────────────────────────────────────────────────────────────
+const iData = {
+  1: { ico:'🧭', name:'Ilha de Diagnóstico', color:'#D97706', steps:5, done:5, st:'done', desc:'Já completaste! Aprendeste sobre ti e descobrimos o teu nível.' },
+  2: { ico:'🏝️', name:'Ilha Principal', color:'#059669', steps:7, done:3, st:'prog', desc:'A ilha central da tua aventura! Aprende eletrónica, programação e robótica.' },
+  3: { ico:'🔍', name:'Nível 2', color:'#2563EB', steps:7, done:0, st:'lock', desc:'Desafios extra avançados. Desbloqueia ao completar o nível 3.' },
+  pascoa: { ico:'🐣', name:'Ilha da Páscoa', color:'#9333EA', steps:4, done:0, st:'seas', desc:'Disponível em março e abril. Desafios temáticos de Páscoa!' },
+  verao:  { ico:'☀️', name:'Ilha do Verão',  color:'#D97706', steps:4, done:0, st:'seas', desc:'Disponível em junho, julho e agosto. Desafios de verão!' },
+  natal:  { ico:'🎄', name:'Ilha do Natal',  color:'#DC2626', steps:4, done:0, st:'seas', desc:'Disponível em dezembro. Desafios natalícios!' },
+};
+
+function iClick(id) {
+  if (_mapDragged) return;
+  const d = iData[id]; if(!d) return;
+  // For main islands (1,2,3) — open ilha detail directly; seasonal show popup
+  if (id === 1 || id === 2) { abrirIlha(id); return; }
+  if (id === 3) {
+    const i3el = document.getElementById('i3');
+    if(i3el && !i3el.classList.contains('lk')) { abrirIlha(id); return; }
+  }
+  // seasonal or locked: show popup
+  const stBadge = { done:'<span class="badge bd">Completo ✓</span>', prog:'<span class="badge bp2">Em progresso ▶</span>', lock:'<span class="badge bl">🔒 Bloqueada</span>', seas:'<span class="badge bl">📅 Sazonal</span>' };
+  const stBtn = {
+    done:`<button onclick="cPop()" style="flex:1;padding:12px;background:#71C8C0;color:#012C56;border:none;border-radius:11px;font-family:'Outfit',sans-serif;font-weight:900;font-size:14px;cursor:pointer">Rever ✓</button>`,
+    prog:`<button onclick="abrirIlha(${JSON.stringify(id)});cPop()" style="flex:1;padding:12px;background:#0364DB;color:white;border:none;border-radius:11px;font-family:'Outfit',sans-serif;font-weight:900;font-size:14px;cursor:pointer">Continuar →</button>`,
+    lock:`<button style="flex:1;padding:12px;background:#e2e8f0;color:#94a3b8;border:none;border-radius:11px;font-family:'Outfit',sans-serif;font-weight:900;font-size:14px;cursor:default">🔒 Completa a anterior</button>`,
+    seas:`<button style="flex:1;padding:12px;background:#e2e8f0;color:#94a3b8;border:none;border-radius:11px;font-family:'Outfit',sans-serif;font-weight:900;font-size:14px;cursor:default">📅 Disponível em breve</button>`,
+  };
+  const pct = Math.round((d.done/d.steps)*100);
+  document.getElementById('iContent').innerHTML = `
+    <div style="display:flex;align-items:center;gap:13px;margin-bottom:14px">
+      <div style="width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:28px;background:${d.color}22;border:2px solid ${d.color}44">${d.ico}</div>
+      <div><div style="font-size:17px;font-weight:900;color:#012C56">${d.name}</div>${stBadge[d.st]}</div>
+    </div>
+    <p style="font-size:13px;color:#64748b;font-family:'Quicksand',sans-serif;line-height:1.6;margin-bottom:13px">${d.desc}</p>
+    ${(d.st==='done'||d.st==='prog')?`<div style="margin-bottom:14px"><div style="display:flex;justify-content:space-between;font-size:12px;color:#64748b;font-family:'Quicksand',sans-serif;margin-bottom:5px"><span>${d.done}/${d.steps} desafios</span><span>${pct}%</span></div><div class="pb2" style="height:9px;border-radius:5px"><div class="pf" style="width:${pct}%"></div></div></div>`:''}
+    <div style="display:flex;gap:9px">${stBtn[d.st]}</div>`;
+  document.getElementById('ipop').classList.add('on');
+}
+
+function cPop(e) {
+  if (!e || e.target===document.getElementById('ipop'))
+    document.getElementById('ipop').classList.remove('on');
+}
+
+// ── ISLAND DATA ────────────────────────────────────────────────────────────────
+const ilhasData = {
+  1: {
+    nome:'① Ilha de Diagnóstico', emoji:'🧭', color:'#D97706',
+    desc:'Descobre o teu nível e personaliza a tua aventura de programação!',
+    steps:[
+      {n:1,titulo:'Já programaste alguma vez?',desc:'Conta-nos a tua experiência com programação.',done:true,emo:'💻'},
+      {n:2,titulo:'Qual destas ferramentas já usaste?',desc:'Scratch, micro:bit, Python, Arduino ou nenhuma?',done:true,emo:'🛠️'},
+      {n:3,titulo:'O que acontece quando usamos um bloco "repetir"?',desc:'Testa os teus conhecimentos sobre loops na programação.',done:true,emo:'🔁'},
+      {n:4,titulo:'Para que serve um sensor num robô?',desc:'Aprende a diferença entre sensores e atuadores.',done:true,emo:'📡'},
+      {n:5,titulo:'O que gostavas mais de criar?',desc:'Escolhe o teu caminho: robótica, jogos ou IoT!',done:true,emo:'🚀'},
+    ]
+  },
+  2: {
+    nome:'② Bot Starter', emoji:'🤖', color:'#059669',
+    desc:'Aprende eletrónica, programação e robótica com o micro:bit e projetos reais!',
+    steps:[
+      {n:1,titulo:'Circuitos em Ação',desc:'Todos os circuitos precisam de um caminho fechado para a eletricidade passar.',done:false,emo:'⚡'},
+      {n:2,titulo:'O Primeiro LED',desc:'Um LED tem dois lados: o positivo (ânodo) e o negativo (cátodo).',done:false,emo:'💡'},
+      {n:3,titulo:'Liga e Desliga',desc:'Usa o bloco "wait" para criar pausas entre acender e apagar.',done:false,emo:'🔘'},
+      {n:4,titulo:'Conhece o micro:bit',desc:'O micro:bit tem LEDs, botões e sensores já incluídos.',done:false,emo:'🤖'},
+      {n:5,titulo:'Mostra o teu Nome',desc:'Usa o bloco "show string" para exibir letras no ecrã de LEDs.',done:false,emo:'📛'},
+      {n:6,titulo:'Programa os LEDs',desc:'Os LEDs do micro:bit são como uma grelha 5x5 que podes controlar individualmente.',done:false,emo:'🔦'},
+      {n:7,titulo:'Breadboard Master',desc:'A breadboard tem linhas ligadas na horizontal — usa isso a teu favor!',done:false,emo:'🔌'},
+      {n:8,titulo:'Acende sem Erros',desc:'Verifica sempre as polaridades antes de ligar o circuito.',done:false,emo:'✅'},
+      {n:9,titulo:'RGB Mágico',desc:'Um LED RGB mistura vermelho, verde e azul para criar qualquer cor.',done:false,emo:'🌈'},
+      {n:10,titulo:'Faróis Inteligentes',desc:'Os faróis dos carros modernos usam LEDs porque duram mais tempo.',done:false,emo:'🚗'},
+      {n:11,titulo:'Primeira Viagem',desc:'Um robot move-se ligando dois motores com velocidades diferentes.',done:false,emo:'🚀'},
+      {n:12,titulo:'Curvas Perfeitas',desc:'Para virar, um motor vai mais rápido que o outro.',done:false,emo:'🔄'},
+      {n:13,titulo:'Funções Secretas',desc:'Uma função é como um mini programa dentro do programa principal.',done:false,emo:'🔧'},
+      {n:14,titulo:'Sentido da Luz',desc:'Os sensores de luz medem quanto brilho existe no ambiente.',done:false,emo:'☀️'},
+      {n:15,titulo:'Alarme Sonoro',desc:'O buzzer transforma sinais elétricos em som através de vibrações.',done:false,emo:'🔔'},
+      {n:16,titulo:'Semáforo da Cidade',desc:'Um semáforo segue sempre a mesma sequência: vermelho, amarelo, verde.',done:false,emo:'🚦'},
+      {n:17,titulo:'Missão Sensor',desc:'Os sensores leem o mundo físico e convertem em dados digitais.',done:false,emo:'📡'},
+      {n:18,titulo:'Mestre da Robótica',desc:'Juntaste eletrónica, sensores e programação num projeto completo. Parabéns!',done:false,emo:'🏆'},
+    ]
+  },
+  3: {
+    nome:'③ Smart Farm Lab', emoji:'🌾', color:'#16a34a',
+    desc:'Explora o mundo do IoT e da agricultura inteligente com o ESP32!',
+    steps:[
+      {n:1,titulo:'Bem-vindo à Quinta Inteligente',desc:'As quintas inteligentes usam tecnologia para poupar água e energia.',done:false,emo:'🌾'},
+      {n:2,titulo:'Conhece o ESP32',desc:'O ESP32 é um microcontrolador com WiFi e Bluetooth incluídos.',done:false,emo:'📡'},
+      {n:3,titulo:'Sensor de Temperatura',desc:'O sensor DHT11 mede temperatura e humidade ao mesmo tempo.',done:false,emo:'🌡️'},
+      {n:4,titulo:'Humidade do Solo',desc:'O sensor de humidade do solo mede se a terra precisa de água.',done:false,emo:'💧'},
+      {n:5,titulo:'O Guardião da Luz',desc:'Os sensores LDR mudam de resistência conforme a quantidade de luz.',done:false,emo:'☀️'},
+      {n:6,titulo:'Estação Meteorológica',desc:'Uma estação meteorológica regista temperatura, humidade e pressão atmosférica.',done:false,emo:'⛅'},
+      {n:7,titulo:'Rega Automática',desc:'A rega automática poupa até 50% de água comparada à rega manual.',done:false,emo:'🌊'},
+      {n:8,titulo:'Ventoinha Inteligente',desc:'Uma ventoinha automática mantém a temperatura ideal nas plantas.',done:false,emo:'🌀'},
+      {n:9,titulo:'O Despertar das Plantas',desc:'As plantas crescem melhor com luz, temperatura e humidade controladas.',done:false,emo:'🌱'},
+      {n:10,titulo:'Alerta de Emergência',desc:'Um sistema de alerta avisa quando os valores saem dos limites normais.',done:false,emo:'🚨'},
+      {n:11,titulo:'Painel de Controlo',desc:'Um dashboard mostra todos os dados dos sensores num só lugar.',done:false,emo:'📊'},
+      {n:12,titulo:'Variáveis da Quinta',desc:'As variáveis guardam os valores dos sensores para comparar ao longo do tempo.',done:false,emo:'📝'},
+      {n:13,titulo:'Decisões Inteligentes',desc:'Um "se... então..." decide automaticamente o que fazer com os dados.',done:false,emo:'🧠'},
+      {n:14,titulo:'Liga Tudo',desc:'Integrar vários sensores num sistema é como construir um cérebro para a quinta.',done:false,emo:'🔗'},
+      {n:15,titulo:'Internet das Coisas',desc:'IoT significa que os dispositivos comunicam pela internet sem intervenção humana.',done:false,emo:'🌐'},
+      {n:16,titulo:'Agricultor Digital',desc:'Um agricultor digital usa dados para tomar melhores decisões de cultivo.',done:false,emo:'👨‍🌾'},
+      {n:17,titulo:'Projeto Final',desc:'O projeto final integra tudo o que aprendeste sobre IoT e automação.',done:false,emo:'🏗️'},
+      {n:18,titulo:'Mestre da Smart Farm',desc:'Criaste um sistema inteligente de agricultura do futuro. Parabéns!',done:false,emo:'🏆'},
+    ]
+  },
+  4: {
+    nome:'④ Arcade Studio', emoji:'🎮', color:'#7c3aed',
+    desc:'Cria videojogos incríveis com Scratch e torna-te um game developer!',
+    steps:[
+      {n:1,titulo:'Primeiros Pixels',desc:'Os primeiros videojogos eram feitos com apenas alguns píxeis na tela.',done:false,emo:'🎮'},
+      {n:2,titulo:'Herói em Movimento',desc:'Usa as teclas de setas para mover o teu personagem pelo ecrã.',done:false,emo:'🦸'},
+      {n:3,titulo:'Mundo dos Blocos',desc:'Um cenário com blocos serve de plataforma onde o herói pode andar.',done:false,emo:'🧱'},
+      {n:4,titulo:'Apanha os Tesouros',desc:'Usa deteção de colisões para verificar se o herói apanha um tesouro.',done:false,emo:'💎'},
+      {n:5,titulo:'Inimigos à Vista',desc:'Os inimigos movem-se automaticamente para criar desafio no jogo.',done:false,emo:'👾'},
+      {n:6,titulo:'Sistema de Pontos',desc:'O sistema de pontos motiva os jogadores a continuarem a jogar.',done:false,emo:'🏅'},
+      {n:7,titulo:'Vidas Extra',desc:'Vidas extra dão ao jogador mais uma oportunidade quando perde.',done:false,emo:'❤️'},
+      {n:8,titulo:'Poderes Especiais',desc:'Um poder especial muda temporariamente as capacidades do herói.',done:false,emo:'⭐'},
+      {n:9,titulo:'Música Arcade',desc:'A música e os sons tornam o jogo muito mais imersivo e divertido.',done:false,emo:'🎵'},
+      {n:10,titulo:'Níveis Secretos',desc:'Os níveis secretos são recompensas para jogadores mais curiosos.',done:false,emo:'🗝️'},
+      {n:11,titulo:'Variáveis Mágicas',desc:'As variáveis guardam pontos, vidas e outros estados do jogo.',done:false,emo:'🔮'},
+      {n:12,titulo:'Loops Infinitos',desc:'Um loop que corre sempre é a base de qualquer jogo de computador.',done:false,emo:'♾️'},
+      {n:13,titulo:'IA dos Inimigos',desc:'A IA dos inimigos faz com que persigam o jogador automaticamente.',done:false,emo:'🤖'},
+      {n:14,titulo:'Batalha Final',desc:'O boss final é um inimigo mais difícil que testa todas as tuas habilidades.',done:false,emo:'⚔️'},
+      {n:15,titulo:'Cria o Teu Menu',desc:'Um menu permite escolher jogar, ver pontuações ou sair do jogo.',done:false,emo:'📋'},
+      {n:16,titulo:'Efeitos Visuais',desc:'Explosões e partículas tornam os momentos importantes mais emocionantes.',done:false,emo:'✨'},
+      {n:17,titulo:'Publica o Teu Jogo',desc:'Publica o teu jogo para que outros possam jogar e dar feedback.',done:false,emo:'🚀'},
+      {n:18,titulo:'Mestre Arcade',desc:'Criaste um jogo completo com todos os elementos profissionais. Parabéns!',done:false,emo:'🏆'},
+    ]
+  },
+  5: {
+    nome:'⑤ Scratch Jr', emoji:'🐱', color:'#f59e0b',
+    desc:'Aprende a programar com Scratch Jr — perfeito para começar do zero!',
+    steps:[
+      {n:1,titulo:'Primeiro Toque',desc:'O Scratch Jr usa blocos coloridos que qualquer criança consegue usar.',done:false,emo:'👆'},
+      {n:2,titulo:'Faz o Gato Andar',desc:'Usa o bloco azul de movimento para mover o teu personagem.',done:false,emo:'🐱'},
+      {n:3,titulo:'Dança dos Personagens',desc:'Adiciona mais personagens para fazerem coisas diferentes ao mesmo tempo.',done:false,emo:'💃'},
+      {n:4,titulo:'Muda o Cenário',desc:'Os cenários criam o ambiente onde a história acontece.',done:false,emo:'🎨'},
+      {n:5,titulo:'Conta uma História',desc:'Usa blocos de mensagem para os personagens conversarem.',done:false,emo:'📖'},
+      {n:6,titulo:'Esconde e Mostra',desc:'O bloco de esconder/mostrar cria efeitos de magia e surpresa.',done:false,emo:'👀'},
+      {n:7,titulo:'Corre e Salta',desc:'Combina movimento e salto para criar um pequeno jogo de plataforma.',done:false,emo:'🏃'},
+      {n:8,titulo:'Festa dos Sons',desc:'Os sons tornam a história mais animada e divertida.',done:false,emo:'🎉'},
+      {n:9,titulo:'Missão Colorida',desc:'Muda as cores dos personagens para criar efeitos especiais.',done:false,emo:'🌈'},
+      {n:10,titulo:'O Meu Primeiro Jogo',desc:'Um jogo simples é a base para criar jogos mais complexos no futuro.',done:false,emo:'🎮'},
+    ]
+  },
+  6: {
+    nome:'⑥ Scratch', emoji:'🐈', color:'#2563EB',
+    desc:'Domina o Scratch e cria animações, histórias e jogos incríveis!',
+    steps:[
+      {n:1,titulo:'O Primeiro Projeto',desc:'No Scratch, os projetos são feitos com sprites que executam scripts.',done:false,emo:'🐱'},
+      {n:2,titulo:'Animação Divertida',desc:'Alterna entre trajes do sprite para criar uma animação fluida.',done:false,emo:'🎬'},
+      {n:3,titulo:'O Gato Explorador',desc:'Usa coordenadas x e y para posicionar sprites no ecrã.',done:false,emo:'🗺️'},
+      {n:4,titulo:'Histórias Interativas',desc:'Usa blocos de evento para reagir a cliques e teclas pressionadas.',done:false,emo:'📚'},
+      {n:5,titulo:'Apanha os Objetos',desc:'A deteção de toque entre sprites é a base de muitos jogos Scratch.',done:false,emo:'🎯'},
+      {n:6,titulo:'Sistema de Pontos',desc:'Usa variáveis para guardar e mostrar a pontuação do jogador.',done:false,emo:'🏅'},
+      {n:7,titulo:'Labirinto Maluco',desc:'Usa o sensor "a tocar cor" para detetar as paredes do labirinto.',done:false,emo:'🌀'},
+      {n:8,titulo:'Jogo de Futebol',desc:'Combina movimento com deteção de colisões para criar um jogo de futebol.',done:false,emo:'⚽'},
+      {n:9,titulo:'Variáveis Secretas',desc:'As variáveis guardam informação que pode mudar durante o jogo.',done:false,emo:'🔮'},
+      {n:10,titulo:'Clones em Ação',desc:'Os clones permitem criar muitas cópias de um sprite automaticamente.',done:false,emo:'👥'},
+      {n:11,titulo:'Desafio dos Reflexos',desc:'Um jogo de reflexos mede a velocidade de reação do jogador.',done:false,emo:'⚡'},
+      {n:12,titulo:'Quiz Inteligente',desc:'Usa listas para guardar as perguntas e respostas do quiz.',done:false,emo:'🧠'},
+      {n:13,titulo:'Plataforma Radical',desc:'Um jogo de plataforma usa gravidade e saltos para criar desafio.',done:false,emo:'🏃'},
+      {n:14,titulo:'Corrida Espacial',desc:'Uma corrida espacial combina velocidade crescente com obstáculos.',done:false,emo:'🚀'},
+      {n:15,titulo:'Invasão Robótica',desc:'Inimigos em formação que avançam criam um jogo de tiro clássico.',done:false,emo:'🤖'},
+      {n:16,titulo:'Jogo Completo',desc:'Um jogo completo tem menu, níveis, pontuação e ecrã final.',done:false,emo:'🎮'},
+      {n:17,titulo:'Publica o Teu Projeto',desc:'Partilha o teu projeto Scratch com a comunidade mundial!',done:false,emo:'🌐'},
+      {n:18,titulo:'Mestre Scratch',desc:'Dominaste os fundamentos da programação com Scratch. Parabéns!',done:false,emo:'🏆'},
+    ]
+  },
+};
+
+let ilhaAtual = null;
+let stepAtual = null;
+
+function abrirIlha(id) {
+  const ilha = ilhasData[id];
+  if (!ilha) return;
+  ilhaAtual = id;
+  document.getElementById('ipop').classList.remove('on');
+
+  // island colours by id
+  const cols = {
+    1: { top:'#34D399', hl:'#6EE7B7', base:'#1a6b47', conn:'#34D399', label:'Início' },
+    2: { top:'#F59E0B', hl:'#FDE68A', base:'#7C4B20', conn:'#F59E0B', label:'Nível 1' },
+    3: { top:'#D4A574', hl:'#E8C99A', base:'#7C4B20', conn:'#D4A574', label:'Nível 2' },
+  };
+  const col = cols[id] || cols[2];
+
+  // header
+  document.getElementById('ilhaNome').textContent = ilha.nome;
+  document.getElementById('ilhaLabelSub').textContent = col.label;
+  document.getElementById('ilhaLabelName').textContent = ilha.nome.replace(/^[①②③] /, '');
+
+  const done = ilha.steps.filter(s=>s.done).length;
+  const total = ilha.steps.length;
+  document.getElementById('ilhaProgHUD').textContent = done + '/' + total + ' desafios';
+
+  // update SVG colours
+  ['mainRect','connRect','topRect'].forEach(id2 => {
+    const el = document.getElementById(id2);
+    if(el) el.setAttribute('fill', col.top);
+  });
+  ['mainHL','topRect2'].forEach(id2 => {
+    const el = document.getElementById(id2);
+    if(el) el.setAttribute('fill', col.hl);
+  });
+
+  // render steps path on island SVG — show first 7 as visual markers
+  const stepPos = [
+    {x:60,  y:370}, // 1 bottom-left
+    {x:60,  y:300}, // 2 mid-left
+    {x:180, y:270}, // 3 mid-center
+    {x:300, y:300}, // 4 mid-right
+    {x:300, y:230}, // 5 upper-right (connector area)
+    {x:220, y:140}, // 6 top piece right
+    {x:160, y:60},  // 7 top piece top
+  ];
+
+  const steps = ilha.steps.slice(0, 7); // visual map shows first 7; full list is in stepsList
+  const pts = stepPos.slice(0, steps.length);
+
+  // build polyline
+  const polyPts = pts.map(p => p.x+','+p.y).join(' ');
+
+  let svg = '';
+  // white path
+  svg += `<polyline points="${polyPts}" fill="none" stroke="white" stroke-width="14" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/>`;
+  // step dots
+  steps.forEach((s, i) => {
+    const p = pts[i];
+    const isDone = s.done;
+    const isActive = s.active && !s.done;
+    const isLocked = !s.done && !s.active;
+    const fill = isDone ? '#71C8C0' : isActive ? '#FBC92A' : 'white';
+    const stroke = isDone ? '#1a6b47' : isActive ? '#D97706' : '#CBD5E1';
+    const r = isActive ? 18 : 15;
+    const canOpen = (isDone || isActive) && s.emo;
+    const gOpen = canOpen ? ` style="cursor:pointer" onclick="abrirDesafio(${ilhaAtual},${s.n})"` : '';
+    svg += `<g${gOpen}>`;
+    // larger invisible hit area for easy clicking
+    if (canOpen) svg += `<circle cx="${p.x}" cy="${p.y}" r="${r+10}" fill="transparent"/>`;
+    svg += `<circle cx="${p.x}" cy="${p.y}" r="${r}" fill="${fill}" stroke="${stroke}" stroke-width="3"/>`;
+    if (isDone) {
+      svg += `<text x="${p.x}" y="${p.y+6}" text-anchor="middle" font-size="14" fill="#012C56" font-family="Arial" font-weight="800" style="pointer-events:none">✓</text>`;
+    } else if (!isLocked) {
+      svg += `<text x="${p.x}" y="${p.y+5}" text-anchor="middle" font-size="13" fill="${isActive?'#7C2D12':'#94a3b8'}" font-family="Arial" font-weight="800" style="pointer-events:none">${i+1}</text>`;
+    } else {
+      svg += `<text x="${p.x}" y="${p.y+5}" text-anchor="middle" font-size="13" fill="#CBD5E1" font-family="Arial" font-weight="600" style="pointer-events:none">${i+1}</text>`;
+    }
+    svg += `</g>`;
+  });
+
+  // decorations based on island
+  let deco = '';
+  if (id === 1 || id === 2) {
+    // palm tree
+    deco += `<rect x="140" y="290" width="9" height="35" rx="3" fill="#7C4B20"/>`;
+    deco += `<ellipse cx="144" cy="286" rx="22" ry="10" fill="#16A34A" transform="rotate(-22 144 286)"/>`;
+    deco += `<ellipse cx="144" cy="287" rx="22" ry="10" fill="#22C55E" transform="rotate(22 144 287)"/>`;
+    deco += `<ellipse cx="144" cy="288" rx="18" ry="8" fill="#16A34A" transform="rotate(65 144 288)"/>`;
+  }
+  if (id === 2) {
+    // 2nd palm on top piece + robot icon
+    deco += `<rect x="172" y="25" width="7" height="24" rx="2" fill="#7C4B20"/>`;
+    deco += `<ellipse cx="175" cy="21" rx="17" ry="8" fill="#16A34A" transform="rotate(-22 175 21)"/>`;
+    deco += `<ellipse cx="175" cy="22" rx="17" ry="8" fill="#22C55E" transform="rotate(22 175 22)"/>`;
+    deco += `<rect x="232" y="22" width="30" height="24" rx="5" fill="#0364DB"/>`;
+    deco += `<circle cx="240" cy="32" r="4" fill="#92D6FF"/><circle cx="254" cy="32" r="4" fill="#92D6FF"/>`;
+  }
+  if (id === 3) {
+    // ESP32 chip + plant
+    deco += `<rect x="130" y="282" width="52" height="38" rx="5" fill="#1f2937"/>`;
+    deco += `<rect x="136" y="288" width="40" height="26" rx="3" fill="#0F172A"/>`;
+    deco += `<text x="156" y="306" text-anchor="middle" font-size="8" fill="#4ADE80" font-family="Courier,monospace" font-weight="700">ESP32</text>`;
+    deco += `<line x1="156" y1="282" x2="156" y2="270" stroke="#4ADE80" stroke-width="2.5" stroke-linecap="round"/>`;
+    deco += `<circle cx="156" cy="267" r="3.5" fill="#FBC92A"/>`;
+    deco += `<rect x="235" y="295" width="9" height="30" rx="3" fill="#7C4B20"/>`;
+    deco += `<ellipse cx="239" cy="289" rx="20" ry="9" fill="#166534" transform="rotate(-22 239 289)"/>`;
+    deco += `<ellipse cx="239" cy="290" rx="20" ry="9" fill="#22C55E" transform="rotate(22 239 290)"/>`;
+    deco += `<rect x="200" y="25" width="7" height="22" rx="2" fill="#7C4B20"/>`;
+    deco += `<polygon points="203,0 188,28 218,28" fill="#166534"/>`;
+    deco += `<polygon points="203,12 190,34 216,34" fill="#22C55E"/>`;
+  }
+  if (id === 4) {
+    // game controller + pixel art
+    deco += `<rect x="125" y="282" width="76" height="50" rx="14" fill="#4C1D95"/>`;
+    deco += `<rect x="138" y="296" width="20" height="7" rx="2" fill="#6D28D9"/>`;
+    deco += `<rect x="144" y="290" width="7" height="18" rx="2" fill="#6D28D9"/>`;
+    deco += `<circle cx="178" cy="296" r="5" fill="#EF4444"/><circle cx="188" cy="304" r="5" fill="#22C55E"/>`;
+    deco += `<circle cx="168" cy="304" r="5" fill="#FBC92A"/><circle cx="178" cy="312" r="5" fill="#3B82F6"/>`;
+    deco += `<rect x="200" y="20" width="62" height="44" rx="5" fill="#1e1b4b"/>`;
+    deco += `<rect x="204" y="24" width="54" height="36" rx="3" fill="#0F0A2A"/>`;
+    deco += `<rect x="228" y="32" width="6" height="6" rx="1" fill="#FBC92A"/>`;
+    deco += `<rect x="220" y="38" width="6" height="6" rx="1" fill="#EF4444"/>`;
+    deco += `<rect x="228" y="44" width="6" height="6" rx="1" fill="#22C55E"/>`;
+    deco += `<rect x="236" y="38" width="6" height="6" rx="1" fill="#3B82F6"/>`;
+  }
+  if (id === 5) {
+    // Scratch Jr cat face
+    deco += `<ellipse cx="175" cy="300" rx="34" ry="32" fill="#FF8C00"/>`;
+    deco += `<polygon points="155,278 145,260 169,276" fill="#FF8C00"/>`;
+    deco += `<polygon points="195,278 205,260 181,276" fill="#FF8C00"/>`;
+    deco += `<polygon points="157,277 149,263 168,276" fill="#FFDAB9"/>`;
+    deco += `<polygon points="193,277 201,263 182,276" fill="#FFDAB9"/>`;
+    deco += `<ellipse cx="163" cy="295" rx="7" ry="8" fill="white"/>`;
+    deco += `<ellipse cx="187" cy="295" rx="7" ry="8" fill="white"/>`;
+    deco += `<circle cx="164" cy="296" r="4.5" fill="#1f2937"/>`;
+    deco += `<circle cx="188" cy="296" r="4.5" fill="#1f2937"/>`;
+    deco += `<ellipse cx="175" cy="307" rx="3.5" ry="2.5" fill="#e85d04"/>`;
+    deco += `<path d="M169,312 Q175,317 181,312" fill="none" stroke="#1f2937" stroke-width="1.5"/>`;
+    deco += `<text x="175" y="40" text-anchor="middle" font-size="10" fill="rgba(255,255,255,0.6)" font-family="Outfit,sans-serif">Scratch Jr 🐱</text>`;
+  }
+  if (id === 6) {
+    // Scratch blocks
+    deco += `<rect x="115" y="280" width="100" height="15" rx="4" fill="#FFAB19" opacity="0.95"/>`;
+    deco += `<text x="165" y="291" text-anchor="middle" font-size="7.5" fill="#1f2937" font-family="Courier,monospace" font-weight="700">quando ▶ clicado</text>`;
+    deco += `<rect x="115" y="299" width="100" height="15" rx="4" fill="#9966FF" opacity="0.95"/>`;
+    deco += `<text x="165" y="310" text-anchor="middle" font-size="7.5" fill="white" font-family="Courier,monospace" font-weight="700">mover 10 passos</text>`;
+    deco += `<rect x="115" y="318" width="100" height="15" rx="4" fill="#5CB1D6" opacity="0.95"/>`;
+    deco += `<text x="165" y="329" text-anchor="middle" font-size="7.5" fill="white" font-family="Courier,monospace" font-weight="700">dizer "Olá!"</text>`;
+    deco += `<ellipse cx="243" cy="300" rx="28" ry="26" fill="#FF8C00"/>`;
+    deco += `<ellipse cx="234" cy="286" rx="7" ry="8" fill="white"/><ellipse cx="252" cy="286" rx="7" ry="8" fill="white"/>`;
+    deco += `<circle cx="235" cy="287" r="4" fill="#1f2937"/><circle cx="253" cy="287" r="4" fill="#1f2937"/>`;
+  }
+
+  document.getElementById('stepsGroup').innerHTML = svg;
+  document.getElementById('decoGroup').innerHTML = deco;
+
+  // show/hide top piece (only for islands with 7 steps)
+  const showTop = steps.length >= 5;
+  ['topPiece'].forEach(id2 => {
+    const el = document.getElementById(id2);
+    if(el) el.style.display = showTop ? 'block' : 'none';
+  });
+  const conn = document.getElementById('connRect');
+  if(conn) conn.style.display = showTop ? 'block' : 'none';
+  const connB = document.getElementById('connBase');
+  if(connB) connB.style.display = showTop ? 'block' : 'none';
+
+  // steps list cards below
+  const list = document.getElementById('stepsList');
+  list.innerHTML = ilha.steps.map((s,i) => {
+    const isDone = s.done;
+    const isActive = s.active && !s.done;
+    const isLocked = !s.done && !s.active;
+    const bg = isDone ? 'rgba(49,192,107,.15)' : isActive ? 'rgba(251,201,42,.15)' : 'rgba(255,255,255,.07)';
+    const border = isDone ? 'rgba(49,192,107,.4)' : isActive ? 'rgba(251,201,42,.4)' : 'rgba(255,255,255,.1)';
+    const numBg = isDone ? '#71C8C0' : isActive ? '#FBC92A' : 'rgba(255,255,255,.15)';
+    const numCol = isDone ? '#012C56' : isActive ? '#7C2D12' : 'rgba(255,255,255,.35)';
+    const clickable = (isDone || isActive) && s.emo;
+    const onclk = clickable ? 'onclick="abrirDesafio(' + ilhaAtual + ',' + s.n + ')"' : '';
+    const numTxt = isDone ? '&#10003;' : s.n;
+    const hover = clickable
+      ? ' onmouseover="this.style.transform=\'translateX(5px)\'" onmouseout="this.style.transform=\'none\'"'
+      : '';
+    const tag = isDone
+      ? '<div style="font-size:11px;font-weight:800;color:#86efac;font-family:Outfit,sans-serif;display:flex;align-items:center;gap:4px;white-space:nowrap">↻ Repetir</div>'
+      : isActive
+      ? '<div style="font-size:11px;font-weight:800;color:#FBC92A;font-family:Outfit,sans-serif;white-space:nowrap">▶ Jogar</div>'
+      : '<div style="font-size:16px">🔒</div>';
+    return '<div ' + onclk + hover + ' style="background:' + bg + ';border:1px solid ' + border + ';border-radius:14px;padding:13px 15px;display:flex;align-items:center;gap:12px;cursor:' + (clickable?'pointer':'default') + ';transition:transform .15s ease"'+'>'
+      + '<div style="width:36px;height:36px;border-radius:50%;background:' + numBg + ';display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:900;color:' + numCol + ';flex-shrink:0">' + numTxt + '</div>'
+      + '<div style="flex:1"><div style="font-size:14px;font-weight:700;color:white">' + s.titulo + '</div>'
+      + '<div style="font-size:11px;color:rgba(255,255,255,.55);font-family:Quicksand,sans-serif;margin-top:2px">' + s.desc + '</div></div>'
+      + tag
+      + '</div>';
+  }).join('');
+  shV('v-ilha');
+}
+
+
+function goMap() {
+  const lv = Lvs[cLvl];
+  const el = id => document.getElementById(id);
+  if(el('mCN')) el('mCN').textContent = uName;
+  if(el('mLv')) el('mLv').textContent = lv.lv;
+  if(el('mXP')) el('mXP').textContent = lv.xp;
+  if(el('mXF')) el('mXF').style.width = lv.xpF;
+  if(el('mC'))  el('mC').textContent = lv.coins;
+  if(el('mS'))  el('mS').textContent = lv.streak;
+  if(el('i2p')) el('i2p').textContent = lv.i2;
+  if(cLvl >= 2) { const i3=document.getElementById('i3'); if(i3) i3.classList.remove('lk'); }
+  document.querySelectorAll('.ni').forEach(b=>b.classList.remove('on'));
+  const mb = document.querySelector('.ni[onclick*="v-map"]');
+  if(mb) mb.classList.add('on');
+  shV('v-map');
+  // Posição inicial — mostrar a zona de início (Diagnóstico + Principal)
+  requestAnimationFrame(() => {
+    mapPan.x = 0;
+    mapPan.y = 0;
+    clampMapPan();
+    applyMapPan();
+  });
+}
+
+function voltarIlha() {
+  if (ilhaAtual) abrirIlha(ilhaAtual);
+  else goMap();
+}
+
+// ── EDITOR SCRATCH (TurboWarp iframe) ────────────────────────────────────────
+
+
+
+function abrirDesafio(ilhaId, stepN) {
+  const ilha = ilhasData[ilhaId];
+  const step = ilha.steps.find(s => s.n === stepN);
+  if (!step || !step.emo) return;
+  stepAtual = step;
+  ilhaAtual = ilhaId;
+
+  // header
+  document.getElementById('desTitle').textContent = 'Desafio ' + stepN + ' — ' + step.titulo;
+
+  // progress dots
+  const dots = ilha.steps.map((s,i) =>
+    `<div style="width:10px;height:10px;border-radius:50%;background:${s.done?'#71C8C0':s.active?'#FBC92A':'rgba(255,255,255,.2)'}"></div>`
+  ).join('');
+  document.getElementById('desProg').innerHTML = dots;
+
+  // instruction
+  document.getElementById('desEmoji').textContent = step.emo;
+  document.getElementById('desH3').textContent = step.titulo + '!';
+  document.getElementById('desP').textContent = step.desc || '';
+  document.getElementById('desInst').textContent = step.inst || '';
+
+  shV('v-desafio');
+}
+
+function toggleDesPanel() {
+  var panel = document.getElementById('desPanel');
+  var btn = document.getElementById('desPanelToggle');
+  var collapsed = panel.style.width === '0px';
+  if (collapsed) {
+    panel.style.width = '260px';
+    panel.style.minWidth = '260px';
+    panel.style.padding = '16px';
+    btn.style.left = '252px';
+    btn.textContent = '◀';
+  } else {
+    panel.style.width = '0px';
+    panel.style.minWidth = '0px';
+    panel.style.padding = '0px';
+    btn.style.left = '0px';
+    btn.textContent = '▶';
+  }
+}
+
+function showHint() {
+  const hint = stepAtual && stepAtual.inst
+    ? '💡 Dica: ' + stepAtual.inst
+    : '💡 Dica: Usa os blocos do Scratch para programar o Juni:bit! Carrega no ▶ verde do Scratch para correr o projeto.';
+  alert(hint);
+}
+
+function completarDesafio() {
+  // mark as done and go back to ilha
+  if (stepAtual && ilhaAtual) {
+    const ilha = ilhasData[ilhaAtual];
+    const step = ilha.steps.find(s => s.n === stepAtual.n);
+    if (step) { step.done = true; step.active = false; }
+    // activate next step
+    const next = ilha.steps.find(s => !s.done && !s.active && s.emo);
+    if (next) next.active = true;
+    abrirIlha(ilhaAtual);
+  }
+}
+
+</script>
+
+<script>
+/* ── Starfield para a página de login ── */
+(function(){
+  var wrap = document.getElementById('sa-stars-wrap');
+  if(!wrap) return;
+  for(var i = 0; i < 130; i++){
+    var s = document.createElement('div');
+    s.className = 'sa-star';
+    var size = Math.random() * 2.2 + 0.6;
+    s.style.cssText = 'width:'+size+'px;height:'+size+'px;top:'+Math.random()*100+'%;left:'+Math.random()*100+'%;animation-duration:'+(2.5+Math.random()*4.5)+'s;animation-delay:'+Math.random()*6+'s;';
+    wrap.appendChild(s);
+  }
+})();
+</script>
+</body>
+</html>

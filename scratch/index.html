@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Scratch Editor</title>
+  <style>
+    html, body { margin:0; padding:0; width:100%; height:100%; overflow:hidden; background:#1e3a5f; }
+    #app { width:100%; height:100%; }
+  </style>
+  <script>
+    // Redirect asset fetches from Scratch CDN to local static/assets/
+    (function() {
+      var _open = XMLHttpRequest.prototype.open;
+      XMLHttpRequest.prototype.open = function(method, url) {
+        var u = String(url);
+        var m = u.match(/internalapi\/asset\/([a-f0-9]{32}\.\w+)\/get/);
+        if (m) url = './static/assets/' + m[1];
+        return _open.call(this, method, url);
+      };
+    })();
+  </script>
+</head>
+<body>
+  <div id="app"></div>
+  <script src="./scratch-gui.js"></script>
+  <script>
+    // Default project: Stage + Ator1 (blue circle sprite)
+    var DEFAULT_PROJECT = JSON.stringify({
+      "targets": [
+        {
+          "isStage": true, "name": "Stage",
+          "variables": {}, "lists": {}, "broadcasts": {}, "blocks": {},
+          "currentCostume": 0,
+          "costumes": [{"assetId": "f03e9379536d8e07c836772239a8c6fd", "name": "Cenário1", "md5ext": "f03e9379536d8e07c836772239a8c6fd.svg", "dataFormat": "svg", "rotationCenterX": 240, "rotationCenterY": 180}],
+          "sounds": [], "volume": 100, "layerOrder": 0, "tempo": 60,
+          "videoTransparency": 50, "videoState": "on", "textToSpeechLanguage": null
+        },
+        {
+          "isStage": false, "name": "Ator1",
+          "variables": {}, "lists": {}, "broadcasts": {}, "blocks": {},
+          "currentCostume": 0,
+          "costumes": [{"assetId": "4dc9ed66cbdbb02a45b94e9dcc3d1b38", "name": "Fantasia1", "md5ext": "4dc9ed66cbdbb02a45b94e9dcc3d1b38.svg", "dataFormat": "svg", "rotationCenterX": 30, "rotationCenterY": 30}],
+          "sounds": [], "volume": 100, "layerOrder": 1,
+          "visible": true, "x": 0, "y": 0, "size": 100, "direction": 90,
+          "draggable": false, "rotationStyle": "all around"
+        }
+      ],
+      "monitors": [], "extensions": [],
+      "meta": {"semver": "3.0.0", "vm": "0.1.0", "agent": ""}
+    });
+
+    function getVM() {
+      var appEl = document.getElementById('app');
+      var root = appEl && appEl._reactRootContainer;
+      var fiber = root && root.current;
+      function find(f, d) {
+        if (!f || d > 100) return null;
+        try {
+          if (f.memoizedProps && f.memoizedProps.vm && f.memoizedProps.vm.runtime) return f.memoizedProps.vm;
+          if (f.stateNode && f.stateNode.props && f.stateNode.props.vm && f.stateNode.props.vm.runtime) return f.stateNode.props.vm;
+          return find(f.child, d+1) || find(f.sibling, d+1);
+        } catch(e) { return null; }
+      }
+      return find(fiber, 0);
+    }
+
+    function loadDefaultProject() {
+      var vm = getVM();
+      if (!vm) return false;
+      if (vm.runtime.targets && vm.runtime.targets.length > 0) {
+        // Already has sprites — just select first non-stage
+        var s = vm.runtime.targets.find(function(t) { return !t.isStage; });
+        if (s) vm.setEditingTarget(s.id);
+        return true;
+      }
+      // Load our default project
+      vm.loadProject(DEFAULT_PROJECT).then(function() {
+        var s = vm.runtime.targets.find(function(t) { return !t.isStage; });
+        if (s) vm.setEditingTarget(s.id);
+      }).catch(function(e) { console.warn('loadProject failed:', e); });
+      return true;
+    }
+
+    // Try every 500ms starting at 1.5s, give up after 15s
+    var _att = 0;
+    setTimeout(function() {
+      var _t = setInterval(function() {
+        _att++;
+        if (loadDefaultProject() || _att > 28) clearInterval(_t);
+      }, 500);
+    }, 1500);
+  </script>
+</body>
+</html>
