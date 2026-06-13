@@ -8,18 +8,7 @@
     html, body { margin:0; padding:0; width:100%; height:100%; overflow:hidden; background:#1e3a5f; }
     #app { width:100%; height:100%; }
   </style>
-  <script>
-    // Redirect asset fetches from Scratch CDN to local static/assets/
-    (function() {
-      var _open = XMLHttpRequest.prototype.open;
-      XMLHttpRequest.prototype.open = function(method, url) {
-        var u = String(url);
-        var m = u.match(/internalapi\/asset\/([a-f0-9]{32}\.\w+)\/get/);
-        if (m) url = './static/assets/' + m[1];
-        return _open.call(this, method, url);
-      };
-    })();
-  </script>
+  <!-- Assets served directly from Scratch CDN (assets.scratch.mit.edu) -->
 </head>
 <body>
   <div id="app"></div>
