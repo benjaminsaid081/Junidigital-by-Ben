@@ -1178,14 +1178,28 @@ body.dark .lh1{color:white!important}
             <filter id="labelGlow" x="-30%" y="-60%" width="160%" height="220%">
               <feDropShadow dx="0" dy="3" stdDeviation="5" flood-color="rgba(0,0,0,0.35)"/>
             </filter>
+            <filter id="lkFilter" color-interpolation-filters="sRGB">
+              <feColorMatrix type="saturate" values="0.25"/>
+              <feComponentTransfer><feFuncR type="linear" slope="0.6"/><feFuncG type="linear" slope="0.6"/><feFuncB type="linear" slope="0.6"/></feComponentTransfer>
+            </filter>
             <style>
-              .route{fill:none;stroke:rgba(255,255,255,.48);stroke-width:5;stroke-linecap:round;stroke-dasharray:13 14;pointer-events:none;filter:url(#shadow)}
-              .leader{stroke:rgba(255,255,255,.55);stroke-width:2.5;stroke-linecap:round;pointer-events:none}
+              /* route-a: percurso activo (brilhante) */
+              .route-a{fill:none;stroke:rgba(255,255,255,.65);stroke-width:6;stroke-linecap:round;stroke-dasharray:14 10;pointer-events:none}
+              /* route-b: próxima ilha bloqueada */
+              .route-b{fill:none;stroke:rgba(255,255,255,.30);stroke-width:4;stroke-linecap:round;stroke-dasharray:10 12;pointer-events:none}
+              /* route-c: ilhas futuras (muito ténue) */
+              .route-c{fill:none;stroke:rgba(255,255,255,.13);stroke-width:3;stroke-linecap:round;stroke-dasharray:8 14;pointer-events:none}
+              .leader{stroke:rgba(255,255,255,.55);stroke-width:2;stroke-linecap:round;pointer-events:none}
+              .leader-lk{stroke:rgba(255,255,255,.25);stroke-width:1.5;stroke-linecap:round;pointer-events:none}
               .hot{fill:rgba(255,255,255,.01);stroke:rgba(255,255,255,.0);stroke-width:2;transition:stroke .2s,fill .2s}
               .node:hover .hot{fill:rgba(255,255,255,.08);stroke:rgba(255,255,255,.75)}
+              .node-lk{filter:url(#lkFilter);cursor:default!important}
+              .node-lk .hot{pointer-events:none}
               .labelBox{filter:url(#labelGlow)}
-              .labelText{font-family:Outfit,sans-serif;font-size:14px;font-weight:800;letter-spacing:0;fill:white;pointer-events:none}
+              .labelText{font-family:Outfit,sans-serif;font-size:13px;font-weight:800;letter-spacing:0;fill:white;pointer-events:none}
               .labelSub{font-family:Quicksand,sans-serif;font-size:10px;font-weight:700;letter-spacing:0;fill:rgba(255,255,255,.72);pointer-events:none}
+              .labelText-lk{font-family:Outfit,sans-serif;font-size:13px;font-weight:800;letter-spacing:0;fill:rgba(255,255,255,.45);pointer-events:none}
+              .labelSub-lk{font-family:Quicksand,sans-serif;font-size:10px;font-weight:700;letter-spacing:0;fill:rgba(255,255,255,.3);pointer-events:none}
             </style>
           </defs>
           <g id="worldGroup" transform="translate(0,0)">
@@ -1193,94 +1207,85 @@ body.dark .lh1{color:white!important}
             <!-- MAPA PROFISSIONAL -->
             <image href="ilhasv2.svg" x="0" y="0" width="1728" height="1904"/>
 
-            <!-- Percurso visual, inspirado em mapa-mundo: menos texto por cima das ilhas -->
-            <path class="route" d="M650,905 C710,790 800,735 902,712 S1135,715 1225,628 S1285,520 1205,460"/>
-            <path class="route" d="M650,905 C595,805 570,710 590,615 S710,470 832,418 S985,420 1205,460"/>
-            <path class="route" d="M832,418 C780,300 710,215 630,160" opacity=".75"/>
+            <!-- ══ PERCURSO: estrutura em árvore, sem cruzamentos ══ -->
 
-            <!-- ILHA 1: DIAGNOSTICO -->
+            <!-- Rota activa: 1 → 2 (brilhante) -->
+            <path class="route-a" d="M700,878 Q960,680 1175,490"/>
+
+            <!-- Rota para ilha seguinte bloqueada: 2 → 3 -->
+            <path class="route-b" d="M1205,530 Q1218,578 1225,628"/>
+
+            <!-- Rotas futuras (muito ténues): 3→4, 4→5, 5→6, 6→Natal -->
+            <path class="route-c" d="M1175,665 Q1040,690 902,712"/>
+            <path class="route-c" d="M840,712 Q715,665 590,615"/>
+            <path class="route-c" d="M590,615 Q710,516 832,418"/>
+            <path class="route-c" d="M795,390 C760,290 700,210 640,165"/>
+
+            <!-- ══ ILHA 1: DIAGNÓSTICO — COMPLETA ══ -->
             <g id="mi1" class="node" style="cursor:pointer" onclick="iClick(1)">
               <ellipse class="hot" cx="650" cy="905" rx="145" ry="92"/>
-              <line class="leader" x1="600" y1="890" x2="520" y2="890"/>
-              <g class="labelBox" transform="translate(330,866)">
-                <rect x="0" y="0" width="190" height="47" rx="14" fill="rgba(1,44,86,.82)"/>
-                <circle cx="24" cy="23" r="14" fill="#10B981"/>
-                <text x="48" y="20" class="labelText">① Diagnóstico</text>
-                <text x="48" y="35" class="labelSub">5 perguntas</text>
+              <line class="leader" x1="600" y1="888" x2="522" y2="888"/>
+              <g class="labelBox" transform="translate(325,864)">
+                <rect x="0" y="0" width="195" height="50" rx="14" fill="rgba(1,44,86,.88)"/>
+                <circle cx="26" cy="25" r="15" fill="#10B981"/>
+                <text x="26" y="22" text-anchor="middle" font-family="Outfit" font-size="13" font-weight="900" fill="white">✓</text>
+                <text x="51" y="21" class="labelText">① Diagnóstico</text>
+                <text x="51" y="36" class="labelSub">5 perguntas · Completo</text>
               </g>
             </g>
 
-            <!-- ILHA 2: BOT STARTER -->
+            <!-- ══ ILHA 2: BOT STARTER — EM PROGRESSO ══ -->
             <g id="mi2" class="node" style="cursor:pointer" onclick="iClick(2)">
               <ellipse class="hot" cx="1205" cy="460" rx="120" ry="78"/>
-              <line class="leader" x1="1260" y1="420" x2="1350" y2="370"/>
-              <g class="labelBox" transform="translate(1290,330)">
-                <rect x="0" y="0" width="170" height="47" rx="14" fill="rgba(1,44,86,.82)"/>
-                <circle cx="24" cy="23" r="14" fill="#F59E0B"/>
-                <text x="48" y="20" class="labelText">② Bot Starter</text>
-                <text x="48" y="35" class="labelSub">18 desafios</text>
+              <line class="leader" x1="1258" y1="422" x2="1340" y2="372"/>
+              <g class="labelBox" transform="translate(1278,342)">
+                <rect x="0" y="0" width="192" height="50" rx="14" fill="rgba(1,44,86,.88)"/>
+                <circle cx="26" cy="25" r="15" fill="#F59E0B"/>
+                <text x="26" y="22" text-anchor="middle" font-family="Outfit" font-size="11" font-weight="900" fill="white">▶</text>
+                <text x="51" y="21" class="labelText">② Bot Starter</text>
+                <text x="51" y="36" class="labelSub">18 desafios · Em progresso</text>
               </g>
             </g>
 
-            <!-- ILHA 3: SMART FARM -->
-            <g id="mi3" class="node" style="cursor:pointer" onclick="iClick(3)">
+            <!-- ══ ILHA 3: NÍVEL 2 — BLOQUEADA ══ -->
+            <g id="mi3" class="node-lk" onclick="iClick(3)">
               <ellipse class="hot" cx="1225" cy="628" rx="120" ry="78"/>
-              <line class="leader" x1="1285" y1="640" x2="1380" y2="680"/>
-              <g class="labelBox" transform="translate(1345,660)">
-                <rect x="0" y="0" width="178" height="47" rx="14" fill="rgba(1,44,86,.82)"/>
-                <circle cx="24" cy="23" r="14" fill="#22C55E"/>
-                <text x="48" y="20" class="labelText">③ Smart Farm</text>
-                <text x="48" y="35" class="labelSub">bloqueada</text>
+              <line class="leader-lk" x1="1278" y1="642" x2="1358" y2="678"/>
+              <g class="labelBox" transform="translate(1338,656)">
+                <rect x="0" y="0" width="178" height="50" rx="14" fill="rgba(1,44,86,.70)"/>
+                <circle cx="26" cy="25" r="15" fill="rgba(255,255,255,.12)"/>
+                <text x="26" y="22" text-anchor="middle" font-family="Outfit" font-size="12" fill="rgba(255,255,255,.45)">🔒</text>
+                <text x="51" y="21" class="labelText-lk">③ Smart Farm</text>
+                <text x="51" y="36" class="labelSub-lk">Completa Bot Starter</text>
               </g>
             </g>
 
-            <!-- ILHA 4: ARCADE STUDIO -->
-            <g id="mi4" class="node" style="cursor:pointer" onclick="iClick(4)">
+            <!-- ══ ILHA 4: ARCADE — FUTURA (sem label para não poluir) ══ -->
+            <g id="mi4" class="node-lk">
               <ellipse class="hot" cx="902" cy="712" rx="120" ry="78"/>
-              <line class="leader" x1="902" y1="775" x2="890" y2="815"/>
-              <g class="labelBox" transform="translate(830,790)">
-                <rect x="0" y="0" width="182" height="47" rx="14" fill="rgba(1,44,86,.82)"/>
-                <circle cx="24" cy="23" r="14" fill="#8B5CF6"/>
-                <text x="48" y="20" class="labelText">④ Arcade</text>
-                <text x="48" y="35" class="labelSub">bloqueada</text>
-              </g>
             </g>
 
-            <!-- ILHA 5: SCRATCH JR -->
-            <g id="mi5" class="node" style="cursor:pointer" onclick="iClick(5)">
+            <!-- ══ ILHA 5: SCRATCH JR — FUTURA ══ -->
+            <g id="mi5" class="node-lk">
               <ellipse class="hot" cx="590" cy="615" rx="120" ry="78"/>
-              <line class="leader" x1="545" y1="590" x2="455" y2="555"/>
-              <g class="labelBox" transform="translate(295,520)">
-                <rect x="0" y="0" width="168" height="47" rx="14" fill="rgba(1,44,86,.82)"/>
-                <circle cx="24" cy="23" r="14" fill="#FBBF24"/>
-                <text x="48" y="20" class="labelText">⑤ Scratch Jr</text>
-                <text x="48" y="35" class="labelSub">bloqueada</text>
-              </g>
             </g>
 
-            <!-- ILHA 6: SCRATCH -->
-            <g id="mi6" class="node" style="cursor:pointer" onclick="iClick(6)">
+            <!-- ══ ILHA 6: SCRATCH — FUTURA ══ -->
+            <g id="mi6" class="node-lk">
               <ellipse class="hot" cx="832" cy="418" rx="120" ry="78"/>
-              <line class="leader" x1="875" y1="385" x2="970" y2="330"/>
-              <g class="labelBox" transform="translate(930,288)">
-                <rect x="0" y="0" width="148" height="47" rx="14" fill="rgba(1,44,86,.82)"/>
-                <circle cx="24" cy="23" r="14" fill="#3B82F6"/>
-                <text x="48" y="20" class="labelText">⑥ Scratch</text>
-                <text x="48" y="35" class="labelSub">bloqueada</text>
-              </g>
             </g>
 
-            <!-- ILHA NATAL -->
-            <g id="mi-n" class="node" style="cursor:pointer;opacity:.88" onclick="iClick('natal')">
+            <!-- ══ NATAL — sazonal ══ -->
+            <g id="mi-n" class="node" style="cursor:pointer;opacity:.82" onclick="iClick('natal')">
               <ellipse class="hot" cx="630" cy="160" rx="100" ry="64"/>
-              <line class="leader" x1="585" y1="132" x2="500" y2="88"/>
-              <g class="labelBox" transform="translate(385,55)">
-                <rect x="0" y="0" width="128" height="40" rx="13" fill="rgba(1,44,86,.82)"/>
-                <text x="18" y="25" class="labelText">🎄 Natal</text>
+              <line class="leader-lk" x1="585" y1="132" x2="504" y2="88"/>
+              <g class="labelBox" transform="translate(386,56)">
+                <rect x="0" y="0" width="128" height="40" rx="13" fill="rgba(1,44,86,.80)"/>
+                <text x="18" y="26" class="labelText">🎄 Natal</text>
               </g>
             </g>
 
-            <!-- ILHA PASCOA -->
+            <!-- ══ PÁSCOA & VERÃO — fora do viewport (y≈1680), acessíveis via scroll ══ -->
             <g id="mi-p" class="node" style="cursor:pointer;opacity:.75" onclick="iClick('pascoa')">
               <ellipse class="hot" cx="380" cy="1680" rx="220" ry="150"/>
               <g class="labelBox" transform="translate(295,1495)">
@@ -1288,8 +1293,6 @@ body.dark .lh1{color:white!important}
                 <text x="18" y="25" class="labelText">🐣 Páscoa</text>
               </g>
             </g>
-
-            <!-- ILHA VERAO -->
             <g id="mi-v" class="node" style="cursor:pointer;opacity:.75" onclick="iClick('verao')">
               <ellipse class="hot" cx="1250" cy="1680" rx="270" ry="160"/>
               <g class="labelBox" transform="translate(1170,1495)">
