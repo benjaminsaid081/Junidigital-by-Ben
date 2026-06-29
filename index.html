@@ -324,7 +324,7 @@ body.dark .dv span{background:#0a1426}
 body.dark .terms,body.dark .sl{color:#94a3b8}
 
 /* ═══ CHILD MAP ═══ */
-#v-map{min-height:calc(100vh - 28px);height:calc(100vh - 28px);margin:-26px;padding:0;overflow:hidden;background:#3B82F6;position:relative;flex-direction:column}
+#v-map{min-height:100vh;height:100vh;margin:-26px;padding:0;overflow:hidden;background:#3B82F6;position:relative;flex-direction:column}
 .pv.on#v-map{display:flex}
 #mapPan::-webkit-scrollbar{width:8px;height:8px}
 #mapPan::-webkit-scrollbar-track{background:rgba(0,0,0,.15)}
@@ -764,7 +764,7 @@ body.dark .lh1{color:white!important}
       <div id="forgotWrap" style="text-align:right;margin-bottom:13px"><a href="#" style="font-size:12px;color:var(--blue);font-weight:600;text-decoration:none">Esqueci a palavra-passe</a></div>
       <button class="bp bp-login" onclick="doL()">Entrar <span class="arr">→</span></button>
       <div id="loginHint" style="margin-top:14px;text-align:center;font-size:12px;color:#94a3b8;font-family:'Quicksand',sans-serif">
-        Testa: <strong>prof@test.pt</strong> · <strong>pai@test.pt</strong><br>password: qualquer coisa
+        Usa o email e a palavra-passe registados no Supabase.
       </div>
       <button class="lbtn2" type="button" onclick="showRegister()">Criar nova conta</button>
     </div><!-- /loginView -->
@@ -804,7 +804,7 @@ body.dark .lh1{color:white!important}
         <div class="f"><label>Email</label><input class="inp" type="email" id="rem" placeholder="joao@email.com"/>
           <div class="em" id="eErr">Introduz um email válido</div></div>
         <div class="f" id="scWrap" style="display:none"><label>Escola</label>
-          <input class="inp" type="text" placeholder="Agrupamento de Escolas..."/></div>
+          <input class="inp" type="text" id="school" placeholder="Agrupamento de Escolas..."/></div>
         <div class="dv"><span>ou regista com</span></div>
         <div class="sbs">
           <button class="sb"><svg class="si" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>Google</button>
@@ -842,7 +842,7 @@ body.dark .lh1{color:white!important}
             <div class="rcc"><div class="rci">🏝️</div><div class="rcl">Plataforma activa</div></div>
             <div class="rcc"><div class="rci">🔒</div><div class="rcl">RGPD protegido</div></div>
           </div>
-          <button class="bg" onclick="goP()">Entrar na plataforma →</button>
+          <button class="bg" id="enterPlatformBtn" onclick="goP()">Entrar na plataforma →</button>
         </div>
       </div>
       <button class="bk" type="button" onclick="showLogin()" style="margin-top:8px">← Já tenho conta</button>
@@ -1161,276 +1161,147 @@ body.dark .lh1{color:white!important}
       </div>
 
       <!-- ISO MAP CANVAS -->
-      <div id="mapPan" style="flex:1;overflow:hidden;position:relative;background:#3B82F6;cursor:grab;user-select:none;-webkit-user-select:none;min-height:0;touch-action:none">
-        <!-- subtle grid pattern like Code Club World -->
-        <div style="position:absolute;inset:0;background-image:radial-gradient(circle,rgba(255,255,255,.06) 1px,transparent 1px);background-size:40px 40px;pointer-events:none"></div>
+      <div id="mapPan" style="flex:1;overflow:hidden;position:relative;background:#0265BD;cursor:grab;user-select:none;-webkit-user-select:none;min-height:0;touch-action:none">
         <!-- pan hint (fades after first drag) -->
         <div id="panHint" style="position:absolute;top:14px;left:50%;transform:translateX(-50%);background:rgba(1,44,86,.75);backdrop-filter:blur(8px);color:white;padding:7px 14px;border-radius:20px;font-size:12px;font-weight:600;font-family:'Outfit',sans-serif;display:inline-flex;align-items:center;gap:8px;z-index:5;pointer-events:none;transition:opacity .4s ease;width:max-content">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 9l-3 3 3 3"/><path d="M9 5l3-3 3 3"/><path d="M15 19l-3 3-3-3"/><path d="M19 9l3 3-3 3"/><path d="M2 12h20"/><path d="M12 2v20"/></svg>
           Clica e arrasta para explorar
         </div>
 
-        <svg id="isoMap" viewBox="0 0 1330 900" xmlns="http://www.w3.org/2000/svg"
-             preserveAspectRatio="xMidYMid slice"
+        <svg id="isoMap" viewBox="0 0 1500 1100" xmlns="http://www.w3.org/2000/svg"
+             preserveAspectRatio="xMidYMid meet"
              style="display:block;width:100%;height:100%;pointer-events:visiblePainted">
-          <g id="worldGroup" transform="translate(0,0)">
-
-          <!-- ══ ILHA 1 — DIAGNÓSTICO (Home/Start) — green cross shape ══ -->
-          <g id="mi1" style="cursor:pointer" onclick="iClick(1)" transform="translate(140,580)">
-            <!-- brown base (3D side) -->
-            <path d="M20,170 L20,188 L80,204 L230,204 L290,188 L290,170 Z" fill="#7C4B20" opacity="0.9"/>
-            <path d="M20,170 L20,188 L60,198 L60,180 Z" fill="#5C3310"/>
-            <path d="M290,170 L290,188 L250,198 L250,180 Z" fill="#5C3310"/>
-            <!-- arm left brown -->
-            <path d="M0,110 L0,128 L30,138 L30,120 Z" fill="#7C4B20"/>
-            <path d="M0,110 L0,128 L20,133 L20,115 Z" fill="#5C3310"/>
-            <!-- arm right brown -->
-            <path d="M310,110 L310,128 L280,138 L280,120 Z" fill="#7C4B20"/>
-            <!-- arm bottom brown -->
-            <path d="M100,210 L100,228 L155,238 L210,228 L210,210 Z" fill="#7C4B20"/>
-
-            <!-- GREEN TOP — cross/plus shape -->
-            <!-- main body -->
-            <rect x="20" y="80" width="270" height="90" rx="14" fill="#34D399"/>
-            <!-- left arm -->
-            <rect x="0" y="100" width="50" height="50" rx="10" fill="#34D399"/>
-            <!-- right arm -->
-            <rect x="260" y="100" width="50" height="50" rx="10" fill="#34D399"/>
-            <!-- bottom arm -->
-            <rect x="90" y="160" width="130" height="55" rx="10" fill="#34D399"/>
-
-            <!-- highlight -->
-            <rect x="20" y="80" width="270" height="18" rx="14" fill="#6EE7B7" opacity="0.5"/>
-            <rect x="0" y="100" width="50" height="14" rx="10" fill="#6EE7B7" opacity="0.4"/>
-
-            <!-- TREE -->
-            <rect x="58" y="95" width="9" height="30" rx="3" fill="#7C4B20"/>
-            <ellipse cx="62" cy="90" rx="18" ry="20" fill="#16A34A"/>
-            <ellipse cx="62" cy="79" rx="13" ry="14" fill="#22C55E"/>
-
-            <!-- robot character -->
-            <rect x="195" y="96" width="26" height="22" rx="5" fill="#0364DB"/>
-            <rect x="197" y="99" width="22" height="14" rx="3" fill="#012C56"/>
-            <circle cx="203" cy="105" r="4" fill="#92D6FF"/>
-            <circle cx="213" cy="105" r="4" fill="#92D6FF"/>
-            <circle cx="204" cy="106" r="2.5" fill="#012C56"/>
-            <circle cx="214" cy="106" r="2.5" fill="#012C56"/>
-            <path d="M202,112 Q208,115 214,112" fill="none" stroke="#71C8C0" stroke-width="1.5" stroke-linecap="round"/>
-            <!-- antenna -->
-            <line x1="208" y1="96" x2="208" y2="88" stroke="#0364DB" stroke-width="2" stroke-linecap="round"/>
-            <circle cx="208" cy="86" r="3" fill="#FBC92A"/>
-
-            <!-- label -->
-            <rect x="85" y="190" width="140" height="50" rx="12" fill="white" filter="url(#shadow)"/>
-            <text x="155" y="211" text-anchor="middle" font-size="11" fill="#64748b" font-family="Outfit,Arial" font-weight="600">Início</text>
-            <text x="155" y="230" text-anchor="middle" font-size="16" fill="#012C56" font-family="Outfit,Arial" font-weight="900">Diagnóstico ✓</text>
-
-            <!-- done badge -->
-            <circle cx="285" cy="88" r="16" fill="#71C8C0" stroke="white" stroke-width="2.5"/>
-            <text x="285" y="94" text-anchor="middle" font-size="14" fill="#012C56" font-family="Arial" font-weight="bold">✓</text>
-          </g>
-
-          <!-- ══ ILHA 2 — PRINCIPAL (Level 1) — yellow/gold, bigger ══ -->
-          <g id="mi2" style="cursor:pointer" onclick="iClick(2)" transform="translate(620,280)">
-            <!-- brown base -->
-            <path d="M10,190 L10,210 L80,228 L280,228 L340,210 L340,190 Z" fill="#7C4B20" opacity="0.9"/>
-            <path d="M10,190 L10,210 L50,220 L50,200 Z" fill="#5C3310"/>
-            <path d="M340,190 L340,210 L300,220 L300,200 Z" fill="#5C3310"/>
-            <!-- top notch brown -->
-            <path d="M120,10 L120,28 L175,38 L230,28 L230,10 Z" fill="#7C4B20"/>
-
-            <!-- YELLOW TOP — L-shape (puzzle piece style) -->
-            <!-- main body -->
-            <rect x="10" y="70" width="330" height="120" rx="16" fill="#F59E0B"/>
-            <!-- top notch going up -->
-            <rect x="110" y="10" width="130" height="80" rx="14" fill="#F59E0B"/>
-
-            <!-- highlights -->
-            <rect x="10" y="70" width="330" height="20" rx="16" fill="#FDE68A" opacity="0.5"/>
-            <rect x="110" y="10" width="130" height="16" rx="14" fill="#FDE68A" opacity="0.4"/>
-
-            <!-- PALM TREE 1 -->
-            <rect x="55" y="80" width="10" height="40" rx="3" fill="#7C4B20"/>
-            <ellipse cx="60" cy="76" rx="22" ry="10" fill="#16A34A" transform="rotate(-25 60 76)"/>
-            <ellipse cx="60" cy="77" rx="22" ry="10" fill="#22C55E" transform="rotate(20 60 77)"/>
-            <ellipse cx="60" cy="78" rx="18" ry="8" fill="#16A34A" transform="rotate(65 60 78)"/>
-
-            <!-- PALM TREE 2 (top notch) -->
-            <rect x="168" y="18" width="8" height="30" rx="3" fill="#7C4B20"/>
-            <ellipse cx="172" cy="14" rx="18" ry="8" fill="#16A34A" transform="rotate(-22 172 14)"/>
-            <ellipse cx="172" cy="15" rx="18" ry="8" fill="#22C55E" transform="rotate(22 172 15)"/>
-
-            <!-- steps path on island -->
-            <polyline points="50,170 50,140 100,120 175,110 250,120 300,140 300,170"
-              fill="none" stroke="rgba(255,255,255,0.8)" stroke-width="5" stroke-dasharray="0"
-              stroke-linecap="round" stroke-linejoin="round"/>
-            <!-- step dots -->
-            <circle cx="50" cy="170" r="10" fill="white" stroke="#D97706" stroke-width="2.5"/>
-            <text x="50" y="175" text-anchor="middle" font-size="10" fill="#D97706" font-family="Arial" font-weight="800">1</text>
-            <circle cx="50" cy="148" r="10" fill="white" stroke="#D97706" stroke-width="2.5"/>
-            <text x="50" y="153" text-anchor="middle" font-size="10" fill="#D97706" font-family="Arial" font-weight="800">2</text>
-            <circle cx="98" cy="128" r="10" fill="white" stroke="#D97706" stroke-width="2.5"/>
-            <text x="98" y="133" text-anchor="middle" font-size="10" fill="#D97706" font-family="Arial" font-weight="800">3</text>
-            <circle cx="175" cy="110" r="10" fill="#FBC92A" stroke="#D97706" stroke-width="2.5"/>
-            <text x="175" y="115" text-anchor="middle" font-size="10" fill="#7C2D12" font-family="Arial" font-weight="800">4</text>
-            <circle cx="252" cy="128" r="10" fill="white" stroke="#D97706" stroke-width="2.5" opacity="0.5"/>
-            <text x="252" y="133" text-anchor="middle" font-size="10" fill="#D97706" font-family="Arial" font-weight="800" opacity="0.5">5</text>
-            <circle cx="300" cy="148" r="10" fill="white" stroke="#D97706" stroke-width="2.5" opacity="0.3"/>
-            <text x="300" y="153" text-anchor="middle" font-size="10" fill="#D97706" font-family="Arial" font-weight="800" opacity="0.3">6</text>
-            <circle cx="300" cy="170" r="10" fill="white" stroke="#D97706" stroke-width="2.5" opacity="0.2"/>
-            <text x="300" y="175" text-anchor="middle" font-size="10" fill="#D97706" font-family="Arial" font-weight="800" opacity="0.2">7</text>
-
-            <!-- label -->
-            <rect x="105" y="195" width="140" height="54" rx="12" fill="white"/>
-            <text x="175" y="215" text-anchor="middle" font-size="11" fill="#64748b" font-family="Outfit,Arial" font-weight="600">Nível 1</text>
-            <text x="175" y="237" text-anchor="middle" font-size="17" fill="#012C56" font-family="Outfit,Arial" font-weight="900">Principal</text>
-          </g>
-
-          <!-- ══ ILHA 3 — ZOOM IN (Level 2) — sand/brown ══ -->
-          <g id="mi3" style="cursor:pointer;opacity:0.6" onclick="iClick(3)" transform="translate(1240,620)">
-            <!-- brown base -->
-            <path d="M10,160 L10,178 L70,194 L250,194 L300,178 L300,160 Z" fill="#7C4B20" opacity="0.9"/>
-            <path d="M10,160 L10,178 L50,186 L50,168 Z" fill="#5C3310"/>
-            <!-- bottom notch -->
-            <path d="M90,215 L90,233 L155,243 L210,233 L210,215 Z" fill="#7C4B20"/>
-
-            <!-- SAND/BROWN TOP -->
-            <rect x="10" y="60" width="290" height="100" rx="14" fill="#D4A574"/>
-            <!-- bottom notch -->
-            <rect x="80" y="150" width="140" height="70" rx="12" fill="#D4A574"/>
-
-            <!-- highlights -->
-            <rect x="10" y="60" width="290" height="16" rx="14" fill="#E8C99A" opacity="0.6"/>
-
-            <!-- PINE TREES -->
-            <rect x="55" y="90" width="8" height="25" rx="2" fill="#7C4B20"/>
-            <polygon points="59,50 42,90 76,90" fill="#166534"/>
-            <polygon points="59,62 44,96 74,96" fill="#22C55E"/>
-
-            <rect x="210" y="78" width="8" height="30" rx="2" fill="#7C4B20"/>
-            <polygon points="214,40 196,80 232,80" fill="#166534"/>
-            <polygon points="214,54 198,86 230,86" fill="#22C55E"/>
-
-            <!-- ROCKS -->
-            <ellipse cx="130" cy="80" rx="18" ry="12" fill="#A0856A"/>
-            <ellipse cx="150" cy="75" rx="14" ry="10" fill="#B8977E"/>
-            <ellipse cx="168" cy="82" rx="12" ry="9" fill="#A0856A"/>
-
-            <!-- lock icon -->
-            <rect x="128" y="105" width="44" height="34" rx="8" fill="white" opacity="0.9"/>
-            <text x="150" y="127" text-anchor="middle" font-size="18" font-family="Arial">🔒</text>
-
-            <!-- label -->
-            <rect x="80" y="172" width="140" height="50" rx="12" fill="white" opacity="0.85"/>
-            <text x="150" y="191" text-anchor="middle" font-size="11" fill="#64748b" font-family="Outfit,Arial" font-weight="600">Nível 2</text>
-            <text x="150" y="210" text-anchor="middle" font-size="15" fill="#5C3D2E" font-family="Outfit,Arial" font-weight="900">Bloqueada 🔒</text>
-          </g>
-
-          <!-- ══ ILHA PÁSCOA — purple/pink (seasonal) ══ -->
-          <g id="mi-p" style="cursor:pointer;opacity:0.55" onclick="iClick('pascoa')" transform="translate(160,1000)">
-            <!-- brown base -->
-            <path d="M10,120 L10,136 L80,150 L210,150 L260,136 L260,120 Z" fill="#7C4B20" opacity="0.85"/>
-            <!-- PURPLE TOP -->
-            <rect x="10" y="50" width="250" height="72" rx="14" fill="#A855F7"/>
-            <rect x="10" y="50" width="250" height="15" rx="14" fill="#C084FC" opacity="0.5"/>
-            <!-- egg + bunny deco -->
-            <ellipse cx="90" cy="80" rx="14" ry="18" fill="#F472B6"/>
-            <path d="M76,80 Q90,73 104,80" fill="#FDE68A"/>
-            <path d="M77,84 Q90,91 103,84" fill="#60A5FA"/>
-            <ellipse cx="160" cy="84" rx="11" ry="13" fill="white"/>
-            <ellipse cx="156" cy="70" rx="5" ry="9" fill="white"/>
-            <ellipse cx="164" cy="70" rx="5" ry="9" fill="white"/>
-            <ellipse cx="156" cy="71" rx="2.5" ry="6" fill="#F9A8D4"/>
-            <ellipse cx="164" cy="71" rx="2.5" ry="6" fill="#F9A8D4"/>
-            <circle cx="157" cy="81" r="2" fill="#1f2937"/>
-            <circle cx="163" cy="81" r="2" fill="#1f2937"/>
-            <!-- label -->
-            <rect x="55" y="105" width="140" height="44" rx="10" fill="white" opacity="0.9"/>
-            <text x="125" y="122" text-anchor="middle" font-size="10" fill="#7c3aed" font-family="Outfit,Arial" font-weight="600">Sazonal · março</text>
-            <text x="125" y="139" text-anchor="middle" font-size="14" fill="#5b21b6" font-family="Outfit,Arial" font-weight="900">🐣 Páscoa</text>
-          </g>
-
-          <!-- ══ ILHA NATAL — white/snow (seasonal) ══ -->
-          <g id="mi-n" style="cursor:pointer;opacity:0.55" onclick="iClick('natal')" transform="translate(1080,80)">
-            <!-- brown base -->
-            <path d="M10,130 L10,147 L80,162 L220,162 L260,147 L260,130 Z" fill="#7C4B20" opacity="0.85"/>
-            <!-- SNOW TOP -->
-            <rect x="10" y="55" width="250" height="78" rx="14" fill="#E2E8F0"/>
-            <rect x="10" y="55" width="250" height="16" rx="14" fill="white" opacity="0.7"/>
-            <!-- snow bumps -->
-            <ellipse cx="50" cy="56" rx="20" ry="8" fill="white" opacity="0.8"/>
-            <ellipse cx="100" cy="53" rx="16" ry="7" fill="white" opacity="0.8"/>
-            <ellipse cx="155" cy="55" rx="20" ry="8" fill="white" opacity="0.75"/>
-            <ellipse cx="210" cy="53" rx="16" ry="7" fill="white" opacity="0.7"/>
-            <!-- xmas tree -->
-            <rect x="81" y="95" width="8" height="14" rx="2" fill="#7C4B20"/>
-            <polygon points="85,44 68,78 102,78" fill="#166534"/>
-            <polygon points="85,58 70,88 100,88" fill="#22C55E"/>
-            <circle cx="75" cy="74" r="3.5" fill="#EF4444"/>
-            <circle cx="94" cy="70" r="3.5" fill="#FBC92A"/>
-            <polygon points="85,40 87,48 94,48 89,52 91,60 85,56 79,60 81,52 76,48 83,48" fill="#FBC92A"/>
-            <!-- snowman -->
-            <ellipse cx="170" cy="100" rx="14" ry="14" fill="white" stroke="#CBD5E1" stroke-width="1"/>
-            <ellipse cx="170" cy="83" rx="11" ry="11" fill="white" stroke="#CBD5E1" stroke-width="1"/>
-            <rect x="163" y="72" width="14" height="2.5" rx="1" fill="#1f2937"/>
-            <rect x="165" y="60" width="10" height="13" rx="2" fill="#1f2937"/>
-            <circle cx="167" cy="80" r="1.8" fill="#1f2937"/>
-            <circle cx="173" cy="80" r="1.8" fill="#1f2937"/>
-            <path d="M162,86 Q170,83 178,86" fill="none" stroke="#EF4444" stroke-width="2.5" stroke-linecap="round"/>
-            <!-- label -->
-            <rect x="65" y="117" width="130" height="44" rx="10" fill="white" opacity="0.9"/>
-            <text x="130" y="134" text-anchor="middle" font-size="10" fill="#475569" font-family="Outfit,Arial" font-weight="600">Sazonal · dezembro</text>
-            <text x="130" y="151" text-anchor="middle" font-size="14" fill="#1e3a5f" font-family="Outfit,Arial" font-weight="900">🎄 Natal</text>
-          </g>
-
-          <!-- ══ ILHA VERÃO — sand (seasonal) ══ -->
-          <g id="mi-v" style="cursor:pointer;opacity:0.55" onclick="iClick('verao')" transform="translate(1430,1050)">
-            <!-- brown base -->
-            <path d="M10,128 L10,145 L75,158 L215,158 L255,145 L255,128 Z" fill="#7C4B20" opacity="0.85"/>
-            <!-- SAND TOP -->
-            <rect x="10" y="52" width="245" height="78" rx="14" fill="#FCD34D"/>
-            <rect x="10" y="52" width="245" height="15" rx="14" fill="#FEF3C7" opacity="0.6"/>
-            <!-- palm -->
-            <rect x="75" y="68" width="9" height="32" rx="3" fill="#7C4B20"/>
-            <ellipse cx="79" cy="64" rx="22" ry="9" fill="#16A34A" transform="rotate(-22 79 64)"/>
-            <ellipse cx="79" cy="65" rx="22" ry="9" fill="#22C55E" transform="rotate(22 79 65)"/>
-            <ellipse cx="79" cy="67" rx="18" ry="8" fill="#16A34A" transform="rotate(65 79 67)"/>
-            <!-- sun -->
-            <circle cx="195" cy="70" r="18" fill="#F59E0B" opacity="0.9"/>
-            <line x1="195" y1="48" x2="195" y2="41" stroke="#F59E0B" stroke-width="3" stroke-linecap="round"/>
-            <line x1="213" y1="55" x2="218" y2="50" stroke="#F59E0B" stroke-width="3" stroke-linecap="round"/>
-            <line x1="220" y1="70" x2="227" y2="70" stroke="#F59E0B" stroke-width="3" stroke-linecap="round"/>
-            <!-- beach ball -->
-            <circle cx="145" cy="100" r="16" fill="#EF4444"/>
-            <path d="M133,92 Q145,85 157,92" fill="none" stroke="white" stroke-width="2"/>
-            <path d="M131,100 Q145,107 159,100" fill="none" stroke="white" stroke-width="2"/>
-            <!-- label -->
-            <rect x="60" y="115" width="130" height="44" rx="10" fill="white" opacity="0.9"/>
-            <text x="125" y="132" text-anchor="middle" font-size="10" fill="#92400e" font-family="Outfit,Arial" font-weight="600">Sazonal · junho</text>
-            <text x="125" y="149" text-anchor="middle" font-size="14" fill="#78350f" font-family="Outfit,Arial" font-weight="900">☀️ Verão</text>
-          </g>
-
-          <!-- ══ PATHS between islands ══ -->
-          <!-- Diagnóstico → Principal -->
-          <path d="M 480,680 Q 580,560 680,480" fill="none" stroke="rgba(255,255,255,0.35)" stroke-width="6" stroke-dasharray="14 10" stroke-linecap="round"/>
-          <polygon points="678,478 692,492 668,492" fill="rgba(255,255,255,0.5)"/>
-          <!-- Principal → Nível 2 -->
-          <path d="M 960,490 Q 1100,560 1240,660" fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="5" stroke-dasharray="12 10" stroke-linecap="round"/>
-          <polygon points="1238,658 1254,672 1228,672" fill="rgba(255,255,255,0.35)"/>
-          <!-- Diagnóstico → Páscoa -->
-          <path d="M 290,820 Q 290,920 290,1010" fill="none" stroke="rgba(255,255,255,0.18)" stroke-width="3" stroke-dasharray="8 10" stroke-linecap="round"/>
-          <!-- Nível 2 → Verão -->
-          <path d="M 1430,870 Q 1480,960 1540,1060" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="3" stroke-dasharray="8 10" stroke-linecap="round"/>
-          <!-- Principal → Natal -->
-          <path d="M 920,300 Q 1010,200 1110,160" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="3" stroke-dasharray="8 10" stroke-linecap="round"/>
-          </g><!-- /worldGroup -->
-
-          <!-- ══ DEFS ══ -->
           <defs>
             <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
-              <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="rgba(0,0,0,0.15)"/>
+              <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="rgba(0,0,0,0.25)"/>
             </filter>
+            <filter id="labelGlow" x="-30%" y="-60%" width="160%" height="220%">
+              <feDropShadow dx="0" dy="3" stdDeviation="5" flood-color="rgba(0,0,0,0.35)"/>
+            </filter>
+            <filter id="lkFilter" color-interpolation-filters="sRGB">
+              <feColorMatrix type="saturate" values="0.25"/>
+              <feComponentTransfer><feFuncR type="linear" slope="0.6"/><feFuncG type="linear" slope="0.6"/><feFuncB type="linear" slope="0.6"/></feComponentTransfer>
+            </filter>
+            <style>
+              /* route-a: percurso activo (brilhante) */
+              .route-a{fill:none;stroke:rgba(255,255,255,.65);stroke-width:6;stroke-linecap:round;stroke-dasharray:14 10;pointer-events:none}
+              /* route-b: próxima ilha bloqueada */
+              .route-b{fill:none;stroke:rgba(255,255,255,.30);stroke-width:4;stroke-linecap:round;stroke-dasharray:10 12;pointer-events:none}
+              /* route-c: ilhas futuras (muito ténue) */
+              .route-c{fill:none;stroke:rgba(255,255,255,.13);stroke-width:3;stroke-linecap:round;stroke-dasharray:8 14;pointer-events:none}
+              .leader{stroke:rgba(255,255,255,.55);stroke-width:2;stroke-linecap:round;pointer-events:none}
+              .leader-lk{stroke:rgba(255,255,255,.25);stroke-width:1.5;stroke-linecap:round;pointer-events:none}
+              .hot{fill:rgba(255,255,255,.01);stroke:rgba(255,255,255,.0);stroke-width:2;transition:stroke .2s,fill .2s}
+              .node:hover .hot{fill:rgba(255,255,255,.08);stroke:rgba(255,255,255,.75)}
+              .node-lk{filter:url(#lkFilter);cursor:default!important}
+              .node-lk .hot{pointer-events:none}
+              .labelBox{filter:url(#labelGlow)}
+              .labelText{font-family:Outfit,sans-serif;font-size:13px;font-weight:800;letter-spacing:0;fill:white;pointer-events:none}
+              .labelSub{font-family:Quicksand,sans-serif;font-size:10px;font-weight:700;letter-spacing:0;fill:rgba(255,255,255,.72);pointer-events:none}
+              .labelText-lk{font-family:Outfit,sans-serif;font-size:13px;font-weight:800;letter-spacing:0;fill:rgba(255,255,255,.45);pointer-events:none}
+              .labelSub-lk{font-family:Quicksand,sans-serif;font-size:10px;font-weight:700;letter-spacing:0;fill:rgba(255,255,255,.3);pointer-events:none}
+            </style>
           </defs>
+          <g id="worldGroup" transform="translate(0,0)">
+
+            <!-- MAPA PROFISSIONAL -->
+            <image href="ilhas.svg" x="0" y="0" width="1728" height="1904" preserveAspectRatio="xMidYMid slice"/>
+
+            <!-- ══ PERCURSO: estrutura em árvore, sem cruzamentos ══ -->
+
+            <!-- Rota activa: 1 → 2 (brilhante) -->
+            <path class="route-a" d="M700,878 Q960,680 1175,490"/>
+
+            <!-- Rota para ilha seguinte bloqueada: 2 → 3 -->
+            <path class="route-b" d="M1205,530 Q1218,578 1225,628"/>
+
+            <!-- Rotas futuras (muito ténues): 3→4, 4→5, 5→6, 6→Natal -->
+            <path class="route-c" d="M1175,665 Q1040,690 902,712"/>
+            <path class="route-c" d="M840,712 Q715,665 590,615"/>
+            <path class="route-c" d="M590,615 Q710,516 832,418"/>
+            <path class="route-c" d="M795,390 C760,290 700,210 640,165"/>
+
+            <!-- ══ ILHA 1: DIAGNÓSTICO — COMPLETA ══ -->
+            <g id="mi1" class="node" style="cursor:pointer" onclick="iClick(1)">
+              <ellipse class="hot" cx="650" cy="905" rx="145" ry="92"/>
+              <line class="leader" x1="600" y1="888" x2="522" y2="888"/>
+              <g class="labelBox" transform="translate(325,864)">
+                <rect x="0" y="0" width="195" height="50" rx="14" fill="rgba(1,44,86,.88)"/>
+                <circle cx="26" cy="25" r="15" fill="#10B981"/>
+                <text x="26" y="22" text-anchor="middle" font-family="Outfit" font-size="13" font-weight="900" fill="white">✓</text>
+                <text x="51" y="21" class="labelText">① Diagnóstico</text>
+                <text x="51" y="36" class="labelSub">5 perguntas · Completo</text>
+              </g>
+            </g>
+
+            <!-- ══ ILHA 2: BOT STARTER — EM PROGRESSO ══ -->
+            <g id="mi2" class="node" style="cursor:pointer" onclick="iClick(2)">
+              <ellipse class="hot" cx="1205" cy="460" rx="120" ry="78"/>
+              <line class="leader" x1="1258" y1="422" x2="1340" y2="372"/>
+              <g class="labelBox" transform="translate(1278,342)">
+                <rect x="0" y="0" width="192" height="50" rx="14" fill="rgba(1,44,86,.88)"/>
+                <circle cx="26" cy="25" r="15" fill="#F59E0B"/>
+                <text x="26" y="22" text-anchor="middle" font-family="Outfit" font-size="11" font-weight="900" fill="white">▶</text>
+                <text x="51" y="21" class="labelText">② Bot Starter</text>
+                <text x="51" y="36" class="labelSub">18 desafios · Em progresso</text>
+              </g>
+            </g>
+
+            <!-- ══ ILHA 3: NÍVEL 2 — BLOQUEADA ══ -->
+            <g id="mi3" class="node-lk" onclick="iClick(3)">
+              <ellipse class="hot" cx="1225" cy="628" rx="120" ry="78"/>
+              <line class="leader-lk" x1="1278" y1="642" x2="1358" y2="678"/>
+              <g class="labelBox" transform="translate(1338,656)">
+                <rect x="0" y="0" width="178" height="50" rx="14" fill="rgba(1,44,86,.70)"/>
+                <circle cx="26" cy="25" r="15" fill="rgba(255,255,255,.12)"/>
+                <text x="26" y="22" text-anchor="middle" font-family="Outfit" font-size="12" fill="rgba(255,255,255,.45)">🔒</text>
+                <text x="51" y="21" class="labelText-lk">③ Smart Farm</text>
+                <text x="51" y="36" class="labelSub-lk">Completa Bot Starter</text>
+              </g>
+            </g>
+
+            <!-- ══ ILHA 4: ARCADE — FUTURA (sem label para não poluir) ══ -->
+            <g id="mi4" class="node-lk">
+              <ellipse class="hot" cx="902" cy="712" rx="120" ry="78"/>
+            </g>
+
+            <!-- ══ ILHA 5: SCRATCH JR — FUTURA ══ -->
+            <g id="mi5" class="node-lk">
+              <ellipse class="hot" cx="590" cy="615" rx="120" ry="78"/>
+            </g>
+
+            <!-- ══ ILHA 6: SCRATCH — FUTURA ══ -->
+            <g id="mi6" class="node-lk">
+              <ellipse class="hot" cx="832" cy="418" rx="120" ry="78"/>
+            </g>
+
+            <!-- ══ NATAL — sazonal ══ -->
+            <g id="mi-n" class="node" style="cursor:pointer;opacity:.82" onclick="iClick('natal')">
+              <ellipse class="hot" cx="630" cy="160" rx="100" ry="64"/>
+              <line class="leader-lk" x1="585" y1="132" x2="504" y2="88"/>
+              <g class="labelBox" transform="translate(386,56)">
+                <rect x="0" y="0" width="128" height="40" rx="13" fill="rgba(1,44,86,.80)"/>
+                <text x="18" y="26" class="labelText">🎄 Natal</text>
+              </g>
+            </g>
+
+            <!-- ══ PÁSCOA & VERÃO — fora do viewport (y≈1680), acessíveis via scroll ══ -->
+            <g id="mi-p" class="node" style="cursor:pointer;opacity:.75" onclick="iClick('pascoa')">
+              <ellipse class="hot" cx="380" cy="1680" rx="220" ry="150"/>
+              <g class="labelBox" transform="translate(295,1495)">
+                <rect x="0" y="0" width="142" height="40" rx="13" fill="rgba(1,44,86,.82)"/>
+                <text x="18" y="25" class="labelText">🐣 Páscoa</text>
+              </g>
+            </g>
+            <g id="mi-v" class="node" style="cursor:pointer;opacity:.75" onclick="iClick('verao')">
+              <ellipse class="hot" cx="1250" cy="1680" rx="270" ry="160"/>
+              <g class="labelBox" transform="translate(1170,1495)">
+                <rect x="0" y="0" width="132" height="40" rx="13" fill="rgba(1,44,86,.82)"/>
+                <text x="18" y="25" class="labelText">☀️ Verão</text>
+              </g>
+            </g>
+
+          </g><!-- /worldGroup -->
 
         </svg>
 
@@ -1521,9 +1392,9 @@ body.dark .lh1{color:white!important}
           <div id="desProg" style="display:flex;gap:5px;align-items:center"></div>
         </div>
         <!-- challenge body -->
-        <div style="display:flex;flex:1;overflow:hidden">
-          <!-- left: instruction panel -->
-          <div style="width:36%;min-width:260px;padding:16px;border-right:1px solid #1e3a5f;display:flex;flex-direction:column;gap:12px;overflow-y:auto">
+        <div style="display:flex;flex:1;overflow:hidden;position:relative">
+          <!-- left: instruction panel (collapsible) -->
+          <div id="desPanel" style="width:260px;min-width:260px;padding:16px;border-right:1px solid #1e3a5f;display:flex;flex-direction:column;gap:12px;overflow-y:auto;transition:width .25s,min-width .25s,padding .25s;flex-shrink:0">
             <div style="background:#1e3a5f;border-radius:14px;padding:15px;border-left:4px solid #71C8C0;flex-shrink:0">
               <div id="desEmoji" style="font-size:23px;margin-bottom:4px"></div>
               <h3 id="desH3" style="font-size:16px;font-weight:800;color:white;margin-bottom:5px"></h3>
@@ -1538,15 +1409,12 @@ body.dark .lh1{color:white!important}
               <button onclick="completarDesafio()" style="background:#71C8C0;color:#012C56;border:none;padding:13px;border-radius:10px;font-weight:900;font-size:14px;cursor:pointer;font-family:'Outfit',sans-serif">✅ Marcar como concluído →</button>
             </div>
           </div>
+          <!-- toggle button -->
+          <button id="desPanelToggle" onclick="toggleDesPanel()" title="Mostrar/esconder instruções" style="position:absolute;left:252px;top:50%;transform:translateY(-50%);z-index:10;width:16px;height:48px;background:#1e3a5f;border:1px solid #2a3a5f;border-radius:0 6px 6px 0;cursor:pointer;color:#71C8C0;font-size:11px;display:flex;align-items:center;justify-content:center;transition:left .25s;padding:0">◀</button>
           <!-- right: Scratch editor (embedded) -->
           <div style="flex:1;display:flex;flex-direction:column;overflow:hidden;background:#0f172a">
-            <!-- top bar -->
-            <div style="background:#12122a;padding:8px 14px;display:flex;align-items:center;gap:8px;border-bottom:1px solid #2a3a5f;flex-shrink:0">
-              <svg width="18" height="18" viewBox="0 0 56 56" style="flex-shrink:0"><circle cx="28" cy="28" r="28" fill="#4C97FF"/><path d="M22 18c0-3.3 2.7-6 6-6s6 2.7 6 6v4h4a4 4 0 0 1 4 4v12a4 4 0 0 1-4 4H18a4 4 0 0 1-4-4V26a4 4 0 0 1 4-4h4v-4z" fill="white" opacity=".9"/><circle cx="23" cy="30" r="3" fill="#4C97FF"/><circle cx="33" cy="30" r="3" fill="#4C97FF"/></svg>
-              <span style="color:#4C97FF;font-size:12px;font-weight:700">Editor Scratch</span>
-            </div>
-            <!-- Scratch iframe -->
-            <iframe src="./scratch/index.html" style="flex:1;border:none;width:100%;display:block" allow="microphone" title="Editor Scratch"></iframe>
+            <!-- Scratch via TurboWarp (editor completo, biblioteca de atores e cenários) -->
+            <iframe id="scratchFrame" src="https://turbowarp.org/editor?locale=pt-br&cloud_host=0" style="flex:1;border:none;width:100%;height:100%;display:block" allow="microphone; camera; clipboard-read; clipboard-write; display-capture" title="Editor Scratch" allowfullscreen></iframe>
           </div>
         </div>
       </div>
@@ -1621,6 +1489,37 @@ body.dark .lh1{color:white!important}
       </div>
     </div>
 
+
+    <!-- USERS MANAGEMENT -->
+    <div class="pv" id="v-users">
+      <div class="pt">👥 Utilizadores</div>
+      <div class="ps2">Lista de perfis guardados no Supabase. Professores podem gerir tipo e estado dos utilizadores.</div>
+      <div class="sr2 c3">
+        <div class="sc"><div class="sci">👥</div><div class="scv" id="usersCount">0</div><div class="scl">Total de utilizadores</div></div>
+        <div class="sc"><div class="sci">🏫</div><div class="scv" id="usersProfCount">0</div><div class="scl">Professores</div></div>
+        <div class="sc"><div class="sci">👪</div><div class="scv" id="usersEncCount">0</div><div class="scl">Enc. de Educação</div></div>
+      </div>
+      <div class="sec">
+        <div class="sh">
+          <div class="st">Gestão de utilizadores</div>
+          <button class="bsm bb2" onclick="loadUsers()">Atualizar</button>
+        </div>
+        <div style="overflow-x:auto">
+          <table class="tbl">
+            <thead>
+              <tr><th>Nome</th><th>Email</th><th>Tipo</th><th>Escola</th><th>Estado</th><th>Ações</th></tr>
+            </thead>
+            <tbody id="usersTableBody">
+              <tr><td colspan="6">Clica em “Atualizar” para carregar utilizadores.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p style="font-size:11px;color:#94a3b8;font-family:'Quicksand',sans-serif;margin-top:10px">
+          Nota: por segurança, apagar definitivamente utilizadores Auth deve ser feito no painel Supabase ou através de uma Edge Function com chave secreta.
+        </p>
+      </div>
+    </div>
+
     <!-- SETTINGS -->
     <div class="pv" id="v-set">
       <div class="pt">⚙️ Definições</div><div class="ps2">Gere o teu perfil</div>
@@ -1649,18 +1548,19 @@ body.dark .lh1{color:white!important}
 
       <!-- CRIANÇA: nome (sem email) -->
       <div class="sec roleOnly-child">
-        <div class="sh"><div class="st">Perfil</div><button class="bsm bb2">Guardar</button></div>
+        <div class="sh"><div class="st">Perfil</div><button class="bsm bb2" onclick="saveCurrentProfile()">Guardar</button></div>
         <div class="f"><label>O meu nome</label><input class="inp" id="cName" type="text" value="Maria"/></div>
       </div>
 
       <!-- ADULTO: perfil completo -->
       <div class="sec roleOnly-adult">
-        <div class="sh"><div class="st">Perfil</div><button class="bsm bb2">Guardar</button></div>
+        <div class="sh"><div class="st">Perfil</div><button class="bsm bb2" onclick="saveCurrentProfile()">Guardar</button></div>
         <div class="fr" style="margin-bottom:13px">
-          <div class="f"><label>Nome</label><input class="inp" type="text" value="João"/></div>
-          <div class="f"><label>Apelido</label><input class="inp" type="text" value="Silva"/></div>
+          <div class="f"><label>Nome</label><input class="inp" id="profileFirstName" type="text" value=""/></div>
+          <div class="f"><label>Apelido</label><input class="inp" id="profileLastName" type="text" value=""/></div>
         </div>
-        <div class="f"><label>Email</label><input class="inp" type="email" value="joao@email.pt"/></div>
+        <div class="f"><label>Email</label><input class="inp" id="profileEmail" type="email" value="" disabled title="Para alterar email, usa Supabase Auth"/></div>
+        <div class="f"><label>Escola / Organização</label><input class="inp" id="profileSchool" type="text" value="" placeholder="Ex.: Escola, ATL, Junicoders..."/></div>
       </div>
     </div>
 
@@ -1727,6 +1627,27 @@ body.dark .lh1{color:white!important}
   </div>
 </div></div>
 
+
+<!-- ══════════════ SUPABASE CONFIG ══════════════ -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+/*
+  1) Cria um projeto no Supabase.
+  2) Cola abaixo o Project URL e a Publishable key / anon public key.
+  3) Corre o ficheiro junicoders_supabase_schema.sql no SQL Editor do Supabase.
+*/
+const SUPABASE_URL = "https://tkvyezltihfbkoujqrcp.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_QP77brhP26fEP_xSuJ6WBA_Sf5w3u2a";
+
+const SUPABASE_READY =
+  /^https:\/\/.+\.supabase\.co$/.test(SUPABASE_URL) &&
+  !/COLOCA_AQUI|TUA_|TEU_/i.test(SUPABASE_URL + SUPABASE_PUBLISHABLE_KEY);
+
+const supabaseDb = SUPABASE_READY
+  ? window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY)
+  : null;
+</script>
+
 <script>
 // ── globals
 let role = 'enc';
@@ -1736,6 +1657,277 @@ let curQ = 0;
 let cLvl = 0;
 let loginMode = 'child';
 let _mapDragged = false;
+
+let currentUser = null;
+let currentProfile = null;
+
+const ROLE_LABELS = {
+  enc: 'Enc. de Educação',
+  prof: 'Professor',
+  child: 'Criança'
+};
+
+function requireSupabase() {
+  if (!SUPABASE_READY || !supabaseDb) {
+    toast('Liga primeiro o Supabase: preenche SUPABASE_URL e SUPABASE_PUBLISHABLE_KEY no código.', 'err');
+    return false;
+  }
+  return true;
+}
+
+function cleanLoginName(value) {
+  return (value || '')
+    .toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9._-]/g, '');
+}
+
+function getAuthEmailForLogin(value) {
+  const v = (value || '').trim();
+  if (loginMode === 'child' && !v.includes('@')) {
+    return cleanLoginName(v) + '@alunos.junicoders.local';
+  }
+  return v;
+}
+
+function profileDisplayName(profile, fallback='Utilizador') {
+  if (!profile) return fallback;
+  return profile.full_name || [profile.first_name, profile.last_name].filter(Boolean).join(' ') || profile.email || fallback;
+}
+
+function profileFromUserMetadata(user) {
+  const meta = (user && user.user_metadata) || {};
+  return {
+    id: user ? user.id : null,
+    email: user ? user.email : '',
+    first_name: meta.first_name || '',
+    last_name: meta.last_name || '',
+    full_name: meta.full_name || '',
+    role: meta.role || 'enc',
+    school: meta.school || '',
+    avatar: meta.avatar || '🤖',
+    is_active: true
+  };
+}
+
+async function loadCurrentProfile() {
+  if (!requireSupabase()) return null;
+
+  if (!currentUser) {
+    const { data } = await supabaseDb.auth.getUser();
+    currentUser = data && data.user ? data.user : null;
+  }
+  if (!currentUser) return null;
+
+  const { data, error } = await supabaseDb
+    .from('profiles')
+    .select('*')
+    .eq('id', currentUser.id)
+    .maybeSingle();
+
+  if (error) console.warn('Erro ao carregar perfil:', error);
+
+  currentProfile = data || profileFromUserMetadata(currentUser);
+  role = currentProfile.role || 'enc';
+  uName = profileDisplayName(currentProfile, 'Utilizador');
+
+  updateProfileForms();
+  return currentProfile;
+}
+
+function updateProfileForms() {
+  if (!currentProfile) return;
+
+  const first = document.getElementById('profileFirstName');
+  const last = document.getElementById('profileLastName');
+  const email = document.getElementById('profileEmail');
+  const school = document.getElementById('profileSchool');
+  const childName = document.getElementById('cName');
+
+  if (first) first.value = currentProfile.first_name || '';
+  if (last) last.value = currentProfile.last_name || '';
+  if (email) email.value = currentProfile.email || currentUser?.email || '';
+  if (school) school.value = currentProfile.school || '';
+  if (childName && role === 'child') childName.value = profileDisplayName(currentProfile, uName);
+
+  if (currentProfile.avatar && role === 'child') {
+    const big = document.getElementById('bigAv');
+    if (big) big.textContent = currentProfile.avatar;
+    document.querySelectorAll('#avatarPicker .av').forEach(el => {
+      el.classList.toggle('on', el.textContent.trim() === currentProfile.avatar);
+    });
+  }
+}
+
+function setSuccessAction(mode) {
+  const btn = document.getElementById('enterPlatformBtn');
+  if (!btn) return;
+  if (mode === 'login') {
+    btn.textContent = 'Ir para o login →';
+    btn.onclick = function(){ showLogin(); setLoginMode('adult'); };
+  } else {
+    btn.textContent = 'Entrar na plataforma →';
+    btn.onclick = function(){ goP(); };
+  }
+}
+
+async function initSupabaseSession() {
+  if (!SUPABASE_READY || !supabaseDb) return;
+  const { data } = await supabaseDb.auth.getSession();
+  if (data && data.session && data.session.user) {
+    currentUser = data.session.user;
+    await loadCurrentProfile();
+    if (currentProfile && currentProfile.is_active === false) {
+      await supabaseDb.auth.signOut();
+      currentUser = null;
+      currentProfile = null;
+      toast('A tua conta está inativa. Contacta a Junicoders.', 'err');
+      return;
+    }
+    goP();
+  }
+
+  supabaseDb.auth.onAuthStateChange(function(event, session){
+    if (event === 'SIGNED_OUT') {
+      currentUser = null;
+      currentProfile = null;
+    }
+    if (event === 'SIGNED_IN' && session && session.user) {
+      currentUser = session.user;
+    }
+  });
+}
+
+async function saveCurrentProfile() {
+  if (!requireSupabase()) return;
+  if (!currentUser) {
+    toast('Tens de iniciar sessão primeiro.', 'err');
+    return;
+  }
+
+  let payload = {};
+  if (role === 'child') {
+    const name = (document.getElementById('cName')?.value || '').trim();
+    payload = {
+      full_name: name || uName,
+      first_name: name || uName,
+      avatar: document.getElementById('bigAv')?.textContent || currentProfile?.avatar || '🤖',
+      updated_at: new Date().toISOString()
+    };
+  } else {
+    const first = (document.getElementById('profileFirstName')?.value || '').trim();
+    const last = (document.getElementById('profileLastName')?.value || '').trim();
+    const school = (document.getElementById('profileSchool')?.value || '').trim();
+    payload = {
+      first_name: first,
+      last_name: last,
+      full_name: [first, last].filter(Boolean).join(' ') || uName,
+      school: school,
+      updated_at: new Date().toISOString()
+    };
+  }
+
+  const { data, error } = await supabaseDb
+    .from('profiles')
+    .update(payload)
+    .eq('id', currentUser.id)
+    .select()
+    .single();
+
+  if (error) {
+    toast('Erro ao guardar perfil: ' + error.message, 'err');
+    return;
+  }
+
+  currentProfile = data;
+  role = data.role || role;
+  uName = profileDisplayName(data, uName);
+  updateProfileForms();
+  toast('Perfil guardado no Supabase ✓', 'ok');
+}
+
+async function loadUsers() {
+  if (!requireSupabase()) return;
+  const body = document.getElementById('usersTableBody');
+  if (!body) return;
+  body.innerHTML = '<tr><td colspan="6">A carregar utilizadores...</td></tr>';
+
+  const { data, error } = await supabaseDb
+    .from('profiles')
+    .select('id,email,first_name,last_name,full_name,role,school,is_active,created_at')
+    .order('created_at', { ascending: false });
+
+  if (error) {
+    body.innerHTML = '<tr><td colspan="6">Erro ao carregar utilizadores.</td></tr>';
+    toast('Erro ao carregar utilizadores: ' + error.message, 'err');
+    return;
+  }
+
+  if (!data || data.length === 0) {
+    body.innerHTML = '<tr><td colspan="6">Ainda não existem utilizadores registados.</td></tr>';
+    return;
+  }
+
+  document.getElementById('usersCount').textContent = data.length;
+  document.getElementById('usersProfCount').textContent = data.filter(u => u.role === 'prof').length;
+  document.getElementById('usersEncCount').textContent = data.filter(u => u.role === 'enc').length;
+
+  body.innerHTML = data.map(u => {
+    const name = u.full_name || [u.first_name,u.last_name].filter(Boolean).join(' ') || u.email || 'Sem nome';
+    const active = u.is_active !== false;
+    const roleIcon = u.role === 'prof' ? '🏫' : u.role === 'child' ? '🤖' : '👪';
+    const status = active
+      ? '<span class="badge bd">Ativo</span>'
+      : '<span class="badge bl">Inativo</span>';
+    return `
+      <tr>
+        <td><span class="sav2" style="background:#dbeafe">${roleIcon}</span>${name}</td>
+        <td>${u.email || '—'}</td>
+        <td>
+          <select class="inp" style="padding:6px 8px;font-size:12px;width:auto" onchange="updateUserRole('${u.id}', this.value)">
+            <option value="enc" ${u.role==='enc'?'selected':''}>Enc. Educação</option>
+            <option value="prof" ${u.role==='prof'?'selected':''}>Professor</option>
+            <option value="child" ${u.role==='child'?'selected':''}>Criança</option>
+          </select>
+        </td>
+        <td>${u.school || '—'}</td>
+        <td>${status}</td>
+        <td><button class="bsm bo" onclick="toggleUserActive('${u.id}', ${active})">${active ? 'Desativar' : 'Ativar'}</button></td>
+      </tr>`;
+  }).join('');
+}
+
+async function updateUserRole(id, newRole) {
+  if (!requireSupabase()) return;
+  const { error } = await supabaseDb
+    .from('profiles')
+    .update({ role: newRole, updated_at: new Date().toISOString() })
+    .eq('id', id);
+
+  if (error) {
+    toast('Erro ao atualizar perfil: ' + error.message, 'err');
+    loadUsers();
+    return;
+  }
+  toast('Tipo de utilizador atualizado ✓', 'ok');
+  if (currentUser && currentUser.id === id) await loadCurrentProfile();
+}
+
+async function toggleUserActive(id, activeNow) {
+  if (!requireSupabase()) return;
+  const { error } = await supabaseDb
+    .from('profiles')
+    .update({ is_active: !activeNow, updated_at: new Date().toISOString() })
+    .eq('id', id);
+
+  if (error) {
+    toast('Erro ao atualizar estado: ' + error.message, 'err');
+    return;
+  }
+  toast(!activeNow ? 'Utilizador ativado ✓' : 'Utilizador desativado ✓', 'ok');
+  loadUsers();
+}
+
 
 // ── TOAST ─────────────────────────────────────────────────────────────────────
 function toast(msg, type='ok') {
@@ -1991,6 +2183,20 @@ function setAvatar(emoji, el){
   const sAv = document.getElementById('sAv');
   if(sAv && role==='child') sAv.textContent = emoji;
   try{ localStorage.setItem('jc_avatar', emoji); }catch(e){}
+
+  if (SUPABASE_READY && supabaseDb && currentUser) {
+    supabaseDb.from('profiles')
+      .update({ avatar: emoji, updated_at: new Date().toISOString() })
+      .eq('id', currentUser.id)
+      .then(({ error }) => {
+        if (error) toast('Avatar alterado localmente, mas não foi guardado no Supabase.', 'err');
+        else {
+          if (!currentProfile) currentProfile = {};
+          currentProfile.avatar = emoji;
+          toast('Avatar guardado no Supabase ✓', 'ok');
+        }
+      });
+  }
 }
 function loadAvatar(){
   let saved = '🤖';
@@ -2014,9 +2220,13 @@ else loadIslandsData();
 if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', () => setLoginMode('child'));
 else setLoginMode('child');
 
+// Recupera sessão Supabase ao recarregar a página
+if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initSupabaseSession);
+else initSupabaseSession();
+
 // ── MAP PAN (transform-based — funciona nos dois eixos, em qualquer ecrã) ─────
-const VBW = 1330, VBH = 900;        // janela visível (viewBox)
-const WORLD_W = 1760, WORLD_H = 1280; // dimensão total do mundo (até às ilhas mais distantes)
+const VBW = 1500, VBH = 1100;       // janela visível (viewBox)
+const WORLD_W = 1728, WORLD_H = 1904; // dimensão total do mundo (até às ilhas mais distantes)
 let mapPan = { x: 0, y: 0 };
 
 function applyMapPan(){
@@ -2159,22 +2369,83 @@ function chkP() {
   document.getElementById('pl').textContent = s ? 'Segurança: '+lbls[s] : '';
 }
 
-function vS3() {
+async function vS3() {
+  if (!requireSupabase()) return;
+
+  const firstName = document.getElementById('fn').value.trim();
+  const lastName = document.getElementById('ln').value.trim();
+  const email = document.getElementById('rem').value.trim().toLowerCase();
+  const school = document.getElementById('school') ? document.getElementById('school').value.trim() : '';
   const pw = document.getElementById('pw').value;
   const pw2 = document.getElementById('pw2').value;
   let ok = true;
+
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    document.getElementById('eErr').classList.add('on');
+    document.getElementById('rem').classList.add('er');
+    ok = false;
+  } else {
+    document.getElementById('eErr').classList.remove('on');
+    document.getElementById('rem').classList.remove('er');
+  }
+
   if (pw.length < 8) { document.getElementById('pErr').classList.add('on'); document.getElementById('pw').classList.add('er'); ok=false; }
   else { document.getElementById('pErr').classList.remove('on'); document.getElementById('pw').classList.remove('er'); }
+
   if (pw !== pw2) { document.getElementById('p2Err').classList.add('on'); document.getElementById('pw2').classList.add('er'); ok=false; }
   else { document.getElementById('p2Err').classList.remove('on'); document.getElementById('pw2').classList.remove('er'); }
+
   if (!ok) return;
-  uName = document.getElementById('fn').value || 'Utilizador';
+
+  const fullName = [firstName, lastName].filter(Boolean).join(' ') || 'Utilizador';
+  const btn = (typeof event !== 'undefined' && event.target) ? event.target : null;
+  const oldTxt = btn ? btn.innerHTML : '';
+  if (btn) { btn.disabled = true; btn.innerHTML = 'A criar conta...'; }
+
+  const { data, error } = await supabaseDb.auth.signUp({
+    email: email,
+    password: pw,
+    options: {
+      data: {
+        first_name: firstName,
+        last_name: lastName,
+        full_name: fullName,
+        role: role,
+        school: school
+      }
+    }
+  });
+
+  if (btn) { btn.disabled = false; btn.innerHTML = oldTxt; }
+
+  if (error) {
+    toast('Erro ao criar conta: ' + error.message, 'err');
+    return;
+  }
+
+  currentUser = data.user || null;
+  currentProfile = currentUser ? profileFromUserMetadata(currentUser) : {
+    email, first_name: firstName, last_name: lastName, full_name: fullName, role, school, is_active: true
+  };
+
+  if (data.session && currentUser) {
+    await loadCurrentProfile();
+    setSuccessAction('platform');
+    uName = profileDisplayName(currentProfile, fullName);
+    document.getElementById('wM').textContent = role==='enc'
+      ? 'Conta criada e guardada no Supabase. Podes adicionar os teus filhos e acompanhar o progresso.'
+      : 'Conta criada e guardada no Supabase. Podes criar turmas e gerir utilizadores.';
+  } else {
+    setSuccessAction('login');
+    uName = fullName;
+    document.getElementById('wM').textContent = 'Conta criada no Supabase. Confirma o email antes de iniciares sessão.';
+  }
+
   document.getElementById('wN').textContent = uName;
-  document.getElementById('wM').textContent = role==='enc'
-    ? 'Conta criada! Podes adicionar os teus filhos e acompanhar o progresso.'
-    : 'Conta criada! Podes criar turmas e personalizar os desafios.';
   document.getElementById('wI').textContent = role==='enc' ? '👪' : '🏫';
   document.getElementById('wR').textContent = role==='enc' ? 'Enc. de Educação' : 'Professor';
+
+  toast('Conta guardada no Supabase ✓', 'ok');
   gS('Ok');
 }
 
@@ -2195,14 +2466,14 @@ function setLoginMode(m){
   const forgot = document.getElementById('forgotWrap');
   const hint = document.getElementById('loginHint');
   if(m==='child'){
-    lab.textContent = 'Nome de utilizador ou turma';
+    lab.textContent = 'Email ou nome de utilizador';
     inp.type = 'text';
-    inp.placeholder = 'maria_silva, user1 ou 6A...';
+    inp.placeholder = 'maria_silva ou maria@exemplo.pt';
     inp.value = '';
     inp.setAttribute('autocomplete','username');
     adultOnly.style.display = 'none';
     forgot.style.display = 'none';
-    hint.innerHTML = 'Testa: <strong>maria</strong> · <strong>user1</strong> · <strong>6A</strong><br>password: qualquer coisa';
+    hint.innerHTML = 'Os alunos entram com o utilizador criado no Supabase.<br>Ex.: <strong>maria_silva</strong> fica <strong>maria_silva@alunos.junicoders.local</strong>.';
   } else {
     lab.textContent = 'Email';
     inp.type = 'email';
@@ -2211,7 +2482,7 @@ function setLoginMode(m){
     inp.setAttribute('autocomplete','email');
     adultOnly.style.display = '';
     forgot.style.display = '';
-    hint.innerHTML = 'Testa: <strong>prof@test.pt</strong> · <strong>pai@test.pt</strong><br>password: qualquer coisa';
+    hint.innerHTML = 'Usa o email e a palavra-passe registados no Supabase.';
   }
   document.getElementById('lErr').classList.remove('on');
 }
@@ -2224,21 +2495,48 @@ function togPw(btn){
   }
 }
 
-function doL() {
+async function doL() {
+  if (!requireSupabase()) return;
+
   const e = document.getElementById('le').value.trim();
   const p = document.getElementById('lp').value;
   const err = document.getElementById('lErr');
+
   if (!e || !p) { err.classList.add('on'); return; }
   err.classList.remove('on');
-  if(loginMode === 'child'){
-    role = 'child';
-    // Derive display name from username (split on common separators, capitalize first chunk)
-    const base = e.split(/[_\-\.\s]/)[0] || e;
-    uName = base.charAt(0).toUpperCase() + base.slice(1).toLowerCase();
-  } else {
-    role = e.includes('prof') ? 'prof' : 'enc';
-    uName = e.includes('prof') ? 'Ana' : 'João';
+
+  const authEmail = getAuthEmailForLogin(e);
+  const btn = (typeof event !== 'undefined' && event.target) ? event.target.closest('button') : null;
+  const oldTxt = btn ? btn.innerHTML : '';
+  if (btn) { btn.disabled = true; btn.innerHTML = 'A entrar...'; }
+
+  const { data, error } = await supabaseDb.auth.signInWithPassword({
+    email: authEmail,
+    password: p
+  });
+
+  if (btn) { btn.disabled = false; btn.innerHTML = oldTxt; }
+
+  if (error) {
+    err.classList.add('on');
+    toast('Email/utilizador ou palavra-passe incorretos.', 'err');
+    return;
   }
+
+  currentUser = data.user;
+  await loadCurrentProfile();
+
+  if (currentProfile && currentProfile.is_active === false) {
+    await supabaseDb.auth.signOut();
+    err.classList.add('on');
+    toast('Conta inativa. Contacta a Junicoders.', 'err');
+    return;
+  }
+
+  // Respeita o modo escolhido no login, mas dá prioridade ao perfil real da base de dados.
+  role = currentProfile?.role || (loginMode === 'child' ? 'child' : 'enc');
+  uName = profileDisplayName(currentProfile, authEmail.split('@')[0]);
+
   goP();
 }
 
@@ -2280,6 +2578,7 @@ function goP() {
       <div class="ns">Principal</div>
       <button class="ni on" onclick="shV('v-prof',this)"><span class="ico">🏠</span><span>Dashboard</span></button>
       <button class="ni" onclick="shV('v-turma',this)"><span class="ico">🏫</span><span>Turmas</span></button>
+      <button class="ni" onclick="shV('v-users',this);loadUsers()"><span class="ico">👥</span><span>Utilizadores</span></button>
       <button class="ni" onclick="shV('v-desfios',this);renderChallengeEditor(currentEdIsland)"><span class="ico">⚡</span><span>Desafios</span><div class="nd"></div></button>
       <button class="ni" onclick="shV('v-ranking',this)"><span class="ico">🏆</span><span>Ranking</span></button>
       <div class="ns">Conta</div>
@@ -2330,7 +2629,12 @@ document.querySelectorAll('.av').forEach(a => a.addEventListener('click', functi
   this.classList.add('on');
 }));
 
-function logout() {
+async function logout() {
+  if (SUPABASE_READY && supabaseDb) {
+    try { await supabaseDb.auth.signOut(); } catch(e) {}
+  }
+  currentUser = null;
+  currentProfile = null;
   document.getElementById('PA').classList.remove('on');
   document.getElementById('SA').classList.remove('h');
   ['s1','s2','s3','sOk'].forEach(id => { const e=document.getElementById(id); if(e) e.classList.remove('on'); });
@@ -2519,109 +2823,125 @@ function cPop(e) {
 const ilhasData = {
   1: {
     nome:'① Ilha de Diagnóstico', emoji:'🧭', color:'#D97706',
-    desc:'Aqui descobriste o teu nível e personalizaste a tua aventura.',
+    desc:'Descobre o teu nível e personaliza a tua aventura de programação!',
     steps:[
-      {n:1,titulo:'Quem sou eu?',desc:'Responde às perguntas de diagnóstico',done:true},
-      {n:2,titulo:'Escolhe o teu avatar',desc:'Personaliza a tua personagem',done:true},
-      {n:3,titulo:'Como aprendes?',desc:'Descobre o teu estilo de aprendizagem',done:true},
-      {n:4,titulo:'O que queres criar?',desc:'Define os teus objetivos',done:true},
-      {n:5,titulo:'A tua aventura começa!',desc:'Desbloqueia a Ilha Principal',done:true},
+      {n:1,titulo:'Já programaste alguma vez?',desc:'Conta-nos a tua experiência com programação.',done:true,emo:'💻'},
+      {n:2,titulo:'Qual destas ferramentas já usaste?',desc:'Scratch, micro:bit, Python, Arduino ou nenhuma?',done:true,emo:'🛠️'},
+      {n:3,titulo:'O que acontece quando usamos um bloco "repetir"?',desc:'Testa os teus conhecimentos sobre loops na programação.',done:true,emo:'🔁'},
+      {n:4,titulo:'Para que serve um sensor num robô?',desc:'Aprende a diferença entre sensores e atuadores.',done:true,emo:'📡'},
+      {n:5,titulo:'O que gostavas mais de criar?',desc:'Escolhe o teu caminho: robótica, jogos ou IoT!',done:true,emo:'🚀'},
     ]
   },
   2: {
-    nome:'② Ilha Principal', emoji:'🏝️', color:'#059669',
-    desc:'Aprende eletrónica, programação e robótica com projetos reais!',
+    nome:'② Bot Starter', emoji:'🤖', color:'#059669',
+    desc:'Aprende eletrónica, programação e robótica com o micro:bit e projetos reais!',
     steps:[
-      {n:1,titulo:'Semáforo com LED',desc:'Programa um semáforo com 3 LEDs e temporização',done:true,
-        emo:'🚦',inst:'Programa um semáforo! Liga 3 LEDs (vermelho, amarelo, verde) e faz cada um acender durante 2 segundos.',
-        blocks:[
-          {cor:'#FFAB19',txt:'🚩 quando ▶ clicado',hat:true},
-          {cor:'#FFAB19',txt:'🔁 para sempre',ctrl:true,items:[
-            {cor:'#9966FF',txt:'💬 dizer "Vermelho 🔴"'},
-            {cor:'#5CB1D6',txt:'🔌 LED vermelho → LIGAR'},
-            {cor:'#FFAB19',txt:'⏱ esperar 2 segundos'},
-            {cor:'#5CB1D6',txt:'🔌 LED vermelho → DESLIGAR'},
-            {cor:'#9966FF',txt:'💬 dizer "Amarelo 🟡"'},
-            {cor:'#5CB1D6',txt:'🔌 LED amarelo → LIGAR'},
-            {cor:'#FFAB19',txt:'⏱ esperar 1 segundo'},
-            {cor:'#5CB1D6',txt:'🔌 LED amarelo → DESLIGAR'},
-            {cor:'#9966FF',txt:'💬 dizer "Verde 🟢"'},
-            {cor:'#5CB1D6',txt:'🔌 LED verde → LIGAR'},
-            {cor:'#FFAB19',txt:'⏱ esperar 2 segundos'},
-            {cor:'#5CB1D6',txt:'🔌 LED verde → DESLIGAR'},
-          ]},
-        ],
-        robotTxt:'🔴🟡🟢',output:'Semáforo a funcionar!'},
-      {n:2,titulo:'Detetor de movimento',desc:'Usa sensor PIR para detetar movimento',done:true,
-        emo:'🚨',inst:'Usa o sensor PIR para detetar movimento! Quando alguém se mover, acende o LED e toca o buzzer 3 vezes.',
-        blocks:[
-          {cor:'#FFAB19',txt:'🚩 quando ▶ clicado',hat:true},
-          {cor:'#FFAB19',txt:'🔁 para sempre',ctrl:true,items:[
-            {cor:'#FFAB19',txt:'🔀 se sensor PIR = ATIVADO então',ctrl:true,items:[
-              {cor:'#5CB1D6',txt:'🔌 LED alerta → LIGAR'},
-              {cor:'#59C059',txt:'🔢 repetir 3 vezes',ctrl:true,items:[
-                {cor:'#CF63CF',txt:'🔊 buzzer → BIP'},
-                {cor:'#FFAB19',txt:'⏱ esperar 0.5 segundos'},
-              ]},
-              {cor:'#5CB1D6',txt:'🔌 LED alerta → DESLIGAR'},
-            ]},
-            {cor:'#FFAB19',txt:'⏱ esperar 0.1 segundos'},
-          ]},
-        ],
-        robotTxt:'⚠️ MOV!',output:'Movimento detetado!'},
-      {n:3,titulo:'Buzzer musical',desc:'Toca uma melodia com o buzzer',done:true,
-        emo:'🎵',inst:'Programa o buzzer para tocar a escala musical: Dó Ré Mi Fá Sol Lá Si Dó!',
-        blocks:[
-          {cor:'#FFAB19',txt:'🚩 quando ▶ clicado',hat:true},
-          {cor:'#9966FF',txt:'💬 dizer "A tocar escala! 🎵"'},
-          {cor:'#CF63CF',txt:'🔊 nota Dó por 0.4s'},
-          {cor:'#CF63CF',txt:'🔊 nota Ré por 0.4s'},
-          {cor:'#CF63CF',txt:'🔊 nota Mi por 0.4s'},
-          {cor:'#CF63CF',txt:'🔊 nota Fá por 0.4s'},
-          {cor:'#CF63CF',txt:'🔊 nota Sol por 0.4s'},
-          {cor:'#CF63CF',txt:'🔊 nota Lá por 0.4s'},
-          {cor:'#CF63CF',txt:'🔊 nota Si por 0.4s'},
-          {cor:'#CF63CF',txt:'🔊 nota Dó por 0.8s'},
-          {cor:'#9966FF',txt:'💬 dizer "🎶 Parabéns!"'},
-        ],
-        robotTxt:'🎵🎶',output:'Dó Ré Mi Fá Sol Lá Si Dó!'},
-      {n:4,titulo:'Temperatura e humidade',desc:'Lê dados do sensor DHT11',done:false,active:true,
-        emo:'🌡️',inst:'Usa o sensor DHT11 para ler a temperatura e a humidade e mostra os valores no ecrã!',
-        blocks:[
-          {cor:'#FFAB19',txt:'🚩 quando ▶ clicado',hat:true},
-          {cor:'#FFAB19',txt:'🔁 para sempre',ctrl:true,items:[
-            {cor:'#5CB1D6',txt:'🌡️ ler temperatura'},
-            {cor:'#5CB1D6',txt:'💧 ler humidade'},
-            {cor:'#9966FF',txt:'💬 dizer temperatura + "°C"'},
-            {cor:'#FFAB19',txt:'⏱ esperar 2 segundos'},
-          ]},
-        ],
-        robotTxt:'23°C 65%',output:'Clica ▶ para ler o sensor!'},
-      {n:5,titulo:'Controlo por botões',desc:'Interface com botões físicos',done:false},
-      {n:6,titulo:'Display LCD',desc:'Mostra mensagens num ecrã LCD',done:false},
-      {n:7,titulo:'Projeto final — Robot',desc:'Constrói e programa um robot!',done:false},
+      {n:1,titulo:'Circuitos em Ação',desc:'Todos os circuitos precisam de um caminho fechado para a eletricidade passar.',done:false,emo:'⚡'},
+      {n:2,titulo:'O Primeiro LED',desc:'Um LED tem dois lados: o positivo (ânodo) e o negativo (cátodo).',done:false,emo:'💡'},
+      {n:3,titulo:'Liga e Desliga',desc:'Usa o bloco "wait" para criar pausas entre acender e apagar.',done:false,emo:'🔘'},
+      {n:4,titulo:'Conhece o micro:bit',desc:'O micro:bit tem LEDs, botões e sensores já incluídos.',done:false,emo:'🤖'},
+      {n:5,titulo:'Mostra o teu Nome',desc:'Usa o bloco "show string" para exibir letras no ecrã de LEDs.',done:false,emo:'📛'},
+      {n:6,titulo:'Programa os LEDs',desc:'Os LEDs do micro:bit são como uma grelha 5x5 que podes controlar individualmente.',done:false,emo:'🔦'},
+      {n:7,titulo:'Breadboard Master',desc:'A breadboard tem linhas ligadas na horizontal — usa isso a teu favor!',done:false,emo:'🔌'},
+      {n:8,titulo:'Acende sem Erros',desc:'Verifica sempre as polaridades antes de ligar o circuito.',done:false,emo:'✅'},
+      {n:9,titulo:'RGB Mágico',desc:'Um LED RGB mistura vermelho, verde e azul para criar qualquer cor.',done:false,emo:'🌈'},
+      {n:10,titulo:'Faróis Inteligentes',desc:'Os faróis dos carros modernos usam LEDs porque duram mais tempo.',done:false,emo:'🚗'},
+      {n:11,titulo:'Primeira Viagem',desc:'Um robot move-se ligando dois motores com velocidades diferentes.',done:false,emo:'🚀'},
+      {n:12,titulo:'Curvas Perfeitas',desc:'Para virar, um motor vai mais rápido que o outro.',done:false,emo:'🔄'},
+      {n:13,titulo:'Funções Secretas',desc:'Uma função é como um mini programa dentro do programa principal.',done:false,emo:'🔧'},
+      {n:14,titulo:'Sentido da Luz',desc:'Os sensores de luz medem quanto brilho existe no ambiente.',done:false,emo:'☀️'},
+      {n:15,titulo:'Alarme Sonoro',desc:'O buzzer transforma sinais elétricos em som através de vibrações.',done:false,emo:'🔔'},
+      {n:16,titulo:'Semáforo da Cidade',desc:'Um semáforo segue sempre a mesma sequência: vermelho, amarelo, verde.',done:false,emo:'🚦'},
+      {n:17,titulo:'Missão Sensor',desc:'Os sensores leem o mundo físico e convertem em dados digitais.',done:false,emo:'📡'},
+      {n:18,titulo:'Mestre da Robótica',desc:'Juntaste eletrónica, sensores e programação num projeto completo. Parabéns!',done:false,emo:'🏆'},
     ]
   },
   3: {
-    nome:'Nível 2', emoji:'🔍', color:'#2563EB',
-    desc:'Desafios avançados para aprofundar os conhecimentos da Ilha Principal.',
+    nome:'③ Smart Farm Lab', emoji:'🌾', color:'#16a34a',
+    desc:'Explora o mundo do IoT e da agricultura inteligente com o ESP32!',
     steps:[
-      {n:1,titulo:'Sensores avançados',desc:'Combina múltiplos sensores num projeto',done:false,
-        emo:'🔬',inst:'Usa o sensor de temperatura E o sensor de luz ao mesmo tempo para criar um sistema inteligente.',
-        blocks:[
-          {cor:'#FFAB19',txt:'🚩 quando ▶ clicado',hat:true},
-          {cor:'#FFAB19',txt:'🔁 para sempre',ctrl:true,items:[
-            {cor:'#5CB1D6',txt:'🌡️ ler temperatura'},
-            {cor:'#5CB1D6',txt:'💡 ler luminosidade'},
-            {cor:'#9966FF',txt:'💬 mostrar temperatura + " | " + luz'},
-            {cor:'#FFAB19',txt:'⏱ esperar 1 segundo'},
-          ]},
-        ],
-        robotTxt:'🔬📊',output:'Sistema de monitorização pronto!'},
-      {n:2,titulo:'Controlo por voz',desc:'Programa comandos de voz simples',done:false},
-      {n:3,titulo:'Robot autónomo',desc:'Robot que desvia de obstáculos sozinho',done:false},
-      {n:4,titulo:'Display LCD avançado',desc:'Menu interativo no ecrã LCD',done:false},
-      {n:5,titulo:'Projeto final IA',desc:'Mini projeto com conceitos de IA',done:false},
+      {n:1,titulo:'Bem-vindo à Quinta Inteligente',desc:'As quintas inteligentes usam tecnologia para poupar água e energia.',done:false,emo:'🌾'},
+      {n:2,titulo:'Conhece o ESP32',desc:'O ESP32 é um microcontrolador com WiFi e Bluetooth incluídos.',done:false,emo:'📡'},
+      {n:3,titulo:'Sensor de Temperatura',desc:'O sensor DHT11 mede temperatura e humidade ao mesmo tempo.',done:false,emo:'🌡️'},
+      {n:4,titulo:'Humidade do Solo',desc:'O sensor de humidade do solo mede se a terra precisa de água.',done:false,emo:'💧'},
+      {n:5,titulo:'O Guardião da Luz',desc:'Os sensores LDR mudam de resistência conforme a quantidade de luz.',done:false,emo:'☀️'},
+      {n:6,titulo:'Estação Meteorológica',desc:'Uma estação meteorológica regista temperatura, humidade e pressão atmosférica.',done:false,emo:'⛅'},
+      {n:7,titulo:'Rega Automática',desc:'A rega automática poupa até 50% de água comparada à rega manual.',done:false,emo:'🌊'},
+      {n:8,titulo:'Ventoinha Inteligente',desc:'Uma ventoinha automática mantém a temperatura ideal nas plantas.',done:false,emo:'🌀'},
+      {n:9,titulo:'O Despertar das Plantas',desc:'As plantas crescem melhor com luz, temperatura e humidade controladas.',done:false,emo:'🌱'},
+      {n:10,titulo:'Alerta de Emergência',desc:'Um sistema de alerta avisa quando os valores saem dos limites normais.',done:false,emo:'🚨'},
+      {n:11,titulo:'Painel de Controlo',desc:'Um dashboard mostra todos os dados dos sensores num só lugar.',done:false,emo:'📊'},
+      {n:12,titulo:'Variáveis da Quinta',desc:'As variáveis guardam os valores dos sensores para comparar ao longo do tempo.',done:false,emo:'📝'},
+      {n:13,titulo:'Decisões Inteligentes',desc:'Um "se... então..." decide automaticamente o que fazer com os dados.',done:false,emo:'🧠'},
+      {n:14,titulo:'Liga Tudo',desc:'Integrar vários sensores num sistema é como construir um cérebro para a quinta.',done:false,emo:'🔗'},
+      {n:15,titulo:'Internet das Coisas',desc:'IoT significa que os dispositivos comunicam pela internet sem intervenção humana.',done:false,emo:'🌐'},
+      {n:16,titulo:'Agricultor Digital',desc:'Um agricultor digital usa dados para tomar melhores decisões de cultivo.',done:false,emo:'👨‍🌾'},
+      {n:17,titulo:'Projeto Final',desc:'O projeto final integra tudo o que aprendeste sobre IoT e automação.',done:false,emo:'🏗️'},
+      {n:18,titulo:'Mestre da Smart Farm',desc:'Criaste um sistema inteligente de agricultura do futuro. Parabéns!',done:false,emo:'🏆'},
+    ]
+  },
+  4: {
+    nome:'④ Arcade Studio', emoji:'🎮', color:'#7c3aed',
+    desc:'Cria videojogos incríveis com Scratch e torna-te um game developer!',
+    steps:[
+      {n:1,titulo:'Primeiros Pixels',desc:'Os primeiros videojogos eram feitos com apenas alguns píxeis na tela.',done:false,emo:'🎮'},
+      {n:2,titulo:'Herói em Movimento',desc:'Usa as teclas de setas para mover o teu personagem pelo ecrã.',done:false,emo:'🦸'},
+      {n:3,titulo:'Mundo dos Blocos',desc:'Um cenário com blocos serve de plataforma onde o herói pode andar.',done:false,emo:'🧱'},
+      {n:4,titulo:'Apanha os Tesouros',desc:'Usa deteção de colisões para verificar se o herói apanha um tesouro.',done:false,emo:'💎'},
+      {n:5,titulo:'Inimigos à Vista',desc:'Os inimigos movem-se automaticamente para criar desafio no jogo.',done:false,emo:'👾'},
+      {n:6,titulo:'Sistema de Pontos',desc:'O sistema de pontos motiva os jogadores a continuarem a jogar.',done:false,emo:'🏅'},
+      {n:7,titulo:'Vidas Extra',desc:'Vidas extra dão ao jogador mais uma oportunidade quando perde.',done:false,emo:'❤️'},
+      {n:8,titulo:'Poderes Especiais',desc:'Um poder especial muda temporariamente as capacidades do herói.',done:false,emo:'⭐'},
+      {n:9,titulo:'Música Arcade',desc:'A música e os sons tornam o jogo muito mais imersivo e divertido.',done:false,emo:'🎵'},
+      {n:10,titulo:'Níveis Secretos',desc:'Os níveis secretos são recompensas para jogadores mais curiosos.',done:false,emo:'🗝️'},
+      {n:11,titulo:'Variáveis Mágicas',desc:'As variáveis guardam pontos, vidas e outros estados do jogo.',done:false,emo:'🔮'},
+      {n:12,titulo:'Loops Infinitos',desc:'Um loop que corre sempre é a base de qualquer jogo de computador.',done:false,emo:'♾️'},
+      {n:13,titulo:'IA dos Inimigos',desc:'A IA dos inimigos faz com que persigam o jogador automaticamente.',done:false,emo:'🤖'},
+      {n:14,titulo:'Batalha Final',desc:'O boss final é um inimigo mais difícil que testa todas as tuas habilidades.',done:false,emo:'⚔️'},
+      {n:15,titulo:'Cria o Teu Menu',desc:'Um menu permite escolher jogar, ver pontuações ou sair do jogo.',done:false,emo:'📋'},
+      {n:16,titulo:'Efeitos Visuais',desc:'Explosões e partículas tornam os momentos importantes mais emocionantes.',done:false,emo:'✨'},
+      {n:17,titulo:'Publica o Teu Jogo',desc:'Publica o teu jogo para que outros possam jogar e dar feedback.',done:false,emo:'🚀'},
+      {n:18,titulo:'Mestre Arcade',desc:'Criaste um jogo completo com todos os elementos profissionais. Parabéns!',done:false,emo:'🏆'},
+    ]
+  },
+  5: {
+    nome:'⑤ Scratch Jr', emoji:'🐱', color:'#f59e0b',
+    desc:'Aprende a programar com Scratch Jr — perfeito para começar do zero!',
+    steps:[
+      {n:1,titulo:'Primeiro Toque',desc:'O Scratch Jr usa blocos coloridos que qualquer criança consegue usar.',done:false,emo:'👆'},
+      {n:2,titulo:'Faz o Gato Andar',desc:'Usa o bloco azul de movimento para mover o teu personagem.',done:false,emo:'🐱'},
+      {n:3,titulo:'Dança dos Personagens',desc:'Adiciona mais personagens para fazerem coisas diferentes ao mesmo tempo.',done:false,emo:'💃'},
+      {n:4,titulo:'Muda o Cenário',desc:'Os cenários criam o ambiente onde a história acontece.',done:false,emo:'🎨'},
+      {n:5,titulo:'Conta uma História',desc:'Usa blocos de mensagem para os personagens conversarem.',done:false,emo:'📖'},
+      {n:6,titulo:'Esconde e Mostra',desc:'O bloco de esconder/mostrar cria efeitos de magia e surpresa.',done:false,emo:'👀'},
+      {n:7,titulo:'Corre e Salta',desc:'Combina movimento e salto para criar um pequeno jogo de plataforma.',done:false,emo:'🏃'},
+      {n:8,titulo:'Festa dos Sons',desc:'Os sons tornam a história mais animada e divertida.',done:false,emo:'🎉'},
+      {n:9,titulo:'Missão Colorida',desc:'Muda as cores dos personagens para criar efeitos especiais.',done:false,emo:'🌈'},
+      {n:10,titulo:'O Meu Primeiro Jogo',desc:'Um jogo simples é a base para criar jogos mais complexos no futuro.',done:false,emo:'🎮'},
+    ]
+  },
+  6: {
+    nome:'⑥ Scratch', emoji:'🐈', color:'#2563EB',
+    desc:'Domina o Scratch e cria animações, histórias e jogos incríveis!',
+    steps:[
+      {n:1,titulo:'O Primeiro Projeto',desc:'No Scratch, os projetos são feitos com sprites que executam scripts.',done:false,emo:'🐱'},
+      {n:2,titulo:'Animação Divertida',desc:'Alterna entre trajes do sprite para criar uma animação fluida.',done:false,emo:'🎬'},
+      {n:3,titulo:'O Gato Explorador',desc:'Usa coordenadas x e y para posicionar sprites no ecrã.',done:false,emo:'🗺️'},
+      {n:4,titulo:'Histórias Interativas',desc:'Usa blocos de evento para reagir a cliques e teclas pressionadas.',done:false,emo:'📚'},
+      {n:5,titulo:'Apanha os Objetos',desc:'A deteção de toque entre sprites é a base de muitos jogos Scratch.',done:false,emo:'🎯'},
+      {n:6,titulo:'Sistema de Pontos',desc:'Usa variáveis para guardar e mostrar a pontuação do jogador.',done:false,emo:'🏅'},
+      {n:7,titulo:'Labirinto Maluco',desc:'Usa o sensor "a tocar cor" para detetar as paredes do labirinto.',done:false,emo:'🌀'},
+      {n:8,titulo:'Jogo de Futebol',desc:'Combina movimento com deteção de colisões para criar um jogo de futebol.',done:false,emo:'⚽'},
+      {n:9,titulo:'Variáveis Secretas',desc:'As variáveis guardam informação que pode mudar durante o jogo.',done:false,emo:'🔮'},
+      {n:10,titulo:'Clones em Ação',desc:'Os clones permitem criar muitas cópias de um sprite automaticamente.',done:false,emo:'👥'},
+      {n:11,titulo:'Desafio dos Reflexos',desc:'Um jogo de reflexos mede a velocidade de reação do jogador.',done:false,emo:'⚡'},
+      {n:12,titulo:'Quiz Inteligente',desc:'Usa listas para guardar as perguntas e respostas do quiz.',done:false,emo:'🧠'},
+      {n:13,titulo:'Plataforma Radical',desc:'Um jogo de plataforma usa gravidade e saltos para criar desafio.',done:false,emo:'🏃'},
+      {n:14,titulo:'Corrida Espacial',desc:'Uma corrida espacial combina velocidade crescente com obstáculos.',done:false,emo:'🚀'},
+      {n:15,titulo:'Invasão Robótica',desc:'Inimigos em formação que avançam criam um jogo de tiro clássico.',done:false,emo:'🤖'},
+      {n:16,titulo:'Jogo Completo',desc:'Um jogo completo tem menu, níveis, pontuação e ecrã final.',done:false,emo:'🎮'},
+      {n:17,titulo:'Publica o Teu Projeto',desc:'Partilha o teu projeto Scratch com a comunidade mundial!',done:false,emo:'🌐'},
+      {n:18,titulo:'Mestre Scratch',desc:'Dominaste os fundamentos da programação com Scratch. Parabéns!',done:false,emo:'🏆'},
     ]
   },
 };
@@ -2662,8 +2982,7 @@ function abrirIlha(id) {
     if(el) el.setAttribute('fill', col.hl);
   });
 
-  // render steps path on island SVG
-  // positions for up to 7 steps arranged in a zigzag path across the two-piece island
+  // render steps path on island SVG — show first 7 as visual markers
   const stepPos = [
     {x:60,  y:370}, // 1 bottom-left
     {x:60,  y:300}, // 2 mid-left
@@ -2674,7 +2993,7 @@ function abrirIlha(id) {
     {x:160, y:60},  // 7 top piece top
   ];
 
-  const steps = ilha.steps.slice(0, 7);
+  const steps = ilha.steps.slice(0, 7); // visual map shows first 7; full list is in stepsList
   const pts = stepPos.slice(0, steps.length);
 
   // build polyline
@@ -2718,22 +3037,67 @@ function abrirIlha(id) {
     deco += `<ellipse cx="144" cy="288" rx="18" ry="8" fill="#16A34A" transform="rotate(65 144 288)"/>`;
   }
   if (id === 2) {
-    // 2nd palm on top piece
+    // 2nd palm on top piece + robot icon
     deco += `<rect x="172" y="25" width="7" height="24" rx="2" fill="#7C4B20"/>`;
     deco += `<ellipse cx="175" cy="21" rx="17" ry="8" fill="#16A34A" transform="rotate(-22 175 21)"/>`;
     deco += `<ellipse cx="175" cy="22" rx="17" ry="8" fill="#22C55E" transform="rotate(22 175 22)"/>`;
+    deco += `<rect x="232" y="22" width="30" height="24" rx="5" fill="#0364DB"/>`;
+    deco += `<circle cx="240" cy="32" r="4" fill="#92D6FF"/><circle cx="254" cy="32" r="4" fill="#92D6FF"/>`;
   }
   if (id === 3) {
-    // pine trees
-    deco += `<rect x="138" y="290" width="8" height="28" rx="2" fill="#7C4B20"/>`;
-    deco += `<polygon points="142,255 126,292 158,292" fill="#166534"/>`;
-    deco += `<polygon points="142,268 128,298 156,298" fill="#22C55E"/>`;
+    // ESP32 chip + plant
+    deco += `<rect x="130" y="282" width="52" height="38" rx="5" fill="#1f2937"/>`;
+    deco += `<rect x="136" y="288" width="40" height="26" rx="3" fill="#0F172A"/>`;
+    deco += `<text x="156" y="306" text-anchor="middle" font-size="8" fill="#4ADE80" font-family="Courier,monospace" font-weight="700">ESP32</text>`;
+    deco += `<line x1="156" y1="282" x2="156" y2="270" stroke="#4ADE80" stroke-width="2.5" stroke-linecap="round"/>`;
+    deco += `<circle cx="156" cy="267" r="3.5" fill="#FBC92A"/>`;
+    deco += `<rect x="235" y="295" width="9" height="30" rx="3" fill="#7C4B20"/>`;
+    deco += `<ellipse cx="239" cy="289" rx="20" ry="9" fill="#166534" transform="rotate(-22 239 289)"/>`;
+    deco += `<ellipse cx="239" cy="290" rx="20" ry="9" fill="#22C55E" transform="rotate(22 239 290)"/>`;
     deco += `<rect x="200" y="25" width="7" height="22" rx="2" fill="#7C4B20"/>`;
     deco += `<polygon points="203,0 188,28 218,28" fill="#166534"/>`;
     deco += `<polygon points="203,12 190,34 216,34" fill="#22C55E"/>`;
-    // rocks
-    deco += `<ellipse cx="245" cy="250" rx="16" ry="10" fill="#A0856A"/>`;
-    deco += `<ellipse cx="260" cy="246" rx="12" ry="9" fill="#B8977E"/>`;
+  }
+  if (id === 4) {
+    // game controller + pixel art
+    deco += `<rect x="125" y="282" width="76" height="50" rx="14" fill="#4C1D95"/>`;
+    deco += `<rect x="138" y="296" width="20" height="7" rx="2" fill="#6D28D9"/>`;
+    deco += `<rect x="144" y="290" width="7" height="18" rx="2" fill="#6D28D9"/>`;
+    deco += `<circle cx="178" cy="296" r="5" fill="#EF4444"/><circle cx="188" cy="304" r="5" fill="#22C55E"/>`;
+    deco += `<circle cx="168" cy="304" r="5" fill="#FBC92A"/><circle cx="178" cy="312" r="5" fill="#3B82F6"/>`;
+    deco += `<rect x="200" y="20" width="62" height="44" rx="5" fill="#1e1b4b"/>`;
+    deco += `<rect x="204" y="24" width="54" height="36" rx="3" fill="#0F0A2A"/>`;
+    deco += `<rect x="228" y="32" width="6" height="6" rx="1" fill="#FBC92A"/>`;
+    deco += `<rect x="220" y="38" width="6" height="6" rx="1" fill="#EF4444"/>`;
+    deco += `<rect x="228" y="44" width="6" height="6" rx="1" fill="#22C55E"/>`;
+    deco += `<rect x="236" y="38" width="6" height="6" rx="1" fill="#3B82F6"/>`;
+  }
+  if (id === 5) {
+    // Scratch Jr cat face
+    deco += `<ellipse cx="175" cy="300" rx="34" ry="32" fill="#FF8C00"/>`;
+    deco += `<polygon points="155,278 145,260 169,276" fill="#FF8C00"/>`;
+    deco += `<polygon points="195,278 205,260 181,276" fill="#FF8C00"/>`;
+    deco += `<polygon points="157,277 149,263 168,276" fill="#FFDAB9"/>`;
+    deco += `<polygon points="193,277 201,263 182,276" fill="#FFDAB9"/>`;
+    deco += `<ellipse cx="163" cy="295" rx="7" ry="8" fill="white"/>`;
+    deco += `<ellipse cx="187" cy="295" rx="7" ry="8" fill="white"/>`;
+    deco += `<circle cx="164" cy="296" r="4.5" fill="#1f2937"/>`;
+    deco += `<circle cx="188" cy="296" r="4.5" fill="#1f2937"/>`;
+    deco += `<ellipse cx="175" cy="307" rx="3.5" ry="2.5" fill="#e85d04"/>`;
+    deco += `<path d="M169,312 Q175,317 181,312" fill="none" stroke="#1f2937" stroke-width="1.5"/>`;
+    deco += `<text x="175" y="40" text-anchor="middle" font-size="10" fill="rgba(255,255,255,0.6)" font-family="Outfit,sans-serif">Scratch Jr 🐱</text>`;
+  }
+  if (id === 6) {
+    // Scratch blocks
+    deco += `<rect x="115" y="280" width="100" height="15" rx="4" fill="#FFAB19" opacity="0.95"/>`;
+    deco += `<text x="165" y="291" text-anchor="middle" font-size="7.5" fill="#1f2937" font-family="Courier,monospace" font-weight="700">quando ▶ clicado</text>`;
+    deco += `<rect x="115" y="299" width="100" height="15" rx="4" fill="#9966FF" opacity="0.95"/>`;
+    deco += `<text x="165" y="310" text-anchor="middle" font-size="7.5" fill="white" font-family="Courier,monospace" font-weight="700">mover 10 passos</text>`;
+    deco += `<rect x="115" y="318" width="100" height="15" rx="4" fill="#5CB1D6" opacity="0.95"/>`;
+    deco += `<text x="165" y="329" text-anchor="middle" font-size="7.5" fill="white" font-family="Courier,monospace" font-weight="700">dizer "Olá!"</text>`;
+    deco += `<ellipse cx="243" cy="300" rx="28" ry="26" fill="#FF8C00"/>`;
+    deco += `<ellipse cx="234" cy="286" rx="7" ry="8" fill="white"/><ellipse cx="252" cy="286" rx="7" ry="8" fill="white"/>`;
+    deco += `<circle cx="235" cy="287" r="4" fill="#1f2937"/><circle cx="253" cy="287" r="4" fill="#1f2937"/>`;
   }
 
   document.getElementById('stepsGroup').innerHTML = svg;
@@ -2797,7 +3161,7 @@ function goMap() {
   const mb = document.querySelector('.ni[onclick*="v-map"]');
   if(mb) mb.classList.add('on');
   shV('v-map');
-  // Posição inicial — mostrar a zona de início (Diagnóstico + Principal)
+  // Posição inicial — mostrar as ilhas principais de forma panorâmica
   requestAnimationFrame(() => {
     mapPan.x = 0;
     mapPan.y = 0;
@@ -2838,6 +3202,25 @@ function abrirDesafio(ilhaId, stepN) {
   document.getElementById('desInst').textContent = step.inst || '';
 
   shV('v-desafio');
+}
+
+function toggleDesPanel() {
+  var panel = document.getElementById('desPanel');
+  var btn = document.getElementById('desPanelToggle');
+  var collapsed = panel.style.width === '0px';
+  if (collapsed) {
+    panel.style.width = '260px';
+    panel.style.minWidth = '260px';
+    panel.style.padding = '16px';
+    btn.style.left = '252px';
+    btn.textContent = '◀';
+  } else {
+    panel.style.width = '0px';
+    panel.style.minWidth = '0px';
+    panel.style.padding = '0px';
+    btn.style.left = '0px';
+    btn.textContent = '▶';
+  }
 }
 
 function showHint() {
