@@ -782,7 +782,7 @@ body.dark .lh1{color:white!important}
               <svg viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="#0364DB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="9" r="3.5"/><path d="M5 23.5c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="22" cy="13" r="2.5"/><path d="M17.5 25c0-2.5 2-4.5 4.5-4.5s4.5 2 4.5 4.5"/></svg>
             </div>
             <h3>Enc. de Educação</h3>
-            <p>Cria contas para os teus educandos e acompanha apenas o progresso associado à tua conta</p>
+            <p>Cria contas para os teus filhos e acompanha o progresso</p>
           </div>
           <div class="rc" onclick="pickR(this,'prof')">
             <div class="ri" style="background:#f0fdf4">
@@ -933,7 +933,10 @@ body.dark .lh1{color:white!important}
             <span>Notificações</span>
             <button onclick="markAllRead()">Marcar tudo lido</button>
           </div>
-          <div class="notif-item"><div class="notif-ico">ℹ️</div><div><div class="notif-txt">Ainda não existem notificações.</div><div class="notif-sub">O progresso real dos educandos aparecerá quando houver atividade.</div></div></div>
+          <div class="notif-item unread"><div class="notif-ico">⚡</div><div><div class="notif-txt">Maria completou "Semáforo com LED"</div><div class="notif-sub">Hoje · 15:32 · +80 XP</div></div></div>
+          <div class="notif-item unread"><div class="notif-ico">🏝️</div><div><div class="notif-txt">Pedro desbloqueou a Ilha Principal</div><div class="notif-sub">Ontem · 18:10 · +50 XP</div></div></div>
+          <div class="notif-item unread"><div class="notif-ico">🏆</div><div><div class="notif-txt">Maria ganhou conquista "3 dias seguidos"</div><div class="notif-sub">Ontem · 17:05 · +20 XP</div></div></div>
+          <div class="notif-item"><div class="notif-ico">🎓</div><div><div class="notif-txt">Sofia Costa atingiu Nível 3</div><div class="notif-sub">2 dias atrás · +100 XP</div></div></div>
         </div>
       </div>
       <button class="lo" onclick="logout()">← Sair</button>
@@ -945,55 +948,84 @@ body.dark .lh1{color:white!important}
     <!-- ── ENC VIEWS ── -->
     <div class="pv on" id="v-enc">
       <div class="pt">👋 Olá, <span id="dN">João</span>!</div>
-      <div class="ps2">Acompanha o progresso dos teus educandos</div>
+      <div class="ps2">Acompanha o progresso dos teus filhos</div>
       <div class="sr2 c3">
-        <div class="sc"><div class="sci">👶</div><div class="scv" id="encChildrenCount">0</div><div class="scl">Educandos na plataforma</div></div>
-        <div class="sc"><div class="sci">⭐</div><div class="scv" id="encTotalXp">0</div><div class="scl">XP total acumulado</div></div>
-        <div class="sc"><div class="sci">🔥</div><div class="scv" id="encBestStreak">0</div><div class="scl">Melhor sequência</div></div>
+        <div class="sc"><div class="sci">👶</div><div class="scv">2</div><div class="scl">Filhos na plataforma</div></div>
+        <div class="sc"><div class="sci">⭐</div><div class="scv">850</div><div class="scl">XP total acumulado</div></div>
+        <div class="sc"><div class="sci">🔥</div><div class="scv">12</div><div class="scl">Dias consecutivos</div></div>
       </div>
-      <div class="sec roleOnly-enc">
-        <div class="sh">
-          <div class="st">Os meus educandos</div>
-          <button class="bsm bb2" onclick="shM('addC')">+ Adicionar educando</button>
-        </div>
-        <div class="cg" id="childrenProfilesList">
-          <div class="cc add" onclick="shM('addC')">
-            <div style="font-size:34px">＋</div>
-            <div style="font-size:13px;font-weight:700">Adicionar educando</div>
-            <span style="font-size:12px">Cria o primeiro perfil de aluno</span>
+      <div class="sec">
+        <div class="sh"><div class="st">Os meus filhos</div><button class="bsm bb2" onclick="shM('addC')">+ Adicionar filho</button></div>
+        <div class="cg">
+          <div class="cc" onclick="shV('v-c1')">
+            <div class="cav" style="background:#dbeafe">🤖</div>
+            <div class="cn">Maria Silva</div><div class="ca">10 anos · Nível 3</div>
+            <div class="pb2"><div class="pf" style="width:62%"></div></div>
+            <div class="pt2">3/7 desafios · Ilha Principal</div>
+            <div class="cas">
+              <button style="background:#eff6ff;color:var(--blue)" onclick="event.stopPropagation();shV('v-c1')">Progresso</button>
+              <button style="background:#fef9c3;color:#854d0e" onclick="event.stopPropagation()">Editar</button>
+            </div>
           </div>
+          <div class="cc" onclick="shV('v-c2')">
+            <div class="cav" style="background:#f0fdf4">👾</div>
+            <div class="cn">Pedro Silva</div><div class="ca">8 anos · Nível 1</div>
+            <div class="pb2"><div class="pf" style="width:20%"></div></div>
+            <div class="pt2">1/5 desafios · Diagnóstico</div>
+            <div class="cas">
+              <button style="background:#eff6ff;color:var(--blue)" onclick="event.stopPropagation();shV('v-c2')">Progresso</button>
+              <button style="background:#fef9c3;color:#854d0e" onclick="event.stopPropagation()">Editar</button>
+            </div>
+          </div>
+          <div class="cc add" onclick="shM('addC')"><div style="font-size:34px">＋</div><div style="font-size:13px;font-weight:700">Adicionar filho</div></div>
         </div>
       </div>
       <div class="sec">
         <div class="sh"><div class="st">Actividade recente</div></div>
-        <div class="al" id="encRecentActivity">
-          <div class="ai"><div class="aico">ℹ️</div><div style="flex:1"><div class="att">Ainda não existe atividade registada.</div><div class="atm">Quando os teus educandos começarem a completar desafios, o progresso aparecerá aqui.</div></div><div class="axp">0 XP</div></div>
+        <div class="al">
+          <div class="ai"><div class="aico">⚡</div><div style="flex:1"><div class="att">Maria completou "Semáforo com LED"</div><div class="atm">Hoje · 15:32</div></div><div class="axp">+80 XP</div></div>
+          <div class="ai"><div class="aico">🏝️</div><div style="flex:1"><div class="att">Pedro desbloqueou a Ilha Principal</div><div class="atm">Ontem · 18:10</div></div><div class="axp">+50 XP</div></div>
+          <div class="ai"><div class="aico">🏆</div><div style="flex:1"><div class="att">Maria ganhou conquista "3 dias seguidos"</div><div class="atm">Ontem · 17:05</div></div><div class="axp">+20 XP</div></div>
         </div>
       </div>
     </div>
 
-    <div class="pv" id="v-childProgress">
+    <div class="pv" id="v-c1">
       <div style="display:flex;align-items:center;gap:9px;margin-bottom:3px">
         <button class="bsm bo" onclick="shV('v-enc')">← Voltar</button>
-        <div class="pt" id="childProgressTitle">Progresso do educando</div>
-      </div>
-      <div class="ps2" id="childProgressSubtitle">Seleciona um educando para acompanhar o progresso.</div>
-
+        <div class="pt">🤖 Maria Silva</div></div>
+      <div class="ps2">10 anos · Nível 3 · 620 XP</div>
       <div class="sr2 c4">
-        <div class="sc"><div class="sci">⭐</div><div class="scv" id="childProgressXp">0</div><div class="scl">XP Total</div></div>
-        <div class="sc"><div class="sci">✅</div><div class="scv" id="childProgressChallenges">0</div><div class="scl">Desafios completos</div></div>
-        <div class="sc"><div class="sci">🔥</div><div class="scv" id="childProgressStreak">0</div><div class="scl">Dias seguidos</div></div>
-        <div class="sc"><div class="sci">🪙</div><div class="scv" id="childProgressCoins">0</div><div class="scl">Moedas</div></div>
+        <div class="sc"><div class="sci">⭐</div><div class="scv">620</div><div class="scl">XP Total</div></div>
+        <div class="sc"><div class="sci">✅</div><div class="scv">3</div><div class="scl">Desafios OK</div></div>
+        <div class="sc"><div class="sci">🔥</div><div class="scv">12</div><div class="scl">Dias seguidos</div></div>
+        <div class="sc"><div class="sci">🪙</div><div class="scv">240</div><div class="scl">Moedas</div></div>
       </div>
-
-      <div class="sec">
-        <div class="sh"><div class="st">Progresso por etapa</div></div>
-        <div class="il" id="childProgressIslands"></div>
+      <div class="sec"><div class="sh"><div class="st">Progresso por ilha</div></div>
+        <div class="il">
+          <div class="ii"><div class="iico">🧭</div><div style="flex:1"><div class="iname">Diagnóstico</div><div class="istep">5/5 passos</div><div class="pb2" style="margin-top:5px"><div class="pf" style="width:100%"></div></div></div><span class="badge bd">Completo ✓</span></div>
+          <div class="ii"><div class="iico">🏝️</div><div style="flex:1"><div class="iname">Ilha Principal</div><div class="istep">3/7 passos</div><div class="pb2" style="margin-top:5px"><div class="pf" style="width:43%"></div></div></div><span class="badge bp2">Em progresso</span></div>
+          <div class="ii" style="opacity:.5"><div class="iico">🔍</div><div style="flex:1"><div class="iname">Nível 2</div><div class="istep">Bloqueada</div></div><span class="badge bl">🔒</span></div>
+        </div>
       </div>
+    </div>
 
-      <div class="sec">
-        <div class="sh"><div class="st">Informação do perfil</div></div>
-        <div class="al" id="childProgressInfo"></div>
+    <div class="pv" id="v-c2">
+      <div style="display:flex;align-items:center;gap:9px;margin-bottom:3px">
+        <button class="bsm bo" onclick="shV('v-enc')">← Voltar</button>
+        <div class="pt">👾 Pedro Silva</div></div>
+      <div class="ps2">8 anos · Nível 1 · 120 XP</div>
+      <div class="sr2 c4">
+        <div class="sc"><div class="sci">⭐</div><div class="scv">120</div><div class="scl">XP Total</div></div>
+        <div class="sc"><div class="sci">✅</div><div class="scv">1</div><div class="scl">Desafios OK</div></div>
+        <div class="sc"><div class="sci">🔥</div><div class="scv">3</div><div class="scl">Dias seguidos</div></div>
+        <div class="sc"><div class="sci">🪙</div><div class="scv">40</div><div class="scl">Moedas</div></div>
+      </div>
+      <div class="sec"><div class="sh"><div class="st">Progresso por ilha</div></div>
+        <div class="il">
+          <div class="ii"><div class="iico">🧭</div><div style="flex:1"><div class="iname">Diagnóstico</div><div class="istep">1/5 passos</div><div class="pb2" style="margin-top:5px"><div class="pf" style="width:20%"></div></div></div><span class="badge bp2">Em progresso</span></div>
+          <div class="ii" style="opacity:.5"><div class="iico">🏝️</div><div style="flex:1"><div class="iname">Ilha Principal</div><div class="istep">Bloqueada</div></div><span class="badge bl">🔒</span></div>
+        </div>
       </div>
     </div>
 
@@ -1540,129 +1572,18 @@ body.dark .lh1{color:white!important}
 <div class="toast-wrap" id="toastWrap"></div>
 
 <div class="mo" id="mo-addC"><div class="md">
-  <h3>👦 Novo perfil de aluno</h3>
-  <p>Preenche os dados do educando para criar o perfil na plataforma.</p>
-
-  <div class="f">
-    <label>Nome completo *</label>
-    <input class="inp" type="text" id="childFullName" placeholder="Ex: Maria Silva" oninput="suggestChildUsername()" required>
-    <div class="em" id="childFullNameErr">Indica o nome completo do aluno.</div>
-  </div>
-
+  <h3>👶 Adicionar filho</h3><p>Cria as credenciais que o teu filho vai usar para entrar.</p>
   <div class="fr">
-    <div class="f">
-      <label>Nome de utilizador do aluno *</label>
-      <input class="inp" type="text" id="childUsername" placeholder="Ex: maria.silva" required>
-      <div class="em" id="childUsernameErr">Indica um nome de utilizador válido.</div>
-      <p style="font-size:11px;color:#94a3b8;font-family:'Quicksand',sans-serif;margin-top:5px">
-        O aluno irá entrar com este utilizador. Ex.: maria.silva
-      </p>
-    </div>
-
-    <div class="f">
-      <label>Palavra-passe do aluno *</label>
-      <div class="pw">
-        <input class="inp" type="password" id="childPassword" placeholder="Mínimo 6 caracteres" required>
-        <button class="eye" type="button" onclick="togPw(this)">👁</button>
-      </div>
-      <div class="em" id="childPasswordErr">Indica uma palavra-passe com pelo menos 6 caracteres.</div>
-    </div>
+    <div class="f"><label>Nome</label><input class="inp" type="text" placeholder="Maria"/></div>
+    <div class="f"><label>Idade</label><input class="inp" type="number" placeholder="10" min="7" max="14"/></div>
   </div>
-
-  <div class="fr">
-    <div class="f">
-      <label>Idade *</label>
-      <input class="inp" type="number" id="childAge" min="5" max="18" placeholder="Ex: 9" required>
-      <div class="em" id="childAgeErr">Indica uma idade válida.</div>
-    </div>
-
-    <div class="f">
-      <label>Género *</label>
-      <select class="inp" id="childGender" required>
-        <option value="">Selecionar</option>
-        <option value="Feminino">Feminino</option>
-        <option value="Masculino">Masculino</option>
-        <option value="Outro">Outro</option>
-        <option value="Prefiro não indicar">Prefiro não indicar</option>
-      </select>
-      <div class="em" id="childGenderErr">Seleciona uma opção.</div>
-    </div>
+  <div class="f"><label>Nome de utilizador <span style="color:#94a3b8;font-weight:500;text-transform:none;letter-spacing:0">(login do filho)</span></label><input class="inp" type="text" placeholder="maria_silva" autocomplete="off"/></div>
+  <div class="f"><label>Palavra-passe</label>
+    <div class="pw"><input class="inp" type="password" placeholder="Mínimo 6 caracteres"/>
+      <button class="eye" type="button" onclick="togPw(this)">👁</button></div>
   </div>
-
-  <div class="f">
-    <label>Foto de perfil *</label>
-    <input class="inp" type="file" id="childPhoto" accept="image/*" required>
-    <div class="em" id="childPhotoErr">Adiciona uma foto de perfil.</div>
-    <p style="font-size:11px;color:#94a3b8;font-family:'Quicksand',sans-serif;margin-top:5px">
-      Formatos recomendados: JPG ou PNG.
-    </p>
-  </div>
-
-  <div class="f">
-    <label>Observações</label>
-    <textarea class="cede" id="childObservations" style="width:100%;min-height:80px" placeholder="Indica aqui cuidados especiais, necessidades de acompanhamento ou informações relevantes."></textarea>
-  </div>
-
-  <div class="ma">
-    <button style="background:#f1f5f9;color:#374151" onclick="cMo('addC')">Cancelar</button>
-    <button style="background:var(--blue);color:white" onclick="createChildProfile(event)">Criar perfil ✓</button>
-  </div>
-</div></div>
-
-<div class="mo" id="mo-viewChild"><div class="md">
-  <h3>👦 Perfil do educando</h3>
-  <p>Informações submetidas pelo encarregado de educação.</p>
-
-  <div style="display:flex;gap:16px;align-items:center;margin:16px 0 18px">
-    <img id="viewChildPhoto" src="" alt="Foto do educando"
-      style="width:86px;height:86px;border-radius:22px;object-fit:cover;background:#e2e8f0;box-shadow:0 8px 24px rgba(15,23,42,.12)">
-    <div>
-      <div id="viewChildName" style="font-size:22px;font-weight:900;color:#0f172a;font-family:'Fredoka',sans-serif">—</div>
-      <div id="viewChildSummary" style="font-size:13px;color:#64748b;font-family:'Quicksand',sans-serif;margin-top:3px">—</div>
-      <div id="viewChildLevel" class="badge bp2" style="margin-top:9px">iniciante</div>
-    </div>
-  </div>
-
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px">
-    <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:16px;padding:12px">
-      <div style="font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:#94a3b8;font-weight:800">Nome completo</div>
-      <div id="viewChildFullName" style="font-size:14px;color:#0f172a;font-weight:700;margin-top:4px">—</div>
-    </div>
-
-    <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:16px;padding:12px">
-      <div style="font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:#94a3b8;font-weight:800">Utilizador</div>
-      <div id="viewChildUsername" style="font-size:14px;color:#0f172a;font-weight:700;margin-top:4px">—</div>
-    </div>
-
-    <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:16px;padding:12px">
-      <div style="font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:#94a3b8;font-weight:800">Idade</div>
-      <div id="viewChildAge" style="font-size:14px;color:#0f172a;font-weight:700;margin-top:4px">—</div>
-    </div>
-
-    <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:16px;padding:12px">
-      <div style="font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:#94a3b8;font-weight:800">Género</div>
-      <div id="viewChildGender" style="font-size:14px;color:#0f172a;font-weight:700;margin-top:4px">—</div>
-    </div>
-
-    <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:16px;padding:12px">
-      <div style="font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:#94a3b8;font-weight:800">Nível inicial</div>
-      <div id="viewChildInitialLevel" style="font-size:14px;color:#0f172a;font-weight:700;margin-top:4px">—</div>
-    </div>
-
-    <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:16px;padding:12px">
-      <div style="font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:#94a3b8;font-weight:800">Criado em</div>
-      <div id="viewChildCreatedAt" style="font-size:14px;color:#0f172a;font-weight:700;margin-top:4px">—</div>
-    </div>
-  </div>
-
-  <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:16px;padding:12px;margin-top:12px">
-    <div style="font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:#94a3b8;font-weight:800">Observações</div>
-    <div id="viewChildObservations" style="font-size:14px;color:#334155;line-height:1.5;margin-top:5px;white-space:pre-wrap">—</div>
-  </div>
-
-  <div class="ma">
-    <button style="background:#f1f5f9;color:#374151" onclick="cMo('viewChild')">Fechar</button>
-  </div>
+  <div class="f"><label>Avatar</label><div class="ag"><div class="av on">🤖</div><div class="av">👾</div><div class="av">🦾</div><div class="av">🧑‍💻</div><div class="av">👩‍🚀</div><div class="av">🐱</div></div></div>
+  <div class="ma"><button style="background:#f1f5f9;color:#374151" onclick="cMo('addC')">Cancelar</button><button style="background:var(--blue);color:white" onclick="cMo('addC',true)">Criar ✓</button></div>
 </div></div>
 
 <div class="mo" id="mo-addCl"><div class="md">
@@ -1725,11 +1646,6 @@ const SUPABASE_READY =
 const supabaseDb = SUPABASE_READY
   ? window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY)
   : null;
-
-// Domínio interno meramente identificador para mostrar o login técnico do aluno.
-// Nesta versão NÃO criamos conta no Supabase Auth para o aluno, para evitar limites de envio de emails.
-// O aluno entra por uma função RPC segura: child_login(username, password_hash).
-const CHILD_AUTH_DOMAIN = 'alunos.junicoders.pt';
 </script>
 
 <script>
@@ -1766,23 +1682,10 @@ function cleanLoginName(value) {
     .replace(/[^a-z0-9._-]/g, '');
 }
 
-
-function cleanChildUsername(value) {
-  // Supabase Auth valida o email gerado. Para evitar erro de email inválido,
-  // os utilizadores dos alunos usam apenas letras, números, ponto e hífen.
-  return (value || '')
-    .toLowerCase()
-    .normalize('NFD').replace(/[̀-ͯ]/g, '')
-    .replace(/[^a-z0-9.-]/g, '-')
-    .replace(/\.{2,}/g, '.')
-    .replace(/-{2,}/g, '-')
-    .replace(/^[.-]+|[.-]+$/g, '');
-}
-
 function getAuthEmailForLogin(value) {
   const v = (value || '').trim();
   if (loginMode === 'child' && !v.includes('@')) {
-    return cleanChildUsername(v) + '@' + CHILD_AUTH_DOMAIN;
+    return cleanLoginName(v) + '@alunos.junicoders.local';
   }
   return v;
 }
@@ -1824,44 +1727,7 @@ async function loadCurrentProfile() {
 
   if (error) console.warn('Erro ao carregar perfil:', error);
 
-  if (data) {
-    currentProfile = data;
-  } else {
-    // Se não existir perfil na tabela profiles, tenta carregar como educando criado por um encarregado.
-    // Esta leitura depende da política RLS de child_profiles permitir auth.uid() = auth_user_id.
-    const { data: childData, error: childError } = await supabaseDb
-      .from('child_profiles')
-      .select('*')
-      .eq('auth_user_id', currentUser.id)
-      .maybeSingle();
-
-    if (childError) console.warn('Erro ao carregar perfil de educando:', childError);
-
-    if (childData) {
-      currentProfile = {
-        id: currentUser.id,
-        child_profile_id: childData.id,
-        parent_id: childData.parent_id,
-        email: currentUser.email || childData.login_email || '',
-        username: childData.username || '',
-        first_name: childData.full_name || '',
-        last_name: '',
-        full_name: childData.full_name || '',
-        role: 'child',
-        age: childData.age,
-        gender: childData.gender,
-        observations: childData.observations || '',
-        photo_url: childData.photo_url || '',
-        avatar: childData.photo_url || '🤖',
-        school: '',
-        is_active: true,
-        __source: 'child_profiles'
-      };
-    } else {
-      currentProfile = profileFromUserMetadata(currentUser);
-    }
-  }
-
+  currentProfile = data || profileFromUserMetadata(currentUser);
   role = currentProfile.role || 'enc';
   uName = profileDisplayName(currentProfile, 'Utilizador');
 
@@ -1907,25 +1773,6 @@ function setSuccessAction(mode) {
 
 async function initSupabaseSession() {
   if (!SUPABASE_READY || !supabaseDb) return;
-
-  // Restaura uma sessão local de aluno, se existir.
-  // Esta sessão não usa Supabase Auth; serve apenas para a área da criança no site.
-  try {
-    const saved = JSON.parse(localStorage.getItem('junicoders_child_session') || 'null');
-    if (saved && saved.profile && saved.profile.role === 'child') {
-      currentProfile = saved.profile;
-      currentUser = {
-        id: saved.profile.id,
-        email: saved.profile.email || '',
-        user_metadata: { role: 'child', username: saved.profile.username, full_name: saved.profile.full_name }
-      };
-      role = 'child';
-      uName = profileDisplayName(currentProfile, 'Aluno');
-      goP();
-      return;
-    }
-  } catch(e) { clearChildLocalSession(); }
-
   const { data } = await supabaseDb.auth.getSession();
   if (data && data.session && data.session.user) {
     currentUser = data.session.user;
@@ -1958,70 +1805,27 @@ async function saveCurrentProfile() {
     return;
   }
 
+  let payload = {};
   if (role === 'child') {
-    const name = (document.getElementById('cName')?.value || '').trim() || uName;
-
-    if (currentProfile?.__source === 'child_profiles' && currentProfile.child_profile_id) {
-      const { data, error } = await supabaseDb
-        .from('child_profiles')
-        .update({
-          full_name: name,
-          updated_at: new Date().toISOString()
-        })
-        .eq('id', currentProfile.child_profile_id)
-        .select()
-        .single();
-
-      if (error) {
-        toast('Erro ao guardar perfil: ' + error.message, 'err');
-        return;
-      }
-
-      currentProfile.full_name = data.full_name;
-      currentProfile.first_name = data.full_name;
-      uName = data.full_name;
-      updateProfileForms();
-      toast('Perfil guardado no Supabase ✓', 'ok');
-      return;
-    }
-
-    const payload = {
-      full_name: name,
-      first_name: name,
+    const name = (document.getElementById('cName')?.value || '').trim();
+    payload = {
+      full_name: name || uName,
+      first_name: name || uName,
       avatar: document.getElementById('bigAv')?.textContent || currentProfile?.avatar || '🤖',
       updated_at: new Date().toISOString()
     };
-
-    const { data, error } = await supabaseDb
-      .from('profiles')
-      .update(payload)
-      .eq('id', currentUser.id)
-      .select()
-      .single();
-
-    if (error) {
-      toast('Erro ao guardar perfil: ' + error.message, 'err');
-      return;
-    }
-
-    currentProfile = data;
-    role = data.role || role;
-    uName = profileDisplayName(data, uName);
-    updateProfileForms();
-    toast('Perfil guardado no Supabase ✓', 'ok');
-    return;
+  } else {
+    const first = (document.getElementById('profileFirstName')?.value || '').trim();
+    const last = (document.getElementById('profileLastName')?.value || '').trim();
+    const school = (document.getElementById('profileSchool')?.value || '').trim();
+    payload = {
+      first_name: first,
+      last_name: last,
+      full_name: [first, last].filter(Boolean).join(' ') || uName,
+      school: school,
+      updated_at: new Date().toISOString()
+    };
   }
-
-  const first = (document.getElementById('profileFirstName')?.value || '').trim();
-  const last = (document.getElementById('profileLastName')?.value || '').trim();
-  const school = (document.getElementById('profileSchool')?.value || '').trim();
-  const payload = {
-    first_name: first,
-    last_name: last,
-    full_name: [first, last].filter(Boolean).join(' ') || uName,
-    school: school,
-    updated_at: new Date().toISOString()
-  };
 
   const { data, error } = await supabaseDb
     .from('profiles')
@@ -2664,12 +2468,12 @@ function setLoginMode(m){
   if(m==='child'){
     lab.textContent = 'Email ou nome de utilizador';
     inp.type = 'text';
-    inp.placeholder = 'maria.silva ou maria@exemplo.pt';
+    inp.placeholder = 'maria_silva ou maria@exemplo.pt';
     inp.value = '';
     inp.setAttribute('autocomplete','username');
     adultOnly.style.display = 'none';
     forgot.style.display = 'none';
-    hint.innerHTML = 'Os alunos entram com o utilizador criado pelo encarregado de educação.<br>Ex.: <strong>maria.silva</strong>.';
+    hint.innerHTML = 'Os alunos entram com o utilizador criado no Supabase.<br>Ex.: <strong>maria_silva</strong> fica <strong>maria_silva@alunos.junicoders.local</strong>.';
   } else {
     lab.textContent = 'Email';
     inp.type = 'email';
@@ -2701,821 +2505,39 @@ async function doL() {
   if (!e || !p) { err.classList.add('on'); return; }
   err.classList.remove('on');
 
+  const authEmail = getAuthEmailForLogin(e);
   const btn = (typeof event !== 'undefined' && event.target) ? event.target.closest('button') : null;
   const oldTxt = btn ? btn.innerHTML : '';
   if (btn) { btn.disabled = true; btn.innerHTML = 'A entrar...'; }
 
-  try {
-    // Login de aluno sem Supabase Auth, para evitar envio de emails e rate limits.
-    if (loginMode === 'child') {
-      await loginChildWithUsername(e, p);
-      goP();
-      return;
-    }
+  const { data, error } = await supabaseDb.auth.signInWithPassword({
+    email: authEmail,
+    password: p
+  });
 
-    // Login normal de encarregados/professores via Supabase Auth.
-    const { data, error } = await supabaseDb.auth.signInWithPassword({
-      email: e,
-      password: p
-    });
+  if (btn) { btn.disabled = false; btn.innerHTML = oldTxt; }
 
-    if (error) throw error;
-
-    clearChildLocalSession();
-    currentUser = data.user;
-    await loadCurrentProfile();
-
-    if (currentProfile && currentProfile.is_active === false) {
-      await supabaseDb.auth.signOut();
-      err.classList.add('on');
-      toast('Conta inativa. Contacta a Junicoders.', 'err');
-      return;
-    }
-
-    role = currentProfile?.role || 'enc';
-    uName = profileDisplayName(currentProfile, e.split('@')[0]);
-
-    goP();
-
-  } catch (error) {
+  if (error) {
     err.classList.add('on');
-    toast(error.message || 'Email/utilizador ou palavra-passe incorretos.', 'err');
-  } finally {
-    if (btn) {
-      btn.disabled = false;
-      btn.innerHTML = oldTxt;
-    }
-  }
-}
-
-
-// ── PERFIS DE EDUCANDOS ──────────────────────────────────────────────────────
-let childrenProfilesCache = [];
-
-function escHtml(value) {
-  return String(value ?? '')
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#039;');
-}
-
-function makeChildUsernameFromName(name) {
-  const cleaned = cleanChildUsername((name || '').trim().replace(/\s+/g, '.'));
-  return cleaned || '';
-}
-
-function suggestChildUsername() {
-  const nameEl = document.getElementById('childFullName');
-  const userEl = document.getElementById('childUsername');
-  if (!nameEl || !userEl) return;
-  if (userEl.dataset.manual === '1' && userEl.value.trim()) return;
-  userEl.value = makeChildUsernameFromName(nameEl.value);
-}
-
-document.addEventListener('input', function(ev){
-  if (ev.target && ev.target.id === 'childUsername') {
-    ev.target.dataset.manual = '1';
-    ev.target.value = cleanChildUsername(ev.target.value);
-  }
-});
-
-function buildChildAuthEmail(username) {
-  return cleanChildUsername(username) + '@' + CHILD_AUTH_DOMAIN;
-}
-
-async function sha256Text(text) {
-  const data = new TextEncoder().encode(text);
-  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-  return Array.from(new Uint8Array(hashBuffer))
-    .map(b => b.toString(16).padStart(2, '0'))
-    .join('');
-}
-
-function saveChildLocalSession(profile) {
-  try {
-    localStorage.setItem('junicoders_child_session', JSON.stringify({
-      profile,
-      saved_at: new Date().toISOString()
-    }));
-  } catch(e) {}
-}
-
-function clearChildLocalSession() {
-  try { localStorage.removeItem('junicoders_child_session'); } catch(e) {}
-}
-
-function profileFromChildRow(childData) {
-  return {
-    id: childData.id,
-    child_profile_id: childData.id,
-    parent_id: childData.parent_id,
-    email: childData.login_email || ((childData.username || 'aluno') + '@' + CHILD_AUTH_DOMAIN),
-    username: childData.username || '',
-    first_name: childData.full_name || '',
-    last_name: '',
-    full_name: childData.full_name || '',
-    role: 'child',
-    age: childData.age,
-    gender: childData.gender,
-    observations: childData.observations || '',
-    photo_url: childData.photo_url || '',
-    avatar: childData.photo_url || '🤖',
-    school: '',
-    is_active: true,
-    initial_level: childData.initial_level || 'iniciante',
-    diagnostic_completed: Boolean(childData.diagnostic_completed),
-    diagnostic_score: childData.diagnostic_score ?? null,
-    diagnostic_age: childData.diagnostic_age ?? null,
-    diagnostic_completed_at: childData.diagnostic_completed_at || null,
-    xp_total: childData.xp_total ?? 0,
-    coins: childData.coins ?? 0,
-    streak_days: childData.streak_days ?? 0,
-    challenges_completed: childData.challenges_completed ?? 0,
-    main_steps_completed: childData.main_steps_completed ?? 0,
-    __source: 'child_profiles_rpc'
-  };
-}
-
-async function loginChildWithUsername(usernameOrEmail, password) {
-  const raw = (usernameOrEmail || '').trim();
-  const username = cleanChildUsername(raw.includes('@') ? raw.split('@')[0] : raw);
-  const passwordHash = await sha256Text(password);
-
-  const { data, error } = await supabaseDb.rpc('child_login', {
-    p_username: username,
-    p_password_hash: passwordHash
-  });
-
-  if (error) {
-    const msg = (error.message || '').toLowerCase();
-    if (isMissingChildProfilesTableError(error) || msg.includes('child_login')) {
-      throw new Error(childProfilesSetupMessage());
-    }
-    throw error;
-  }
-
-  const childData = Array.isArray(data) ? data[0] : data;
-  if (!childData) {
-    throw new Error('Utilizador ou palavra-passe incorretos.');
-  }
-
-  currentProfile = profileFromChildRow(childData);
-  currentProfile.__password_hash = passwordHash;
-  currentUser = {
-    id: childData.id,
-    email: currentProfile.email,
-    user_metadata: { role: 'child', username: childData.username, full_name: childData.full_name }
-  };
-  role = 'child';
-  uName = childData.full_name || childData.username || 'Aluno';
-  saveChildLocalSession(currentProfile);
-
-  return currentProfile;
-}
-
-function fileToOptimizedDataUrl(file, maxSize = 420, quality = 0.78) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-
-    reader.onload = () => {
-      const img = new Image();
-
-      img.onload = () => {
-        let width = img.width;
-        let height = img.height;
-
-        if (width > height && width > maxSize) {
-          height = Math.round((height * maxSize) / width);
-          width = maxSize;
-        } else if (height >= width && height > maxSize) {
-          width = Math.round((width * maxSize) / height);
-          height = maxSize;
-        }
-
-        const canvas = document.createElement('canvas');
-        canvas.width = width;
-        canvas.height = height;
-
-        const ctx = canvas.getContext('2d');
-        ctx.drawImage(img, 0, 0, width, height);
-
-        // Guardamos como WEBP para reduzir muito o tamanho na base de dados.
-        resolve(canvas.toDataURL('image/webp', quality));
-      };
-
-      img.onerror = () => reject(new Error('Não foi possível processar a foto selecionada.'));
-      img.src = reader.result;
-    };
-
-    reader.onerror = () => reject(new Error('Não foi possível ler a foto selecionada.'));
-    reader.readAsDataURL(file);
-  });
-}
-
-async function uploadChildPhoto(file, childName) {
-  if (!file) return null;
-
-  // Primeiro tentamos usar o Storage do Supabase, caso o bucket exista.
-  // Se o bucket ainda não existir, usamos automaticamente uma versão otimizada
-  // da imagem em base64/data URL. Assim o perfil é criado na mesma e deixa de aparecer
-  // o erro "Bucket not found".
-  try {
-    const safeName = cleanLoginName(childName || 'aluno') || 'aluno';
-    const ext = (file.name.split('.').pop() || 'jpg').toLowerCase();
-    const ownerId = currentUser?.id || 'sem-utilizador';
-    const filePath = `${ownerId}/${Date.now()}-${safeName}.${ext}`;
-
-    const { error: uploadError } = await supabaseDb
-      .storage
-      .from('child-photos')
-      .upload(filePath, file, {
-        cacheControl: '3600',
-        upsert: false
-      });
-
-    if (uploadError) throw uploadError;
-
-    const { data } = supabaseDb
-      .storage
-      .from('child-photos')
-      .getPublicUrl(filePath);
-
-    if (data?.publicUrl) return data.publicUrl;
-  } catch (storageError) {
-    console.warn('Storage indisponível. A guardar foto otimizada na base de dados:', storageError?.message || storageError);
-  }
-
-  // Plano B: guardar imagem otimizada diretamente no campo photo_url.
-  // Isto evita depender do bucket child-photos.
-  return await fileToOptimizedDataUrl(file);
-}
-
-function clearChildProfileErrors() {
-  ['childFullName', 'childUsername', 'childPassword', 'childAge', 'childGender', 'childPhoto'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.classList.remove('er');
-  });
-
-  ['childFullNameErr', 'childUsernameErr', 'childPasswordErr', 'childAgeErr', 'childGenderErr', 'childPhotoErr'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.classList.remove('on');
-  });
-}
-
-function validateChildProfileForm() {
-  clearChildProfileErrors();
-
-  const fullName = (document.getElementById('childFullName')?.value || '').trim();
-  const username = cleanChildUsername(document.getElementById('childUsername')?.value || '');
-  const password = document.getElementById('childPassword')?.value || '';
-  const age = Number(document.getElementById('childAge')?.value || 0);
-  const gender = (document.getElementById('childGender')?.value || '').trim();
-  const photo = document.getElementById('childPhoto')?.files?.[0] || null;
-
-  let ok = true;
-
-  if (!fullName) {
-    document.getElementById('childFullName')?.classList.add('er');
-    document.getElementById('childFullNameErr')?.classList.add('on');
-    ok = false;
-  }
-
-  if (!username || username.length < 3) {
-    document.getElementById('childUsername')?.classList.add('er');
-    document.getElementById('childUsernameErr')?.classList.add('on');
-    ok = false;
-  }
-
-  if (!password || password.length < 6) {
-    document.getElementById('childPassword')?.classList.add('er');
-    document.getElementById('childPasswordErr')?.classList.add('on');
-    ok = false;
-  }
-
-  if (!age || age < 5 || age > 18) {
-    document.getElementById('childAge')?.classList.add('er');
-    document.getElementById('childAgeErr')?.classList.add('on');
-    ok = false;
-  }
-
-  if (!gender) {
-    document.getElementById('childGender')?.classList.add('er');
-    document.getElementById('childGenderErr')?.classList.add('on');
-    ok = false;
-  }
-
-  if (!photo) {
-    document.getElementById('childPhoto')?.classList.add('er');
-    document.getElementById('childPhotoErr')?.classList.add('on');
-    ok = false;
-  }
-
-  return ok;
-}
-
-function resetChildProfileForm() {
-  ['childFullName', 'childUsername', 'childPassword', 'childAge', 'childGender', 'childObservations', 'childPhoto'].forEach(id => {
-    const el = document.getElementById(id);
-    if (!el) return;
-    el.value = '';
-  });
-
-  clearChildProfileErrors();
-}
-
-
-function isMissingChildProfilesTableError(error) {
-  const msg = ((error && error.message) || '').toLowerCase();
-  return msg.includes('child_profiles') && (
-    msg.includes('schema cache') ||
-    msg.includes('could not find the table') ||
-    msg.includes('relation') ||
-    msg.includes('does not exist')
-  );
-}
-
-function childProfilesSetupMessage() {
-  return 'A tabela public.child_profiles ainda não existe ou o Supabase ainda não atualizou o schema cache. Corre o ficheiro SQL atualizado no Supabase > SQL Editor, espera 10–30 segundos e faz refresh ao site.';
-}
-
-async function checkChildProfilesTableReady() {
-  const { error } = await supabaseDb
-    .from('child_profiles')
-    .select('id')
-    .limit(1);
-
-  if (error && isMissingChildProfilesTableError(error)) {
-    throw new Error(childProfilesSetupMessage());
-  }
-}
-
-async function createChildProfile(ev) {
-  if (!requireSupabase()) return;
-
-  if (!currentUser) {
-    toast('Tens de iniciar sessão como encarregado de educação.', 'err');
+    toast('Email/utilizador ou palavra-passe incorretos.', 'err');
     return;
   }
 
-  if (role !== 'enc') {
-    toast('Apenas encarregados de educação podem criar perfis de alunos.', 'err');
+  currentUser = data.user;
+  await loadCurrentProfile();
+
+  if (currentProfile && currentProfile.is_active === false) {
+    await supabaseDb.auth.signOut();
+    err.classList.add('on');
+    toast('Conta inativa. Contacta a Junicoders.', 'err');
     return;
   }
 
-  if (!validateChildProfileForm()) {
-    toast('Preenche todos os campos obrigatórios.', 'err');
-    return;
-  }
-
-  const fullName = document.getElementById('childFullName').value.trim();
-  const username = cleanChildUsername(document.getElementById('childUsername').value);
-  const password = document.getElementById('childPassword').value;
-  const passwordHash = await sha256Text(password);
-  const loginEmail = buildChildAuthEmail(username);
-  const age = Number(document.getElementById('childAge').value);
-  const gender = document.getElementById('childGender').value;
-  const observations = (document.getElementById('childObservations')?.value || '').trim();
-  const photoFile = document.getElementById('childPhoto').files[0];
-
-  const btn = ev && ev.target ? ev.target : null;
-  const oldTxt = btn ? btn.innerHTML : '';
-
-  try {
-    if (btn) {
-      btn.disabled = true;
-      btn.innerHTML = 'A guardar perfil...';
-    }
-
-    // 0) Confirma se a tabela child_profiles já existe no Supabase/API.
-    await checkChildProfilesTableReady();
-
-    // 1) Guarda a foto no Storage se existir bucket; se não existir, guarda como data URL otimizado.
-    const photoUrl = await uploadChildPhoto(photoFile, fullName);
-
-    // 2) Guarda o perfil e o login do aluno na tabela child_profiles.
-    // Não usamos Supabase Auth para alunos, evitando o erro "email rate limit exceeded".
-    const { error } = await supabaseDb
-      .from('child_profiles')
-      .insert({
-        parent_id: currentUser.id,
-        auth_user_id: null,
-        username: username,
-        login_email: loginEmail,
-        password_hash: passwordHash,
-        full_name: fullName,
-        age: age,
-        gender: gender,
-        observations: observations || null,
-        photo_url: photoUrl,
-        initial_level: 'iniciante',
-        xp_total: 0,
-        challenges_completed: 0,
-        streak_days: 0,
-        coins: 0,
-        main_steps_completed: 0,
-        diagnostic_completed: false,
-        updated_at: new Date().toISOString()
-      });
-
-    if (error) {
-      if (isMissingChildProfilesTableError(error)) {
-        throw new Error(childProfilesSetupMessage());
-      }
-      if ((error.message || '').toLowerCase().includes('duplicate') || error.code === '23505') {
-        throw new Error('Esse nome de utilizador já existe. Escolhe outro, por exemplo ' + username + '.1');
-      }
-      throw error;
-    }
-
-    toast('Perfil e login do aluno criados com sucesso ✓', 'ok');
-    alert('Conta do aluno criada com sucesso!\n\nUtilizador: ' + username + '\nPalavra-passe: a palavra-passe definida no formulário.\n\nO aluno já pode iniciar sessão na opção Criança.');
-
-    resetChildProfileForm();
-    cMo('addC');
-    await loadChildrenProfiles();
-
-  } catch (err) {
-    toast(err.message || 'Erro ao criar perfil do aluno.', 'err');
-  } finally {
-    if (btn) {
-      btn.disabled = false;
-      btn.innerHTML = oldTxt;
-    }
-  }
-}
-
-
-
-function formatChildDatePT(value) {
-  if (!value) return '—';
-  const date = new Date(value);
-  if (Number.isNaN(date.getTime())) return '—';
-  return date.toLocaleDateString('pt-PT', {
-    day: '2-digit',
-    month: '2-digit',
-    year: 'numeric'
-  });
-}
-
-function fillChildProfileModal(child) {
-  if (!child) return;
-
-  const photo = child.photo_url || '';
-  const fullName = child.full_name || '—';
-  const age = child.age ? child.age + ' anos' : '—';
-  const gender = child.gender || '—';
-  const username = child.username || '—';
-  const level = child.initial_level || 'iniciante';
-  const observations = child.observations || 'Sem observações registadas.';
-
-  const photoEl = document.getElementById('viewChildPhoto');
-  if (photoEl) photoEl.src = photo;
-
-  const setTxt = (id, value) => {
-    const el = document.getElementById(id);
-    if (el) el.textContent = value;
-  };
-
-  setTxt('viewChildName', fullName);
-  setTxt('viewChildSummary', age + ' · ' + gender);
-  setTxt('viewChildLevel', level);
-  setTxt('viewChildFullName', fullName);
-  setTxt('viewChildUsername', username);
-  setTxt('viewChildAge', age);
-  setTxt('viewChildGender', gender);
-  setTxt('viewChildInitialLevel', level);
-  setTxt('viewChildCreatedAt', formatChildDatePT(child.created_at));
-  setTxt('viewChildObservations', observations);
-}
-
-async function viewChildProfile(childId) {
-  if (!requireSupabase()) return;
-
-  if (!currentUser || role !== 'enc') {
-    toast('Apenas encarregados de educação podem ver perfis de alunos.', 'err');
-    return;
-  }
-
-  if (!childId) {
-    toast('Não foi possível identificar o perfil do aluno.', 'err');
-    return;
-  }
-
-  let child = childrenProfilesCache.find(item => item.id === childId);
-
-  try {
-    if (!child) {
-      const { data, error } = await supabaseDb
-        .from('child_profiles')
-        .select('*')
-        .eq('id', childId)
-        .eq('parent_id', currentUser.id)
-        .single();
-
-      if (error) {
-        if (isMissingChildProfilesTableError(error)) {
-          throw new Error(childProfilesSetupMessage());
-        }
-        throw error;
-      }
-
-      child = data;
-    }
-
-    if (!child) {
-      toast('Perfil do educando não encontrado.', 'err');
-      return;
-    }
-
-    fillChildProfileModal(child);
-    shM('viewChild');
-
-  } catch (err) {
-    toast(err.message || 'Erro ao carregar perfil do educando.', 'err');
-  }
-}
-
-async function deleteChildProfile(childId, childName) {
-  if (!requireSupabase()) return;
-
-  if (!currentUser || role !== 'enc') {
-    toast('Apenas encarregados de educação podem eliminar perfis de alunos.', 'err');
-    return;
-  }
-
-  if (!childId) {
-    toast('Não foi possível identificar o perfil do aluno.', 'err');
-    return;
-  }
-
-  const nome = childName || 'este educando';
-  const confirmar = confirm(
-    'Tens a certeza que queres eliminar o perfil de ' + nome + '?\n\n' +
-    'Esta ação irá apagar o educando da base de dados do Supabase e não poderá ser anulada.'
-  );
-
-  if (!confirmar) return;
-
-  try {
-    const { error } = await supabaseDb
-      .from('child_profiles')
-      .delete()
-      .eq('id', childId)
-      .eq('parent_id', currentUser.id);
-
-    if (error) {
-      if (isMissingChildProfilesTableError(error)) {
-        throw new Error(childProfilesSetupMessage());
-      }
-      throw error;
-    }
-
-    toast('Perfil do aluno eliminado com sucesso.', 'ok');
-    await loadChildrenProfiles();
-
-  } catch (err) {
-    toast(err.message || 'Erro ao eliminar perfil do aluno.', 'err');
-  }
-}
-
-
-function childProgressNumber(child, field, fallback = 0) {
-  const value = Number(child?.[field]);
-  return Number.isFinite(value) ? value : fallback;
-}
-
-function getChildProgress(child) {
-  const xp = childProgressNumber(child, 'xp_total', 0);
-  const completed = childProgressNumber(child, 'challenges_completed', 0);
-  const streak = childProgressNumber(child, 'streak_days', 0);
-  const coins = childProgressNumber(child, 'coins', 0);
-  const diagDone = Boolean(child?.diagnostic_completed) || completed > 0 || xp > 0;
-  const mainTotal = 7;
-  const mainDone = Math.max(0, Math.min(mainTotal, childProgressNumber(child, 'main_steps_completed', 0)));
-  const mainPercent = Math.round((mainDone / mainTotal) * 100);
-
-  return { xp, completed, streak, coins, diagDone, mainTotal, mainDone, mainPercent };
-}
-
-function renderParentDashboard(children) {
-  const list = Array.isArray(children) ? children : [];
-  const totalXp = list.reduce((sum, child) => sum + getChildProgress(child).xp, 0);
-  const bestStreak = list.reduce((max, child) => Math.max(max, getChildProgress(child).streak), 0);
-
-  const totalEl = document.getElementById('encChildrenCount');
-  const xpEl = document.getElementById('encTotalXp');
-  const streakEl = document.getElementById('encBestStreak');
-  const activityEl = document.getElementById('encRecentActivity');
-
-  if (totalEl) totalEl.textContent = String(list.length);
-  if (xpEl) xpEl.textContent = String(totalXp);
-  if (streakEl) streakEl.textContent = String(bestStreak);
-
-  if (!activityEl) return;
-
-  const activeChildren = list
-    .map(child => ({ child, progress: getChildProgress(child) }))
-    .filter(item => item.progress.xp > 0 || item.progress.completed > 0 || item.progress.streak > 0)
-    .slice(0, 4);
-
-  if (activeChildren.length === 0) {
-    activityEl.innerHTML = `
-      <div class="ai">
-        <div class="aico">ℹ️</div>
-        <div style="flex:1">
-          <div class="att">Ainda não existe atividade registada.</div>
-          <div class="atm">Quando os teus educandos começarem a completar desafios, o progresso aparecerá aqui.</div>
-        </div>
-        <div class="axp">0 XP</div>
-      </div>`;
-    return;
-  }
-
-  activityEl.innerHTML = activeChildren.map(({ child, progress }) => `
-    <div class="ai">
-      <div class="aico">⚡</div>
-      <div style="flex:1">
-        <div class="att">${escHtml(child.full_name)} tem ${progress.completed} desafio(s) completo(s)</div>
-        <div class="atm">Progresso guardado na conta deste educando</div>
-      </div>
-      <div class="axp">${progress.xp} XP</div>
-    </div>
-  `).join('');
-}
-
-async function viewChildProgress(childId) {
-  if (!requireSupabase()) return;
-
-  if (!currentUser || role !== 'enc') {
-    toast('Apenas encarregados de educação podem acompanhar o progresso dos educandos.', 'err');
-    return;
-  }
-
-  let child = childrenProfilesCache.find(item => item.id === childId);
-
-  try {
-    if (!child) {
-      const { data, error } = await supabaseDb
-        .from('child_profiles')
-        .select('*')
-        .eq('id', childId)
-        .eq('parent_id', currentUser.id)
-        .single();
-
-      if (error) {
-        if (isMissingChildProfilesTableError(error)) throw new Error(childProfilesSetupMessage());
-        throw error;
-      }
-
-      child = data;
-    }
-
-    if (!child) {
-      toast('Educando não encontrado.', 'err');
-      return;
-    }
-
-    const progress = getChildProgress(child);
-    const setTxt = (id, value) => {
-      const el = document.getElementById(id);
-      if (el) el.textContent = value;
-    };
-
-    setTxt('childProgressTitle', '📊 ' + (child.full_name || 'Progresso do educando'));
-    setTxt('childProgressSubtitle', `${child.age || '—'} anos · ${child.initial_level || 'iniciante'} · utilizador: ${child.username || '—'}`);
-    setTxt('childProgressXp', progress.xp);
-    setTxt('childProgressChallenges', progress.completed);
-    setTxt('childProgressStreak', progress.streak);
-    setTxt('childProgressCoins', progress.coins);
-
-    const islands = document.getElementById('childProgressIslands');
-    if (islands) {
-      const diagBadge = progress.diagDone
-        ? '<span class="badge bd">Completo ✓</span>'
-        : '<span class="badge bp2">Por iniciar</span>';
-      const mainBadge = progress.mainDone > 0
-        ? '<span class="badge bp2">Em progresso</span>'
-        : '<span class="badge bl">🔒 Por iniciar</span>';
-
-      islands.innerHTML = `
-        <div class="ii">
-          <div class="iico">🧭</div>
-          <div style="flex:1">
-            <div class="iname">Diagnóstico</div>
-            <div class="istep">${progress.diagDone ? 'Concluído' : 'Ainda não concluído'}</div>
-            <div class="pb2" style="margin-top:5px"><div class="pf" style="width:${progress.diagDone ? 100 : 0}%"></div></div>
-          </div>
-          ${diagBadge}
-        </div>
-        <div class="ii">
-          <div class="iico">🏝️</div>
-          <div style="flex:1">
-            <div class="iname">Ilha Principal</div>
-            <div class="istep">${progress.mainDone}/${progress.mainTotal} passos</div>
-            <div class="pb2" style="margin-top:5px"><div class="pf" style="width:${progress.mainPercent}%"></div></div>
-          </div>
-          ${mainBadge}
-        </div>
-        <div class="ii" style="opacity:.55">
-          <div class="iico">🔍</div>
-          <div style="flex:1">
-            <div class="iname">Próximo nível</div>
-            <div class="istep">Desbloqueia quando concluir a etapa atual</div>
-          </div>
-          <span class="badge bl">🔒 Bloqueada</span>
-        </div>`;
-    }
-
-    const info = document.getElementById('childProgressInfo');
-    if (info) {
-      info.innerHTML = `
-        <div class="ai"><div class="aico">👤</div><div style="flex:1"><div class="att">Nome completo</div><div class="atm">${escHtml(child.full_name || '—')}</div></div></div>
-        <div class="ai"><div class="aico">🎂</div><div style="flex:1"><div class="att">Idade</div><div class="atm">${escHtml(String(child.age || '—'))} anos</div></div></div>
-        <div class="ai"><div class="aico">📝</div><div style="flex:1"><div class="att">Observações</div><div class="atm">${escHtml(child.observations || 'Sem observações registadas.')}</div></div></div>`;
-    }
-
-    shV('v-childProgress');
-
-  } catch (err) {
-    toast(err.message || 'Erro ao carregar progresso do educando.', 'err');
-  }
-}
-
-async function loadChildrenProfiles() {
-  if (!requireSupabase()) return;
-  if (!currentUser || role !== 'enc') return;
-
-  const container = document.getElementById('childrenProfilesList');
-  if (!container) return;
-
-  container.innerHTML = '<p style="font-size:13px;color:#64748b">A carregar educandos...</p>';
-
-  const { data, error } = await supabaseDb
-    .from('child_profiles')
-    .select('*')
-    .eq('parent_id', currentUser.id)
-    .order('created_at', { ascending: false });
-
-  if (error) {
-    const friendly = isMissingChildProfilesTableError(error) ? childProfilesSetupMessage() : ('Erro ao carregar educandos: ' + error.message);
-    container.innerHTML = '<p style="font-size:13px;color:#EC6C3B">' + escHtml(friendly) + '</p>';
-    toast(friendly, 'err');
-    return;
-  }
-
-  childrenProfilesCache = data || [];
-  renderParentDashboard(childrenProfilesCache);
-
-  if (!data || data.length === 0) {
-    container.innerHTML = `
-      <div class="cc add" onclick="shM('addC')">
-        <div style="font-size:34px">＋</div>
-        <div style="font-size:13px;font-weight:700">Adicionar educando</div>
-        <span style="font-size:12px">Cria o primeiro perfil de aluno</span>
-      </div>`;
-    return;
-  }
-
-  container.innerHTML = data.map(child => `
-    <div class="cc">
-      <div style="display:flex;gap:12px;align-items:center;margin-bottom:10px">
-        <img src="${escHtml(child.photo_url)}" alt="${escHtml(child.full_name)}"
-          style="width:54px;height:54px;border-radius:14px;object-fit:cover;background:#e2e8f0">
-        <div>
-          <div class="cn">${escHtml(child.full_name)}</div>
-          <div class="ca">${escHtml(child.age)} anos · ${escHtml(child.gender)}</div>
-          <div class="ca">Utilizador: <strong>${escHtml(child.username || '—')}</strong></div>
-        </div>
-      </div>
-
-      <div class="badge bp2">${escHtml(child.initial_level || 'iniciante')}</div>
-      ${(() => { const p = getChildProgress(child); return `
-        <div style="margin-top:10px">
-          <div style="display:flex;justify-content:space-between;font-size:12px;color:#64748b;font-family:'Quicksand',sans-serif;margin-bottom:5px">
-            <span>Progresso</span><strong>${p.xp} XP · ${p.completed} desafios</strong>
-          </div>
-          <div class="pb2"><div class="pf" style="width:${Math.min(100, Math.max(0, p.mainPercent))}%"></div></div>
-        </div>`; })()}
-
-      ${child.observations ? `
-        <p style="font-size:12px;color:#64748b;font-family:'Quicksand',sans-serif;margin-top:10px;line-height:1.4">
-          ${escHtml(child.observations)}
-        </p>
-      ` : ''}
-
-      <div class="cas">
-        <button style="background:#eff6ff;color:#1e40af" onclick="viewChildProfile('${child.id}')">Ver perfil</button>
-        <button style="background:#ecfdf5;color:#166534" onclick="viewChildProgress('${child.id}')">Ver progresso</button>
-        <button style="background:#fee2e2;color:#991b1b" onclick="deleteChildProfile('${child.id}', '${escHtml(child.full_name)}')">Eliminar</button>
-      </div>
-    </div>
-  `).join('') + `
-    <div class="cc add" onclick="shM('addC')">
-      <div style="font-size:34px">＋</div>
-      <div style="font-size:13px;font-weight:700">Adicionar educando</div>
-    </div>`;
+  // Respeita o modo escolhido no login, mas dá prioridade ao perfil real da base de dados.
+  role = currentProfile?.role || (loginMode === 'child' ? 'child' : 'enc');
+  uName = profileDisplayName(currentProfile, authEmail.split('@')[0]);
+
+  goP();
 }
 
 // ── PLATFORM ──────────────────────────────────────────────────────────────────
@@ -3570,22 +2592,17 @@ function goP() {
       <button class="ni" onclick="shV('v-badges',this)"><span class="ico">🏆</span><span>Conquistas</span></button>
       <div class="ns">Conta</div>
       <button class="ni" onclick="shV('v-set',this)"><span class="ico">⚙️</span><span>Perfil</span></button>`;
-
-    if (childNeedsDiagnostic()) {
-      initDiag();
-      shV('v-diag');
-    } else {
-      cLvl = levelIndexFromName(currentProfile?.initial_level);
-      goMap();
-    }
+    initDiag();
+    shV('v-diag');
   } else {
     nav.innerHTML = `
       <div class="ns">Principal</div>
       <button class="ni on" onclick="shV('v-enc',this)"><span class="ico">🏠</span><span>Dashboard</span></button>
+      <button class="ni" onclick="shV('v-c1',this)"><span class="ico">🤖</span><span>Maria</span></button>
+      <button class="ni" onclick="shV('v-c2',this)"><span class="ico">👾</span><span>Pedro</span></button>
       <div class="ns">Conta</div>
       <button class="ni" onclick="shV('v-set',this)"><span class="ico">⚙️</span><span>Definições</span></button>`;
     shV('v-enc');
-    setTimeout(() => loadChildrenProfiles(), 50);
   }
 }
 
@@ -3613,7 +2630,6 @@ document.querySelectorAll('.av').forEach(a => a.addEventListener('click', functi
 }));
 
 async function logout() {
-  clearChildLocalSession();
   if (SUPABASE_READY && supabaseDb) {
     try { await supabaseDb.auth.signOut(); } catch(e) {}
   }
@@ -3647,114 +2663,15 @@ const Qs = [
 ];
 
 const Lvs = [
-  {
-    e:'🌱',
-    t:'Iniciante',
-    d:'Estás a começar! Vais aprender programação, eletrónica e robótica desde o início, passo a passo.',
-    lv:'Nível 1 · Iniciante',
-    xp:'0 / 300 XP',
-    xpF:'0%',
-    coins:50,
-    streak:0,
-    i2:'0/7 passos'
-  },
-  {
-    e:'🤖',
-    t:'Bot Starter',
-    d:'Já tens algumas bases! Vais começar com desafios de robótica, programação e eletrónica com o micro:bit.',
-    lv:'Nível 2 · Bot Starter',
-    xp:'120 / 500 XP',
-    xpF:'24%',
-    coins:120,
-    streak:3,
-    i2:'2/7 passos'
-  },
-  {
-    e:'🌾',
-    t:'Smart Farm',
-    d:'Tens boas bases! Vais começar em desafios mais avançados com sensores, automação e projetos inteligentes.',
-    lv:'Nível 3 · Smart Farm',
-    xp:'280 / 500 XP',
-    xpF:'56%',
-    coins:240,
-    streak:8,
-    i2:'4/7 passos'
-  }
+  { e:'🌱', t:'Principiante', d:'Estás a começar! Vamos aprender tudo desde o início, de forma divertida.', lv:'Nível 1 · Principiante', xp:'0 / 300 XP', xpF:'0%', coins:50, streak:0, i2:'0/7 passos' },
+  { e:'⚙️', t:'Explorador',   d:'Já tens algumas bases! Vais avançar mais depressa e saltar passos básicos.', lv:'Nível 2 · Explorador', xp:'120 / 500 XP', xpF:'24%', coins:120, streak:3, i2:'2/7 passos' },
+  { e:'🚀', t:'Inventor',     d:'Tens boas bases! Começas com desafios mais interessantes.', lv:'Nível 3 · Inventor', xp:'280 / 500 XP', xpF:'56%', coins:240, streak:8, i2:'4/7 passos' },
 ];
-
-
-function levelIndexFromName(levelName) {
-  const value = String(levelName || '').toLowerCase();
-  if (value.includes('smart') || value.includes('farm') || value.includes('nível 3') || value.includes('nivel 3')) return 2;
-  if (value.includes('bot') || value.includes('starter') || value.includes('nível 2') || value.includes('nivel 2')) return 1;
-  return 0;
-}
-
-function childNeedsDiagnostic() {
-  if (role !== 'child') return false;
-  return !Boolean(currentProfile?.diagnostic_completed);
-}
-
-async function saveChildDiagnosticResult(respostasCorretas, idadeAluno, levelIndex) {
-  if (role !== 'child' || !currentProfile) return;
-  if (!requireSupabase()) return;
-
-  const childId = currentProfile.child_profile_id || currentProfile.id;
-  const passwordHash = currentProfile.__password_hash;
-
-  if (!childId || !passwordHash) {
-    toast('Diagnóstico concluído, mas não foi possível guardar. Sai e volta a iniciar sessão para sincronizar.', 'err');
-    return;
-  }
-
-  const nomesNiveis = ['Iniciante', 'Bot Starter', 'Smart Farm'];
-  const xpBonusValor = [50, 75, 100];
-  const moedasBonusValor = [50, 120, 240];
-
-  const payload = {
-    p_child_id: childId,
-    p_password_hash: passwordHash,
-    p_initial_level: nomesNiveis[levelIndex],
-    p_diagnostic_score: respostasCorretas,
-    p_diagnostic_age: idadeAluno,
-    p_xp_total: xpBonusValor[levelIndex],
-    p_coins: moedasBonusValor[levelIndex]
-  };
-
-  try {
-    const { data, error } = await supabaseDb.rpc('complete_child_diagnostic', payload);
-    if (error) throw error;
-
-    const updated = Array.isArray(data) ? data[0] : data;
-
-    currentProfile = {
-      ...currentProfile,
-      initial_level: updated?.initial_level || nomesNiveis[levelIndex],
-      diagnostic_completed: true,
-      diagnostic_score: updated?.diagnostic_score ?? respostasCorretas,
-      diagnostic_age: updated?.diagnostic_age ?? idadeAluno,
-      diagnostic_completed_at: updated?.diagnostic_completed_at || new Date().toISOString(),
-      xp_total: updated?.xp_total ?? xpBonusValor[levelIndex],
-      coins: updated?.coins ?? moedasBonusValor[levelIndex]
-    };
-
-    cLvl = levelIndex;
-    saveChildLocalSession(currentProfile);
-    toast('Diagnóstico guardado com sucesso! 🚀', 'ok');
-  } catch (err) {
-    console.error('Erro ao guardar diagnóstico:', err);
-    toast('Diagnóstico concluído, mas houve um erro ao guardar na base de dados.', 'err');
-  }
-}
 
 function initDiag() {
   diagA = []; curQ = 0;
-  const dots = document.getElementById('dDots');
-  if (dots) dots.style.display = 'flex';
-  const card = document.getElementById('dCard');
-  if (card) card.style.display = '';
-  const res = document.getElementById('dRes');
-  if (res) res.style.display = 'none';
+  document.getElementById('dCard').style.display = '';
+  document.getElementById('dRes').style.display = 'none';
   renderQ();
 }
 
@@ -3829,44 +2746,10 @@ function diagBack(){
   renderQ();
 }
 
-function obterIdadeAluno() {
-  const idade =
-    currentProfile?.idade ||
-    currentProfile?.age ||
-    currentUser?.user_metadata?.idade ||
-    currentUser?.user_metadata?.age ||
-    currentUser?.idade ||
-    currentUser?.age ||
-    7;
-
-  return Number(idade) || 7;
-}
-
-function calcularNivelInicial(respostasCorretas, idade) {
-  let ajusteIdade = 0;
-
-  if (idade >= 9 && idade <= 10) {
-    ajusteIdade = 1;
-  } else if (idade >= 11) {
-    ajusteIdade = 2;
-  }
-
-  const pontuacaoFinal = respostasCorretas + ajusteIdade;
-
-  if (pontuacaoFinal <= 2) return 0; // Iniciante
-  if (pontuacaoFinal <= 4) return 1; // Bot Starter
-  return 2; // Smart Farm
-}
-
 function showRes() {
-  const respostasCorretas = diagA.filter((valorResposta, index) => {
-    const pontuacaoMaxima = Math.max(...Qs[index].sc);
-    return valorResposta === pontuacaoMaxima;
-  }).length;
-
-  const idadeAluno = obterIdadeAluno();
-
-  cLvl = calcularNivelInicial(respostasCorretas, idadeAluno);
+  const total = diagA.reduce((a,b) => a+b, 0);
+  const pct = total / (Qs.length * 3);
+  cLvl = pct < 0.33 ? 0 : pct < 0.66 ? 1 : 2;
   const lv = Lvs[cLvl];
 
   // hide pills + question layout
@@ -3882,20 +2765,12 @@ function showRes() {
   document.getElementById('rD').textContent = lv.d;
 
   const xpBonus = ['+50 XP de bónus', '+75 XP de bónus', '+100 XP de bónus'];
-  const nomesNiveis = ['Iniciante', 'Bot Starter', 'Smart Farm'];
-
   document.getElementById('rIs').innerHTML = `
     <div class="diag-unlock-ico">🏝️</div>
     <div>
-      <div class="diag-unlock-txt">${nomesNiveis[cLvl]} desbloqueado!</div>
-      <div class="diag-unlock-sub">
-        ${xpBonus[cLvl]} por completares o diagnóstico ·
-        ${respostasCorretas}/${Qs.length} respostas corretas ·
-        idade: ${idadeAluno} anos
-      </div>
+      <div class="diag-unlock-txt">Ilha Principal desbloqueada!</div>
+      <div class="diag-unlock-sub">${xpBonus[cLvl]} por completares o diagnóstico</div>
     </div>`;
-
-  saveChildDiagnosticResult(respostasCorretas, idadeAluno, cLvl);
 }
 
 
@@ -4272,23 +3147,14 @@ function abrirIlha(id) {
 
 
 function goMap() {
-  if (role === 'child' && currentProfile?.diagnostic_completed) {
-    cLvl = levelIndexFromName(currentProfile.initial_level);
-  }
   const lv = Lvs[cLvl];
   const el = id => document.getElementById(id);
   if(el('mCN')) el('mCN').textContent = uName;
-  const profileXp = Number(currentProfile?.xp_total ?? NaN);
-  const profileCoins = Number(currentProfile?.coins ?? NaN);
-  const profileStreak = Number(currentProfile?.streak_days ?? NaN);
-  const xpToShow = Number.isFinite(profileXp) && profileXp > 0 ? `${profileXp} / 500 XP` : lv.xp;
-  const xpPercent = Number.isFinite(profileXp) && profileXp > 0 ? `${Math.min(100, Math.round((profileXp / 500) * 100))}%` : lv.xpF;
-
   if(el('mLv')) el('mLv').textContent = lv.lv;
-  if(el('mXP')) el('mXP').textContent = xpToShow;
-  if(el('mXF')) el('mXF').style.width = xpPercent;
-  if(el('mC'))  el('mC').textContent = Number.isFinite(profileCoins) ? profileCoins : lv.coins;
-  if(el('mS'))  el('mS').textContent = Number.isFinite(profileStreak) ? profileStreak : lv.streak;
+  if(el('mXP')) el('mXP').textContent = lv.xp;
+  if(el('mXF')) el('mXF').style.width = lv.xpF;
+  if(el('mC'))  el('mC').textContent = lv.coins;
+  if(el('mS'))  el('mS').textContent = lv.streak;
   if(el('i2p')) el('i2p').textContent = lv.i2;
   if(cLvl >= 2) { const i3=document.getElementById('i3'); if(i3) i3.classList.remove('lk'); }
   document.querySelectorAll('.ni').forEach(b=>b.classList.remove('on'));
